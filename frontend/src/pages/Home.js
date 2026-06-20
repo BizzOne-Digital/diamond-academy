@@ -30,41 +30,135 @@ export default function Home() {
     <>
       <Helmet><title>American Diamond Academy | Online Diamond Grading Courses</title></Helmet>
 
-      {/* HERO */}
-      <section style={{ position: 'relative', background: C.navy, minHeight: '85vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${heroBg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.2 }} />
-        <div className="container" style={{ position: 'relative', zIndex: 1, padding: '80px 20px' }}>
-          <div style={{ maxWidth: '720px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-              <div style={{ height: '1px', width: '40px', background: C.coral }} />
-              <span style={{ color: C.coral, fontSize: '13px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '3px' }}>American Diamond Academy</span>
-            </div>
-           <h1
+    {/* HERO */}
+<section
   style={{
-    fontFamily: "'Playfair Display', serif",
-    fontSize: 'clamp(40px, 6vw, 68px)',
-    fontWeight: 400,
-    color: 'white',
-    lineHeight: 1.1,
-    marginBottom: '24px',
+    position: 'relative',
+    background: C.navy,
+    minHeight: '85vh',
+    display: 'flex',
+    alignItems: 'center',
+    overflow: 'hidden',
   }}
 >
-  Diamond Learning,
-  <br />
-  <span style={{ display: 'block', textAlign: 'center' }}>
-    <em>Reimagined.</em>
-  </span>
-</h1>
-            <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '18px', lineHeight: 1.8, marginBottom: '40px', maxWidth: '600px' }}>
-              Diamonds are more than grades they&apos;re light, structure, and brilliance. Learn to evaluate diamonds confidently, even without holding them in your hand.
-            </p>
-            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-              <Link to="/education" className="btn btn-primary btn-lg">Explore Courses</Link>
-              <Link to="/about" className="btn btn-outline-white btn-lg">Learn More</Link>
-            </div>
-          </div>
-        </div>
-      </section>
+  <div
+    style={{
+      position: 'absolute',
+      inset: 0,
+      backgroundImage: `url(${heroBg})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      opacity: 0.2,
+    }}
+  />
+
+  <div
+    className="container"
+    style={{
+      position: 'relative',
+      zIndex: 1,
+      padding: '80px 20px',
+      display: 'flex',
+      justifyContent: 'center',
+      textAlign: 'center',
+    }}
+  >
+    <div
+      style={{
+        maxWidth: '720px',
+        width: '100%',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '12px',
+          marginBottom: '24px',
+        }}
+      >
+        <div
+          style={{
+            height: '1px',
+            width: '40px',
+            background: C.coral,
+          }}
+        />
+
+        <span
+          style={{
+            color: C.coral,
+            fontSize: '13px',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            letterSpacing: '3px',
+          }}
+        >
+          American Diamond Academy
+        </span>
+
+        <div
+          style={{
+            height: '1px',
+            width: '40px',
+            background: C.coral,
+          }}
+        />
+      </div>
+
+      <h1
+        style={{
+          fontFamily: "'Playfair Display', serif",
+          fontSize: 'clamp(40px, 6vw, 68px)',
+          fontWeight: 400,
+          color: 'white',
+          lineHeight: 1.1,
+          marginBottom: '24px',
+          textAlign: 'center',
+        }}
+      >
+        Diamond Learning,
+        <br />
+        <em>Reimagined.</em>
+      </h1>
+
+      <p
+        style={{
+          color: 'rgba(255,255,255,0.8)',
+          fontSize: '18px',
+          lineHeight: 1.8,
+          marginBottom: '40px',
+          maxWidth: '600px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        }}
+      >
+        Diamonds are more than grades they&apos;re light, structure, and
+        brilliance. Learn to evaluate diamonds confidently, even without
+        holding them in your hand.
+      </p>
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '16px',
+          flexWrap: 'wrap',
+        }}
+      >
+        <Link to="/education" className="btn btn-primary btn-lg">
+          Explore Courses
+        </Link>
+
+        <Link to="/about" className="btn btn-outline-white btn-lg">
+          Learn More
+        </Link>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* REIMAGINED */}
       <section style={{ background: C.light, padding: '80px 0' }}>
