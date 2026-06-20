@@ -39,9 +39,22 @@ export default function Home() {
               <div style={{ height: '1px', width: '40px', background: C.coral }} />
               <span style={{ color: C.coral, fontSize: '13px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '3px' }}>American Diamond Academy</span>
             </div>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(40px, 6vw, 68px)', fontWeight: 400, color: 'white', lineHeight: 1.1, marginBottom: '24px' }}>
-              Diamond Learning,<br /><em>Reimagined.</em>
-            </h1>
+           <h1
+  style={{
+    fontFamily: "'Playfair Display', serif",
+    fontSize: 'clamp(40px, 6vw, 68px)',
+    fontWeight: 400,
+    color: 'white',
+    lineHeight: 1.1,
+    marginBottom: '24px',
+  }}
+>
+  Diamond Learning,
+  <br />
+  <span style={{ display: 'block', textAlign: 'center' }}>
+    <em>Reimagined.</em>
+  </span>
+</h1>
             <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '18px', lineHeight: 1.8, marginBottom: '40px', maxWidth: '600px' }}>
               Diamonds are more than grades they&apos;re light, structure, and brilliance. Learn to evaluate diamonds confidently, even without holding them in your hand.
             </p>
