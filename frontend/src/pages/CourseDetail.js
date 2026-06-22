@@ -50,7 +50,7 @@ export default function CourseDetail() {
       {/* Hero */}
       <section style={{ background: C.navy, padding: '60px 0 0' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', alignItems: 'end' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px', alignItems: 'end' }}>
             <div style={{ paddingBottom: '60px', color: 'white' }}>
               <Link to="/education" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '20px' }}>← Back to Education</Link>
               <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
@@ -74,14 +74,14 @@ export default function CourseDetail() {
               <img src={course.image || 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80'} alt={course.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
           </div>
-          <style>{`@media(max-width:768px){div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr;}}`}</style>
+          
         </div>
       </section>
 
       {/* Details */}
       <section className="section" style={{ background: 'white' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '48px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px' }}>
             <div>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '28px', fontWeight: 400, color: C.navy, marginBottom: '20px' }}>About This Course</h2>
               <p style={{ color: '#4b5563', lineHeight: 1.9, fontSize: '16px', marginBottom: '32px' }}>{course.description}</p>
@@ -89,7 +89,7 @@ export default function CourseDetail() {
               {course.whatYouLearn?.length > 0 && (
                 <div style={{ background: C.light, borderRadius: '8px', padding: '32px', marginBottom: '32px' }}>
                   <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '22px', color: C.navy, marginBottom: '20px' }}>What You&apos;ll Learn</h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '8px' }}>
                     {course.whatYouLearn.map((item, i) => (
                       <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
                         <span style={{ color: C.coral, fontSize: '16px', marginTop: '1px', flexShrink: 0 }}>✓</span>
@@ -156,7 +156,7 @@ export default function CourseDetail() {
               </div>
             </div>
           </div>
-          <style>{`@media(max-width:1024px){div[style*="grid-template-columns: 2fr 1fr"]{grid-template-columns:1fr;}div[style*="position: sticky"]{position:static;}}`}</style>
+          
         </div>
       </section>
     </>

@@ -30,7 +30,7 @@ export function About() {
       {/* FOUNDER SECTION */}
       <section className="section" style={{ background: 'white' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '64px', alignItems: 'start' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '40px', alignItems: 'start' }}>
 
             {/* about1.webp image */}
             <div style={{ textAlign: 'center' }}>
@@ -62,7 +62,7 @@ export function About() {
               <p style={{ color: '#4b5563', lineHeight: 1.9, fontSize: '16px' }}>She holds multiple professional designations including graduating with Honours in Gemmology, receiving the Dean's Medal and the Sarah & Arthur Frankel Award, and completing the GIA's laboratory training. As Director of Communications for the Canadian Gemmological Association, Archana stays closely connected to the gem community.</p>
             </div>
           </div>
-          <style>{`@media(max-width:768px){div[style*="grid-template-columns: 1fr 2fr"]{grid-template-columns:1fr;}}`}</style>
+          
         </div>
       </section>
 
@@ -70,7 +70,7 @@ export function About() {
       <section className="section" style={{ background: C.light }}>
         <div className="container">
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, color: C.navy, marginBottom: '40px' }}>My Certifications</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', alignItems: 'start' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px', alignItems: 'start' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {[
                 { org: 'George Brown College', detail: "Graduate Gemmologist (Dean's Award Medal, Honors, Sarah and Arthur Frankel Gemmology Award)" },
@@ -105,7 +105,7 @@ export function About() {
               </div>
             </div>
           </div>
-          <style>{`@media(max-width:768px){div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr;}}`}</style>
+          
         </div>
       </section>
 
@@ -164,7 +164,7 @@ export function Contact() {
 
       <section className="section" style={{ background: C.light }}>
         <div className="container" style={{ maxWidth: '1000px' }}>
-          <div className="grid-4" style={{ marginBottom: '56px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px', marginBottom: '40px' }}>
             {contactInfo.map(({ Icon, title, detail, href }) => (
               <a key={title} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="card" style={{ padding: '28px 20px', textAlign: 'center', display: 'block', textDecoration: 'none' }}>
                 <div style={{ width: '52px', height: '52px', background: C.light, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
@@ -176,8 +176,8 @@ export function Contact() {
             ))}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
-            <div style={{ background: 'white', borderRadius: '12px', padding: '36px', boxShadow: '0 2px 10px rgba(0,0,0,0.06)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+            <div style={{ background: 'white', borderRadius: '12px', padding: '28px', boxShadow: '0 2px 10px rgba(0,0,0,0.06)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
                 <MessageSVG size={22} color={C.coral} />
                 <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '22px', color: C.navy }}>Send a Message</h3>
@@ -221,7 +221,7 @@ export function Contact() {
                 <WhatsAppSVG size={40} color={C.coral} style={{ margin: '0 auto 16px', display: 'block' }} />
                 <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '22px', marginBottom: '12px' }}>Fastest Response</h3>
                 <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '24px', fontSize: '15px', lineHeight: 1.7 }}>For quick replies about enrollment, courses, and session schedules — message us on WhatsApp.</p>
-                <a href="https://wa.me/14372697007" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg" style={{ width: '100%', justifyContent: 'center' }}>
+                <a href="https://wa.me/14372697007" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg" style={{ width: '100%', justifyContent: 'center', boxSizing: 'border-box' }}>
                   <WhatsAppSVG size={18} color="white" />Chat on WhatsApp
                 </a>
               </div>
@@ -238,7 +238,7 @@ export function Contact() {
               </div>
             </div>
           </div>
-          <style>{`@media(max-width:768px){div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr;}}`}</style>
+          
         </div>
       </section>
     </>

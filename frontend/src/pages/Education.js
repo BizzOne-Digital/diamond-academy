@@ -19,7 +19,7 @@ export default function Education() {
 
       <div className="page-hero">
         <div className="container">
-          <h1>Canadian Diamond Academy</h1>
+          <h1>American Diamond Academy</h1>
           <p>Expert-led online courses in diamond grading and gemology</p>
         </div>
       </div>
@@ -27,9 +27,9 @@ export default function Education() {
       {/* Intro */}
       <section className="section" style={{ background: 'white' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px', alignItems: 'center' }}>
             <div style={{ borderRadius: '8px', overflow: 'hidden', aspectRatio: '4/3' }}>
-              <img src="/course4.png" alt="Diamond Grading" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80" alt="Diamond Grading" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             <div>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,42px)', fontWeight: 400, color: C.navy, marginBottom: '20px', lineHeight: 1.2 }}>Learning beyond the 4 Cs</h2>
@@ -55,7 +55,7 @@ export default function Education() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
               {courses.map((course, i) => (
                 <div key={course._id} className="card" style={{ overflow: 'hidden' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: i % 2 === 0 ? '1fr 1.2fr' : '1.2fr 1fr' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
                     <div style={{ order: i % 2 === 0 ? 1 : 2, minHeight: '320px', background: `url(${course.image || 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80'}) center/cover no-repeat` }} />
                     <div style={{ order: i % 2 === 0 ? 2 : 1, padding: '48px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                       <div style={{ display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap' }}>
@@ -73,7 +73,7 @@ export default function Education() {
             </div>
           )}
         </div>
-        <style>{`@media(max-width:768px){div[style*="grid-template-columns:"]{grid-template-columns:1fr !important;}div[style*="order: 2"]{order:1 !important;}div[style*="order: 1"]{order:2 !important;}}`}</style>
+        
       </section>
 
       {/* Coming Soon */}

@@ -145,14 +145,14 @@ export default function Home() {
             <div style={{ display: 'inline-block', background: C.coral, color: 'white', padding: '6px 20px', borderRadius: '20px', fontSize: '13px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '20px' }}>Coming Soon</div>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,42px)', fontWeight: 400, color: C.navy }}>Upcoming Programs</h2>
           </div>
-          <div className="grid-2">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
             {comingSoon.map(c => (
-              <div key={c.title} style={{ background: 'white', borderRadius: '12px', padding: '36px', border: `1px solid #e5e7eb`, position: 'relative', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', top: '20px', right: '20px', background: C.coral, color: 'white', padding: '4px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 700, letterSpacing: '1px' }}>COMING SOON</div>
-                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '26px', fontWeight: 400, color: C.navy, marginBottom: '6px' }}>{c.title}</h3>
+              <div key={c.title} style={{ background: 'white', borderRadius: '12px', padding: '32px 28px', border: `1px solid #e5e7eb`, position: 'relative', overflow: 'hidden' }}>
+                <div style={{ display: 'inline-block', background: C.coral, color: 'white', padding: '4px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 700, letterSpacing: '1px', marginBottom: '16px' }}>COMING SOON</div>
+                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(22px,3vw,26px)', fontWeight: 400, color: C.navy, marginBottom: '6px' }}>{c.title}</h3>
                 <p style={{ color: C.coral, fontSize: '13px', fontWeight: 600, marginBottom: '16px' }}>{c.subtitle}</p>
-                <p style={{ color: '#4b5563', fontSize: '15px', lineHeight: 1.8 }}>{c.desc}</p>
-                <div style={{ marginTop: '24px', padding: '12px 16px', background: C.light, borderRadius: '8px', fontSize: '13px', color: '#6b7280' }}>
+                <p style={{ color: '#4b5563', fontSize: '15px', lineHeight: 1.8, marginBottom: '20px' }}>{c.desc}</p>
+                <div style={{ padding: '12px 16px', background: C.light, borderRadius: '8px', fontSize: '13px', color: '#6b7280' }}>
                   Join our newsletter to be notified when this course launches.
                 </div>
               </div>
