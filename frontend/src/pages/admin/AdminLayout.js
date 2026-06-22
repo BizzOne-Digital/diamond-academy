@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { BarChartSVG, BookSVG, UsersSVG, CreditCardSVG, DiamondSVG, LogoutSVG, InboxSVG, GlobeSVG } from '../../components/Icons';
+import { BarChartSVG, BookSVG, UsersSVG, CreditCardSVG, DiamondSVG, LogoutSVG, InboxSVG, GlobeSVG, MessageSVG, StarSVG } from '../../components/Icons';
 
 const C = { navy: '#2C3E50', coral: '#E8835A', navyDark: '#1a2532' };
 
@@ -10,6 +10,8 @@ const navItems = [
   { path: '/admin/courses', label: 'Courses', Icon: BookSVG },
   { path: '/admin/leads', label: 'Leads', Icon: InboxSVG },
   { path: '/admin/resources', label: 'Resources', Icon: GlobeSVG },
+  { path: '/admin/blog', label: 'Blog', Icon: MessageSVG },
+  { path: '/admin/comingsoon', label: 'Coming Soon', Icon: StarSVG },
   { path: '/admin/users', label: 'Students', Icon: UsersSVG },
   { path: '/admin/orders', label: 'Orders', Icon: CreditCardSVG },
 ];

@@ -5,6 +5,58 @@ import { GraduationSVG, DiamondSVG, BoltSVG, EmailSVG } from '../components/Icon
 import toast from 'react-hot-toast';
 import api from '../utils/api';
 
+
+// Diamond Shapes Carousel Component
+function DiamondShapesCarousel({ C }) {
+  const [current, setCurrent] = React.useState(0);
+  const shapes = [
+    {
+      name: 'Round Brilliant',
+      img: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80',
+    },
+    {
+      name: 'Fancy Shapes',
+      img: 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80',
+    },
+    {
+      name: 'Diamond Sizes',
+      img: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80',
+    },
+  ];
+
+  React.useEffect(() => {
+    const timer = setInterval(() => setCurrent(c => (c + 1) % shapes.length), 3500);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <section style={{ position: 'relative', background: C.navy, overflow: 'hidden', height: '420px' }}>
+      {shapes.map((s, i) => (
+        <div key={i} style={{
+          position: 'absolute', inset: 0,
+          backgroundImage: `url(${s.img})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: i === current ? 1 : 0,
+          transition: 'opacity 1s ease',
+        }} />
+      ))}
+      {/* Dark overlay */}
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(44,62,80,0.45)' }} />
+      {/* Dots */}
+      <div style={{ position: 'absolute', bottom: '24px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '10px', zIndex: 2 }}>
+        {shapes.map((_, i) => (
+          <button key={i} onClick={() => setCurrent(i)} style={{ width: i === current ? '28px' : '10px', height: '10px', borderRadius: '5px', background: i === current ? C.coral : 'rgba(255,255,255,0.5)', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease', padding: 0 }} />
+        ))}
+      </div>
+      {/* Shape name */}
+      <div style={{ position: 'absolute', bottom: '60px', left: '50%', transform: 'translateX(-50%)', zIndex: 2, textAlign: 'center' }}>
+        <span style={{ color: 'white', fontSize: '14px', fontWeight: 600, letterSpacing: '3px', textTransform: 'uppercase', opacity: 0.8 }}>{shapes[current].name}</span>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const [courses, setCourses] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
@@ -14,6 +66,7 @@ export default function Home() {
 
   useEffect(() => {
     api.get('/courses').then(r => setCourses(r.data.courses?.slice(0, 3) || [])).catch(() => {});
+    api.get('/comingsoon').then(r => setComingSoon(r.data.items || [])).catch(() => {});
     const onResize = () => setIsMobile(window.innerWidth < 768);
     onResize();
     window.addEventListener('resize', onResize);
@@ -40,10 +93,7 @@ export default function Home() {
     { Icon: BoltSVG, title: 'Fast Impact Learning', desc: 'Short, focused training built for immediate real-world application.' },
   ];
 
-  const comingSoon = [
-    { title: 'Diamond Precision', subtitle: 'Applied Diamond Measurement & Valuation', desc: 'Master the science behind diamond measurement, cut efficiency, and valuation logic that determines a diamond\'s true market value.' },
-    { title: 'Diamond Fancy Shapes', subtitle: 'Visual Evaluation', desc: 'Develop expert visual evaluation skills for fancy-shaped diamonds — from pear and oval to marquise, cushion, and beyond.' },
-  ];
+  const [comingSoon, setComingSoon] = useState([]);
 
   return (
     <>
@@ -139,40 +189,41 @@ export default function Home() {
       )}
 
       {/* COMING SOON COURSES */}
-      <section className="section" style={{ background: C.light }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <div style={{ display: 'inline-block', background: C.coral, color: 'white', padding: '6px 20px', borderRadius: '20px', fontSize: '13px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '20px' }}>Coming Soon</div>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,42px)', fontWeight: 400, color: C.navy }}>Upcoming Programs</h2>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
-            {comingSoon.map(c => (
-              <div key={c.title} style={{ background: 'white', borderRadius: '12px', padding: '32px 28px', border: `1px solid #e5e7eb`, position: 'relative', overflow: 'hidden' }}>
-                <div style={{ display: 'inline-block', background: C.coral, color: 'white', padding: '4px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 700, letterSpacing: '1px', marginBottom: '16px' }}>COMING SOON</div>
-                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(22px,3vw,26px)', fontWeight: 400, color: C.navy, marginBottom: '6px' }}>{c.title}</h3>
-                <p style={{ color: C.coral, fontSize: '13px', fontWeight: 600, marginBottom: '16px' }}>{c.subtitle}</p>
-                <p style={{ color: '#4b5563', fontSize: '15px', lineHeight: 1.8, marginBottom: '20px' }}>{c.desc}</p>
-                <div style={{ padding: '12px 16px', background: C.light, borderRadius: '8px', fontSize: '13px', color: '#6b7280' }}>
-                  Join our newsletter to be notified when this course launches.
+      {comingSoon.length > 0 && (
+        <section className="section" style={{ background: C.light }}>
+          <div className="container">
+            <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+              <div style={{ display: 'inline-block', background: C.coral, color: 'white', padding: '6px 20px', borderRadius: '20px', fontSize: '13px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '20px' }}>Coming Soon</div>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,42px)', fontWeight: 400, color: C.navy }}>Upcoming Programs</h2>
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', justifyContent: 'center' }}>
+              {comingSoon.map(c => (
+                <div key={c._id} style={{ background: 'white', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e5e7eb', width: 'clamp(280px, calc(50% - 12px), 560px)', flexShrink: 0 }}>
+                  {/* Course image */}
+                  {c.image ? (
+                    <div style={{ height: '220px', background: `url(${c.image}) center/cover no-repeat` }} />
+                  ) : (
+                    <div style={{ height: '160px', background: `linear-gradient(135deg, ${C.navy}, ${C.coral})`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 9L12 22L22 9L12 2Z" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" strokeLinejoin="round"/></svg>
+                    </div>
+                  )}
+                  <div style={{ padding: '28px' }}>
+                    <div style={{ display: 'inline-block', background: C.coral, color: 'white', padding: '4px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 700, letterSpacing: '1px', marginBottom: '14px' }}>COMING SOON</div>
+                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(22px,2.5vw,28px)', fontWeight: 400, color: C.navy, marginBottom: '6px' }}>{c.title}</h3>
+                    {c.subtitle && <p style={{ color: C.coral, fontSize: '13px', fontWeight: 600, marginBottom: '14px' }}>{c.subtitle}</p>}
+                    <p style={{ color: '#4b5563', fontSize: '15px', lineHeight: 1.8, marginBottom: '20px' }}>{c.description}</p>
+                    <div style={{ padding: '12px 16px', background: C.light, borderRadius: '8px', fontSize: '13px', color: '#6b7280' }}>
+                      Join our newsletter to be notified when this course launches.
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* DIAMOND PRECISION SECTION */}
-      <section style={{ background: C.navy }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-          <div style={{ background: C.coral, padding: '80px 60px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <p style={{ color: 'white', fontSize: '16px', lineHeight: 1.8, marginBottom: '24px' }}>Master the science behind diamond measurement, cut efficiency, and valuation logic that determines a diamond's true market value.</p>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(40px,4vw,64px)', fontWeight: 400, color: C.navy, lineHeight: 1.1 }}>Diamond<br />Precision</h2>
-            <div style={{ marginTop: '24px', display: 'inline-block', background: 'rgba(44,62,80,0.2)', color: 'white', padding: '6px 16px', borderRadius: '20px', fontSize: '12px', fontWeight: 700, letterSpacing: '2px', width: 'fit-content' }}>COMING SOON</div>
-          </div>
-          <div style={{ background: `url(https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80) center/cover no-repeat`, minHeight: '400px' }} />
-        </div>
-        <style>{`@media(max-width:768px){section div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr;}}`}</style>
-      </section>
+        </section>
+      )}
+      {/* DIAMOND SHAPES CAROUSEL */}
+      <DiamondShapesCarousel C={C} />
 
       {/* NEWSLETTER — DIAMOND DIGEST */}
       <section style={{ background: C.navy, padding: '80px 0' }}>

@@ -36,6 +36,8 @@ app.use('/api/admin', require('./routes/admin'));
 app.use('/api/upload', require('./routes/upload'));
 app.use('/api/leads', require('./routes/leads'));
 app.use('/api/resources', require('./routes/resources'));
+app.use('/api/blogs', require('./routes/blogs'));
+app.use('/api/comingsoon', require('./routes/comingsoon'));
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'OK', timestamp: new Date() }));

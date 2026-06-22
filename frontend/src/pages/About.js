@@ -109,6 +109,29 @@ export function About() {
         </div>
       </section>
 
+      {/* INDUSTRY ENGAGEMENT PHOTO */}
+      <section className="section" style={{ background: 'white' }}>
+        <div className="container">
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, color: C.navy, marginBottom: '40px', textAlign: 'center' }}>Industry Engagement</h2>
+          <div style={{ borderRadius: '12px', overflow: 'hidden', maxHeight: '500px' }}>
+            <img
+              src="/industry.webp"
+              alt="Industry Engagement"
+              style={{ width: '100%', height: '500px', objectFit: 'cover', display: 'block' }}
+              onError={e => {
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'flex';
+              }}
+            />
+            {/* Fallback */}
+            <div style={{ display: 'none', height: '300px', background: C.light, alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '12px', borderRadius: '12px' }}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15L16 10L5 21"/></svg>
+              <p style={{ color: '#9ca3af', fontSize: '14px' }}>Place industry.webp in the public folder</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* TIMELINE */}
       <section className="section" style={{ background: C.navy, color: 'white' }}>
         <div className="container" style={{ maxWidth: '800px' }}>

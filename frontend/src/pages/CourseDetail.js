@@ -141,11 +141,11 @@ export default function CourseDetail() {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {[
-                    ['📚', 'Level', course.level],
+                    ['', 'Level', course.level],
                     ['🎯', 'Sessions', course.totalSessions ? `${course.totalSessions} live sessions` : 'TBD'],
-                    ['💻', 'Format', 'Online via Zoom'],
-                    ['🌍', 'Language', 'English'],
-                    ['⏱️', 'Access', 'Lifetime recordings'],
+                    ['', 'Format', 'Online via Zoom'],
+                    ['', 'Language', 'English'],
+                    ['⏱️', 'Duration', '5 hours'],
                   ].map(([icon, label, value]) => (
                     <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid #e5e7eb' }}>
                       <span style={{ color: '#6b7280', fontSize: '13px' }}>{icon} {label}</span>

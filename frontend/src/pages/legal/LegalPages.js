@@ -26,7 +26,7 @@ export function Terms() {
             <P>Welcome to American Diamond Academy ("ADA", "we", "us", or "our"). By accessing or purchasing from our website americandiamondacademy.com, you agree to be bound by these Terms and Conditions. Please read them carefully before enrolling in any course.</P>
 
             <Section title="1. Acceptance of Terms">
-              <P>By registering for an account or purchasing a course, you confirm that you are at least 18 years of age and agree to these Terms and Conditions in full. If you do not agree, please do not use our services.</P>
+              <P>By registering for an account or purchasing a course, you agree to these Terms and Conditions in full. Our courses are open to learners of all ages. Please note that payment processing via Stripe requires the use of a valid credit or debit card. Credit card holders must meet the minimum age requirements set by their card issuer and applicable law in their jurisdiction. If you do not agree to these Terms, please do not use our services.</P>
             </Section>
 
             <Section title="2. Course Access & Delivery">
@@ -98,48 +98,34 @@ export function RefundPolicy() {
         <div className="container" style={{ maxWidth: '860px' }}>
           <div style={{ background: 'white', borderRadius: '12px', padding: '48px', boxShadow: '0 2px 10px rgba(0,0,0,0.06)' }}>
 
-            <P>At American Diamond Academy, we are committed to providing high-quality diamond education. Please read our refund policy carefully before making a purchase.</P>
+            <P>At American Diamond Academy, we are committed to delivering a high-quality learning experience. Please read our refund policy carefully before making a purchase.</P>
 
-            <Section title="7-Day Satisfaction Guarantee">
-              <P>We offer a 7-day refund window from the date of purchase. If you are not satisfied with your course for any reason, you may request a full refund within 7 days of your purchase date, provided that:</P>
+            <Section title="All Sales Are Final">
+              <P>All course purchases are final and non-refundable. Once you have completed your purchase and received access to your course materials and session details, we do not offer refunds or exchanges.</P>
+              <P>We encourage you to review all course details, descriptions, and FAQs carefully before enrolling. If you have any questions prior to purchasing, please contact us at jaswani@angeldiamondinc.com or via WhatsApp at +1 (437) 269-7007.</P>
+            </Section>
+
+            <Section title="One-Time Session Change">
+              <P>We understand that scheduling conflicts can arise. As a courtesy, we offer one (1) complimentary session change per enrollment. This means:</P>
               <ul style={{ paddingLeft: '20px', marginBottom: '12px' }}>
-                <Li>You have not attended more than one (1) live Zoom session.</Li>
-                <Li>You have not downloaded or saved any course materials.</Li>
-                <Li>Your refund request is submitted in writing to jaswani@angeldiamondinc.com within 7 days of purchase.</Li>
+                <Li>You may request to move your registered session to a different available date of the same course, at no additional charge.</Li>
+                <Li>This session change must be requested at least 48 hours before your scheduled session date.</Li>
+                <Li>Only one session change is permitted per course enrollment.</Li>
+                <Li>Session changes are subject to availability.</Li>
               </ul>
+              <P>To request a session change, please contact us at jaswani@angeldiamondinc.com or WhatsApp +1 (437) 269-7007 with your name, course, and preferred new date.</P>
             </Section>
 
-            <Section title="Non-Refundable Circumstances">
-              <P>Refunds will NOT be issued in the following cases:</P>
-              <ul style={{ paddingLeft: '20px', marginBottom: '12px' }}>
-                <Li>More than 7 days have passed since your purchase date.</Li>
-                <Li>You have attended more than one live session.</Li>
-                <Li>You have accessed, downloaded, or distributed course materials.</Li>
-                <Li>The refund request is due to a change of mind after extensive course access.</Li>
-                <Li>Failure to attend scheduled sessions does not qualify for a refund.</Li>
-              </ul>
+            <Section title="Session Cancellation by ADA">
+              <P>In the rare event that American Diamond Academy must cancel a scheduled session due to unforeseen circumstances, enrolled students will be offered a seat in the next available session of the same course at no additional charge.</P>
             </Section>
 
-            <Section title="Session Rescheduling">
-              <P>ADA reserves the right to reschedule sessions due to instructor illness, technical difficulties, or unforeseen circumstances. Rescheduling does not qualify as grounds for a refund. We will make every effort to provide advance notice and offer alternative session dates.</P>
-            </Section>
-
-            <Section title="How to Request a Refund">
-              <P>To request a refund, please contact us within 7 days of your purchase:</P>
+            <Section title="Contact Us">
+              <P>For any questions regarding this policy, please contact us before making your purchase:</P>
               <ul style={{ paddingLeft: '20px', marginBottom: '12px' }}>
                 <Li>Email: jaswani@angeldiamondinc.com</Li>
                 <Li>WhatsApp: +1 (437) 269-7007</Li>
-                <Li>Include your full name, email address, course name, and reason for the refund request.</Li>
               </ul>
-              <P>Approved refunds will be processed within 5–10 business days to your original payment method via Stripe.</P>
-            </Section>
-
-            <Section title="Chargebacks">
-              <P>If you initiate a chargeback with your bank or credit card provider without first contacting ADA, we reserve the right to dispute the chargeback and suspend your account access pending resolution.</P>
-            </Section>
-
-            <Section title="Contact">
-              <P>Questions about our refund policy? Contact us at jaswani@angeldiamondinc.com or WhatsApp +1 (437) 269-7007.</P>
             </Section>
 
           </div>

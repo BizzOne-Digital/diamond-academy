@@ -36,6 +36,7 @@ export default function Navbar() {
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
     { href: '/resources', label: 'Resources' },
+    { href: '/blog', label: 'Blog' },
     { href: '/faq', label: 'FAQ' },
   ];
 

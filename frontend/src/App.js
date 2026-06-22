@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Education from './pages/Education';
 import CourseDetail from './pages/CourseDetail';
 import Resources from './pages/Resources';
+import { Blog, BlogPost } from './pages/Blog';
 import { About } from './pages/About';
 import { Contact } from './pages/About';
 import { FAQ } from './pages/About';
@@ -29,6 +30,8 @@ import AdminUsers from './pages/admin/AdminUsers';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminLeads from './pages/admin/AdminLeads';
 import AdminResources from './pages/admin/AdminResources';
+import AdminBlog, { AdminBlogForm } from './pages/admin/AdminBlog';
+import AdminComingSoon from './pages/admin/AdminComingSoon';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -56,6 +59,10 @@ export default function App() {
         <Route path="orders" element={<AdminOrders />} />
         <Route path="leads" element={<AdminLeads />} />
         <Route path="resources" element={<AdminResources />} />
+        <Route path="blog" element={<AdminBlog />} />
+        <Route path="blog/new" element={<AdminBlogForm />} />
+        <Route path="blog/edit/:id" element={<AdminBlogForm />} />
+        <Route path="comingsoon" element={<AdminComingSoon />} />
       </Route>
 
       <Route path="*" element={
@@ -68,6 +75,8 @@ export default function App() {
               <Route path="/education" element={<Education />} />
               <Route path="/education/:slug" element={<CourseDetail />} />
               <Route path="/resources" element={<Resources />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/faq" element={<FAQ />} />
