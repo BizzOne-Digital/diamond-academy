@@ -9,6 +9,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Education from './pages/Education';
 import CourseDetail from './pages/CourseDetail';
+import Resources from './pages/Resources';
 import { About } from './pages/About';
 import { Contact } from './pages/About';
 import { FAQ } from './pages/About';
@@ -16,6 +17,9 @@ import { PaymentSuccess } from './pages/About';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import { Terms } from './pages/legal/LegalPages';
+import { RefundPolicy } from './pages/legal/LegalPages';
+import { PrivacyPolicy } from './pages/legal/LegalPages';
 
 import AdminLayout from './pages/admin/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -24,6 +28,7 @@ import AdminCourseForm from './pages/admin/AdminCourseForm';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminLeads from './pages/admin/AdminLeads';
+import AdminResources from './pages/admin/AdminResources';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -50,6 +55,7 @@ export default function App() {
         <Route path="users" element={<AdminUsers />} />
         <Route path="orders" element={<AdminOrders />} />
         <Route path="leads" element={<AdminLeads />} />
+        <Route path="resources" element={<AdminResources />} />
       </Route>
 
       <Route path="*" element={
@@ -61,9 +67,13 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/education" element={<Education />} />
               <Route path="/education/:slug" element={<CourseDetail />} />
+              <Route path="/resources" element={<Resources />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/faq" element={<FAQ />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/refund-policy" element={<RefundPolicy />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/payment/success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />

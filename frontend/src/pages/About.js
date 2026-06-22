@@ -55,9 +55,9 @@ export function About() {
 
             <div>
               <blockquote style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(20px,2.5vw,26px)', color: C.navy, lineHeight: 1.5, fontStyle: 'italic', marginBottom: '32px', borderLeft: `4px solid ${C.coral}`, paddingLeft: '24px' }}>
-                "Canadian Diamond Academy reimagines diamond learning with an online experience built for the industry's next era."
+                "American Diamond Academy reimagines diamond learning with an online experience built for the industry's next era."
               </blockquote>
-              <p style={{ color: '#4b5563', lineHeight: 1.9, marginBottom: '16px', fontSize: '16px' }}>Where classroom learning stops at theory, CDA teaches diamond grading through advanced 360° visuals that mirror how diamonds are actually bought, sold, and evaluated in today's digital marketplace.</p>
+              <p style={{ color: '#4b5563', lineHeight: 1.9, marginBottom: '16px', fontSize: '16px' }}>Where classroom learning stops at theory, ADA teaches diamond grading through advanced 360° visuals that mirror how diamonds are actually bought, sold, and evaluated in today's digital marketplace.</p>
               <p style={{ color: '#4b5563', lineHeight: 1.9, marginBottom: '16px', fontSize: '16px' }}>At the helm is Archana Jaswani, a credentialed gemmologist, certified appraiser, and respected industry educator. Her background combines formal gemmological training with over two decades of global business leadership across Dubai, Guangzhou, Seoul, Mumbai, and Toronto.</p>
               <p style={{ color: '#4b5563', lineHeight: 1.9, fontSize: '16px' }}>She holds multiple professional designations including graduating with Honours in Gemmology, receiving the Dean's Medal and the Sarah & Arthur Frankel Award, and completing the GIA's laboratory training. As Director of Communications for the Canadian Gemmological Association, Archana stays closely connected to the gem community.</p>
             </div>
@@ -248,14 +248,46 @@ export function Contact() {
 // ---------- FAQ PAGE ----------
 export function FAQ() {
   const faqs = [
-    { q: 'What courses does American Diamond Academy offer?', a: 'We offer Diamond Grading: Fundamentals ($399), Diamond Grading: Intelligence ($699), and Diamond Precision (coming soon). Each builds on the previous level.' },
-    { q: 'Do I need prior diamond knowledge?', a: 'Diamond Fundamentals is designed for beginners. Intermediate and advanced courses require completion of the prior level.' },
-    { q: 'How are classes delivered?', a: 'All courses are delivered online via Zoom with live weekly sessions plus recordings for enrolled students.' },
-    { q: 'Who teaches the courses?', a: 'Courses are led by Archana Jaswani (FCGmA, PJA, CPAA), a certified gemmologist and appraiser with over two decades of global industry experience.' },
-    { q: 'How do I pay?', a: 'Payments are processed securely via Stripe. We accept all major credit and debit cards.' },
-    { q: 'Can session dates be changed?', a: 'Yes — the academy updates Zoom session dates through the admin dashboard anytime. Enrolled students see the current schedule in their dashboard.' },
-    { q: 'Will I receive a certificate?', a: 'Yes, upon successful completion you receive an Academy certificate from American Diamond Academy.' },
-    { q: 'How do I enroll?', a: "Click Enroll Now on any course page, create an account, and complete payment via Stripe. You'll immediately gain access to session details." },
+    {
+      q: 'What is the format of the courses?',
+      a: 'All ADA courses are delivered online. Course content includes video lessons, visual examples, and reference materials that you can access at your own pace. Select courses also include live Q&A sessions.'
+    },
+    {
+      q: 'Do I need any special equipment or tools to take these courses?',
+      a: 'No special equipment is required. You will need a computer, tablet, or smartphone with internet access and a web browser. Some courses may recommend optional tools for practice, which we make available through our store.'
+    },
+    {
+      q: 'Are these courses accredited?',
+      a: 'ADA courses are not accredited by a gemological institution such as the GIA or CGA. They are designed as practical, skills-based learning programs focused on real-world application — specifically visual evaluation in digital environments. Completion certificates are issued by American Diamond Academy.'
+    },
+    {
+      q: 'Who are these courses designed for?',
+      a: 'Our courses are designed for buyers, sellers, jewelry professionals, enthusiasts, and anyone working in or entering the diamond trade who wants to build visual evaluation skills relevant to today’s online marketplace.'
+    },
+    {
+      q: 'What is the difference between Diamond Grading: Fundamentals and Diamond Grading: Intelligence?',
+      a: 'Diamond Grading: Fundamentals introduces the core concepts of how diamonds are visually assessed beyond certificates — focusing on light performance, structure, and the 4Cs as they apply in real buying and selling situations. Diamond Grading: Intelligence is designed for those who already understand the fundamentals and want to build speed, consistency, and confidence in applying those skills in a digital trade environment.'
+    },
+    {
+      q: 'Can I take Diamond Grading: Intelligence without completing Fundamentals first?',
+      a: 'We strongly recommend completing Diamond Grading: Fundamentals before enrolling in Intelligence. The Intelligence course assumes a working knowledge of the content covered in Fundamentals.'
+    },
+    {
+      q: 'How long do I have access to the course after purchasing?',
+      a: 'Once enrolled, you have ongoing access to your course materials. We do not set an expiry date on course access.'
+    },
+    {
+      q: 'What is your refund policy?',
+      a: 'We offer a 7-day satisfaction guarantee. If you are not satisfied within 7 days of purchase and have attended no more than one live session, you may request a full refund. Please see our Refund Policy page for full details.'
+    },
+    {
+      q: 'Do you offer payment plans?',
+      a: 'At this time, we accept full payment at the time of enrollment. All payments are processed securely through Stripe.'
+    },
+    {
+      q: 'I have more questions. How can I reach you?',
+      a: 'You can contact us through our Contact page, by email at jaswani@angeldiamondinc.com, or via WhatsApp at +1 (437) 269-7007. We are happy to help.'
+    },
   ];
 
   return (

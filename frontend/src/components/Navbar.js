@@ -32,9 +32,10 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '/', label: 'Home' },
-    { href: '/education', label: 'Courses' },
+    { href: '/education', label: 'Education' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
+    { href: '/resources', label: 'Resources' },
     { href: '/faq', label: 'FAQ' },
   ];
 

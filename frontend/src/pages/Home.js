@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { GraduationSVG, DiamondSVG, BoltSVG } from '../components/Icons';
+import { GraduationSVG, DiamondSVG, BoltSVG, EmailSVG } from '../components/Icons';
+import toast from 'react-hot-toast';
 import api from '../utils/api';
 
 export default function Home() {
   const [courses, setCourses] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [newsletter, setNewsletter] = useState({ name: '', email: '' });
+  const [subscribing, setSubscribing] = useState(false);
   const C = { navy: '#2C3E50', coral: '#E8835A', light: '#E8F6F8' };
 
   useEffect(() => {
@@ -17,154 +20,72 @@ export default function Home() {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
+  const heroBg = isMobile ? '/bg1.png' : '/bg.png';
+
+  const handleNewsletter = async (e) => {
+    e.preventDefault();
+    if (!newsletter.email) { toast.error('Please enter your email'); return; }
+    setSubscribing(true);
+    try {
+      await api.post('/leads', { name: newsletter.name || 'Newsletter Subscriber', email: newsletter.email, subject: 'Diamond Digest Newsletter', message: 'Newsletter subscription request.' });
+      toast.success('You are subscribed to Diamond Digest!');
+      setNewsletter({ name: '', email: '' });
+    } catch { toast.error('Subscription failed. Please try again.'); }
+    finally { setSubscribing(false); }
+  };
+
   const features = [
     { Icon: GraduationSVG, title: 'Certified Expertise', desc: 'Certified gemologist translating technical gem knowledge into clear, practical buying insight.' },
     { Icon: DiamondSVG, title: 'Street-Smart Clarity', desc: 'Learn how professionals read diamonds quickly and spot real value in the market.' },
     { Icon: BoltSVG, title: 'Fast Impact Learning', desc: 'Short, focused training built for immediate real-world application.' },
   ];
 
-  // Desktop = bg.png, Mobile = bg1.png
-  const heroBg = isMobile ? '/bg1.png' : '/bg.png';
+  const comingSoon = [
+    { title: 'Diamond Precision', subtitle: 'Applied Diamond Measurement & Valuation', desc: 'Master the science behind diamond measurement, cut efficiency, and valuation logic that determines a diamond\'s true market value.' },
+    { title: 'Diamond Fancy Shapes', subtitle: 'Visual Evaluation', desc: 'Develop expert visual evaluation skills for fancy-shaped diamonds — from pear and oval to marquise, cushion, and beyond.' },
+  ];
 
   return (
     <>
       <Helmet><title>American Diamond Academy | Online Diamond Grading Courses</title></Helmet>
 
-    {/* HERO */}
-<section
-  style={{
-    position: 'relative',
-    background: C.navy,
-    minHeight: '85vh',
-    display: 'flex',
-    alignItems: 'center',
-    overflow: 'hidden',
-  }}
->
-  <div
-    style={{
-      position: 'absolute',
-      inset: 0,
-      backgroundImage: `url(${heroBg})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      opacity: 0.2,
-    }}
-  />
-
-  <div
-    className="container"
-    style={{
-      position: 'relative',
-      zIndex: 1,
-      padding: '80px 20px',
-      display: 'flex',
-      justifyContent: 'center',
-      textAlign: 'center',
-    }}
-  >
-    <div
-      style={{
-        maxWidth: '720px',
-        width: '100%',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '12px',
-          marginBottom: '24px',
-        }}
-      >
-        <div
-          style={{
-            height: '1px',
-            width: '40px',
-            background: C.coral,
-          }}
-        />
-
-        <span
-          style={{
-            color: C.coral,
-            fontSize: '13px',
-            fontWeight: 600,
-            textTransform: 'uppercase',
-            letterSpacing: '3px',
-          }}
-        >
-          American Diamond Academy
-        </span>
-
-        <div
-          style={{
-            height: '1px',
-            width: '40px',
-            background: C.coral,
-          }}
-        />
-      </div>
-
-      <h1
-        style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: 'clamp(40px, 6vw, 68px)',
-          fontWeight: 400,
-          color: 'white',
-          lineHeight: 1.1,
-          marginBottom: '24px',
-          textAlign: 'center',
-        }}
-      >
-        Diamond Learning,
-        <br />
-        <em>Reimagined.</em>
-      </h1>
-
-      <p
-        style={{
-          color: 'rgba(255,255,255,0.8)',
-          fontSize: '18px',
-          lineHeight: 1.8,
-          marginBottom: '40px',
-          maxWidth: '600px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        }}
-      >
-        Diamonds are more than grades they&apos;re light, structure, and
-        brilliance. Learn to evaluate diamonds confidently, even without
-        holding them in your hand.
-      </p>
-
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '16px',
-          flexWrap: 'wrap',
-        }}
-      >
-        <Link to="/education" className="btn btn-primary btn-lg">
-          Explore Courses
-        </Link>
-
-        <Link to="/about" className="btn btn-outline-white btn-lg">
-          Learn More
-        </Link>
-      </div>
-    </div>
-  </div>
-</section>
+      {/* HERO */}
+      <section style={{ position: 'relative', background: C.navy, minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${heroBg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.2 }} />
+        {/* Dark overlay */}
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(44,62,80,0.55)' }} />
+        <div className="container" style={{ position: 'relative', zIndex: 1, padding: '80px 20px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          {/* Badge */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px', justifyContent: 'center' }}>
+            <div style={{ height: '1px', width: '40px', background: C.coral }} />
+            <span style={{ color: C.coral, fontSize: '13px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '3px' }}>American Diamond Academy</span>
+            <div style={{ height: '1px', width: '40px', background: C.coral }} />
+          </div>
+          {/* Heading */}
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(40px, 6vw, 72px)', fontWeight: 400, color: 'white', lineHeight: 1.1, marginBottom: '28px', maxWidth: '860px' }}>
+            Diamond Learning,<br /><em>Reimagined.</em>
+          </h1>
+          {/* Subtext */}
+          <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '18px', lineHeight: 1.85, marginBottom: '16px', maxWidth: '680px' }}>
+            Diamonds are more than grades — they&apos;re light, structure, and brilliance.
+          </p>
+          <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '16px', lineHeight: 1.8, marginBottom: '48px', maxWidth: '640px' }}>
+            The American Diamond Academy teaches the visual skills and judgment today&apos;s digital marketplace demands — so you can evaluate diamonds confidently, even without holding them in your hand. Whether you&apos;re a buyer, seller, or enthusiast, you&apos;ll gain clarity and a skill that lasts a lifetime.
+          </p>
+          {/* Buttons */}
+          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Link to="/education" className="btn btn-primary btn-lg">Explore Courses</Link>
+            <Link to="/about" className="btn btn-outline-white btn-lg">Learn More</Link>
+            <Link to="/contact" className="btn btn-outline-white btn-lg">Contact Us</Link>
+          </div>
+        </div>
+      </section>
 
       {/* REIMAGINED */}
       <section style={{ background: C.light, padding: '80px 0' }}>
         <div className="container" style={{ maxWidth: '900px', textAlign: 'center' }}>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(32px,4vw,52px)', fontWeight: 400, color: C.navy, marginBottom: '24px' }}>Diamond Learning, Reimagined.</h2>
-          <p style={{ color: '#4b5563', fontSize: '17px', lineHeight: 1.9 }}>Diamonds are more than grades—they&apos;re light, structure, and brilliance. As the trade shifts from physical counters to virtual screens, the way we learn must evolve too. The American Diamond Academy teaches the visual skills and judgment today&apos;s digital marketplace demands.</p>
+          <p style={{ color: '#4b5563', fontSize: '17px', lineHeight: 1.9 }}>Diamonds are more than grades—they're light, structure, and brilliance. As the trade shifts from physical counters to virtual screens, the way we learn must evolve too. The American Diamond Academy teaches the visual skills and judgment today's digital marketplace demands.</p>
         </div>
       </section>
 
@@ -185,7 +106,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* COURSES */}
+      {/* ACTIVE COURSES */}
       {courses.length > 0 && (
         <section className="section" style={{ background: 'white' }}>
           <div className="container">
@@ -217,23 +138,83 @@ export default function Home() {
         </section>
       )}
 
-      {/* PRECISION */}
+      {/* COMING SOON COURSES */}
+      <section className="section" style={{ background: C.light }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <div style={{ display: 'inline-block', background: C.coral, color: 'white', padding: '6px 20px', borderRadius: '20px', fontSize: '13px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '20px' }}>Coming Soon</div>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,42px)', fontWeight: 400, color: C.navy }}>Upcoming Programs</h2>
+          </div>
+          <div className="grid-2">
+            {comingSoon.map(c => (
+              <div key={c.title} style={{ background: 'white', borderRadius: '12px', padding: '36px', border: `1px solid #e5e7eb`, position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: '20px', right: '20px', background: C.coral, color: 'white', padding: '4px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 700, letterSpacing: '1px' }}>COMING SOON</div>
+                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '26px', fontWeight: 400, color: C.navy, marginBottom: '6px' }}>{c.title}</h3>
+                <p style={{ color: C.coral, fontSize: '13px', fontWeight: 600, marginBottom: '16px' }}>{c.subtitle}</p>
+                <p style={{ color: '#4b5563', fontSize: '15px', lineHeight: 1.8 }}>{c.desc}</p>
+                <div style={{ marginTop: '24px', padding: '12px 16px', background: C.light, borderRadius: '8px', fontSize: '13px', color: '#6b7280' }}>
+                  Join our newsletter to be notified when this course launches.
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DIAMOND PRECISION SECTION */}
       <section style={{ background: C.navy }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
           <div style={{ background: C.coral, padding: '80px 60px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <p style={{ color: 'white', fontSize: '16px', lineHeight: 1.8, marginBottom: '24px' }}>Master the science behind diamond measurement, cut efficiency, and valuation logic that determines a diamond&apos;s true market value.</p>
+            <p style={{ color: 'white', fontSize: '16px', lineHeight: 1.8, marginBottom: '24px' }}>Master the science behind diamond measurement, cut efficiency, and valuation logic that determines a diamond's true market value.</p>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(40px,4vw,64px)', fontWeight: 400, color: C.navy, lineHeight: 1.1 }}>Diamond<br />Precision</h2>
+            <div style={{ marginTop: '24px', display: 'inline-block', background: 'rgba(44,62,80,0.2)', color: 'white', padding: '6px 16px', borderRadius: '20px', fontSize: '12px', fontWeight: 700, letterSpacing: '2px', width: 'fit-content' }}>COMING SOON</div>
           </div>
           <div style={{ background: `url(https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80) center/cover no-repeat`, minHeight: '400px' }} />
         </div>
         <style>{`@media(max-width:768px){section div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr;}}`}</style>
       </section>
 
+      {/* NEWSLETTER — DIAMOND DIGEST */}
+      <section style={{ background: C.navy, padding: '80px 0' }}>
+        <div className="container" style={{ maxWidth: '640px', textAlign: 'center' }}>
+          <div style={{ width: '56px', height: '56px', background: 'rgba(232,131,90,0.15)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+            <EmailSVG size={26} color={C.coral} />
+          </div>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,40px)', fontWeight: 400, color: 'white', marginBottom: '12px' }}>Diamond Digest</h2>
+          <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '16px', lineHeight: 1.8, marginBottom: '36px' }}>
+            Stay ahead in the diamond world. Subscribe to our newsletter for industry insights, grading tips, new course announcements, and exclusive offers.
+          </p>
+          <form onSubmit={handleNewsletter} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <input
+              type="text"
+              placeholder="Your name (optional)"
+              value={newsletter.name}
+              onChange={e => setNewsletter({ ...newsletter, name: e.target.value })}
+              style={{ padding: '14px 20px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '15px', fontFamily: 'Inter, sans-serif', outline: 'none', width: '100%' }}
+            />
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <input
+                type="email"
+                placeholder="Your email address *"
+                value={newsletter.email}
+                onChange={e => setNewsletter({ ...newsletter, email: e.target.value })}
+                required
+                style={{ flex: 1, padding: '14px 20px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '15px', fontFamily: 'Inter, sans-serif', outline: 'none', minWidth: '200px' }}
+              />
+              <button type="submit" disabled={subscribing} className="btn btn-primary" style={{ padding: '14px 28px', opacity: subscribing ? 0.7 : 1, whiteSpace: 'nowrap' }}>
+                {subscribing ? 'Subscribing...' : 'Subscribe'}
+              </button>
+            </div>
+          </form>
+          <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '12px', marginTop: '16px' }}>No spam. Unsubscribe anytime.</p>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="section" style={{ background: C.light, textAlign: 'center' }}>
         <div className="container">
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,42px)', fontWeight: 400, color: C.navy, marginBottom: '20px' }}>Start Your Diamond Education Today</h2>
-          <p style={{ color: '#6b7280', maxWidth: '560px', margin: '0 auto 32px', lineHeight: 1.8 }}>Join students learning to evaluate diamonds with confidence in today&apos;s digital marketplace.</p>
+          <p style={{ color: '#6b7280', maxWidth: '560px', margin: '0 auto 32px', lineHeight: 1.8 }}>Join students learning to evaluate diamonds with confidence in today's digital marketplace.</p>
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link to="/register" className="btn btn-primary btn-lg">Enroll Now</Link>
             <Link to="/contact" className="btn btn-navy btn-lg">Contact Us</Link>
