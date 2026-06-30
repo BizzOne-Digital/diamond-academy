@@ -9,7 +9,7 @@ export function Login() {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
-  const C = { navy: '#2C3E50', coral: '#E8835A', light: '#E8F6F8' };
+  const C = { navy: '#1B2B4B', coral: '#E8835A', light: '#EAF0F8' };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,7 +60,7 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
-  const C = { navy: '#2C3E50', coral: '#E8835A', light: '#E8F6F8' };
+  const C = { navy: '#1B2B4B', coral: '#E8835A', light: '#EAF0F8' };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

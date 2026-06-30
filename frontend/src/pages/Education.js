@@ -12,12 +12,12 @@ function ComingSoonSection({ C }) {
     api.get('/comingsoon').then(r => {
       if (r.data.items?.length) setItems(r.data.items);
       else setItems([
-        { _id: '1', title: 'Diamond Precision', subtitle: 'Applied Diamond Measurement & Valuation', description: 'This masterclass integrates advanced diamond grading knowledge with the quantitative tools used in real-world diamond evaluation and pricing. Building on Cut, Colour, Clarity, and Carat interpretation, the course introduces key analytical frameworks including proportion analysis, carat weight estimation logic, and value impact assessments based on cut performance and light efficiency.', image: 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80' },
+        { _id: '1', title: 'Diamond Precision', subtitle: 'Applied Diamond Measurement & Valuation', description: 'This masterclass integrates advanced diamond grading knowledge with the quantitative tools used in real-world diamond evaluation and pricing. Building on Cut, Colour, Clarity, and Carat interpretation, the course introduces key analytical frameworks including proportion analysis, carat weight estimation logic, and value impact assessments based on cut performance and light efficiency. You will also explore advanced evaluation models for fancy-cut diamonds, along with an introduction to fancy colour grading considerations and how structure influences perceived value. A core component of the program focuses on how grading outcomes influence market pricing, including value adjustments tied to cut quality, proportion efficiency, and trade benchmarks similar to Rapaport-style pricing structures. Designed as the final stage of the Diamond Intelligence framework, this course moves beyond visual interpretation into structured calculation — connecting how a diamond looks with how it is measured, compared, and valued in the global trade. Pre-requisite: Diamond Intelligence', image: 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80' },
         { _id: '2', title: 'Diamond Fancy Shapes', subtitle: 'Visual Evaluation', description: 'Develop expert visual evaluation skills for fancy-shaped diamonds — from pear and oval to marquise, cushion, and beyond. Learn how to assess cut quality, symmetry, and light performance across the full range of fancy shapes in today’s digital marketplace.', image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80' },
       ]);
     }).catch(() => {
       setItems([
-        { _id: '1', title: 'Diamond Precision', subtitle: 'Applied Diamond Measurement & Valuation', description: 'This masterclass integrates advanced diamond grading knowledge with the quantitative tools used in real-world diamond evaluation and pricing.', image: 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80' },
+        { _id: '1', title: 'Diamond Precision', subtitle: 'Applied Diamond Measurement & Valuation', description: 'This masterclass integrates advanced diamond grading knowledge with the quantitative tools used in real-world diamond evaluation and pricing. Building on Cut, Colour, Clarity, and Carat interpretation, the course introduces key analytical frameworks including proportion analysis, carat weight estimation logic, and value impact assessments based on cut performance and light efficiency. Designed as the final stage of the Diamond Intelligence framework. Pre-requisite: Diamond Intelligence', image: 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80' },
         { _id: '2', title: 'Diamond Fancy Shapes', subtitle: 'Visual Evaluation', description: 'Develop expert visual evaluation skills for fancy-shaped diamonds — from pear and oval to marquise, cushion, and beyond.', image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80' },
       ]);
     });
@@ -67,7 +67,7 @@ export default function Education() {
     api.get('/courses').then(r => setCourses(r.data.courses || [])).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
-  const C = { navy: '#2C3E50', coral: '#E8835A', light: '#E8F6F8' };
+  const C = { navy: '#1B2B4B', coral: '#E8835A', light: '#EAF0F8' };
 
   return (
     <>
@@ -76,23 +76,17 @@ export default function Education() {
       <div className="page-hero">
         <div className="container">
           <h1>American Diamond Academy</h1>
-          <p>Expert-led online courses in diamond grading and gemology</p>
+          <p>Expert-led online courses in diamond grading</p>
         </div>
       </div>
 
-      {/* Intro */}
-      <section className="section" style={{ background: 'white' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px', alignItems: 'center' }}>
-            <div style={{ borderRadius: '8px', overflow: 'hidden', aspectRatio: '4/3' }}>
-              <img src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80" alt="Diamond Grading" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
-            <div>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,42px)', fontWeight: 400, color: C.navy, marginBottom: '20px', lineHeight: 1.2 }}>Learning beyond the 4 Cs</h2>
-              <p style={{ color: '#4b5563', fontSize: '16px', lineHeight: 1.9 }}>Stop relying on certificates alone—learn how diamonds are truly assessed through light, structure, and visual intelligence. We teach you what you were never taught to see.</p>
-            </div>
-          </div>
-          <style>{`@media(max-width:768px){div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr;}}`}</style>
+      {/* Intro — full-width image with overlay text */}
+      <section style={{ position: 'relative', width: '100%', minHeight: '420px', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=1600&q=80)`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(27,43,75,0.72)' }} />
+        <div className="container" style={{ position: 'relative', zIndex: 1, padding: '80px 40px', maxWidth: '860px' }}>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(32px,4vw,52px)', fontWeight: 400, color: 'white', marginBottom: '20px', lineHeight: 1.2 }}>Learning beyond the 4 Cs</h2>
+          <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '17px', lineHeight: 1.9, maxWidth: '640px' }}>Stop relying on certificates alone—learn how diamonds are truly assessed through light, structure, and visual intelligence. We teach you what you were never taught to see.</p>
         </div>
       </section>
 
@@ -132,13 +126,16 @@ export default function Education() {
         
       </section>
 
-      {/* Coming Soon */}
+      {/* Coming Soon Ticker */}
       <section style={{ background: C.coral, padding: '16px 0', overflow: 'hidden' }}>
         <div style={{ display: 'flex', gap: '48px', animation: 'marquee 20s linear infinite', whiteSpace: 'nowrap', width: 'max-content' }}>
           {Array.from({ length: 12 }).map((_, i) => <span key={i} style={{ color: 'white', fontSize: '16px', fontWeight: 600, letterSpacing: '3px', textTransform: 'uppercase' }}>Coming Soon</span>)}
         </div>
         <style>{`@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`}</style>
       </section>
+
+      {/* Coming Soon Courses */}
+      <ComingSoonSection C={C} />
     </>
   );
 }

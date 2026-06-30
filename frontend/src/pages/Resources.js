@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import api from '../utils/api';
 
-const C = { navy: '#2C3E50', coral: '#E8835A', light: '#E8F6F8' };
+const C = { navy: '#1B2B4B', coral: '#E8835A', light: '#EAF0F8' };
 
 function getYouTubeId(url) {
   const match = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})/);

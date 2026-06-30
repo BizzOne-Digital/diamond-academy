@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { DiamondSVG, PhoneSVG, EmailSVG, WhatsAppSVG } from './Icons';
+import { DiamondSVG, PhoneSVG, EmailSVG, WhatsAppSVG, InstagramSVG, FacebookSVG, LinkedInSVG } from './Icons';
 import api from '../utils/api';
 
 export default function Footer() {
@@ -11,7 +11,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer style={{ background: '#1a2532', color: 'white', padding: '60px 0 0' }}>
+    <footer style={{ background: '#111e35', color: 'white', padding: '60px 0 0' }}>
       <div className="container">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '48px', marginBottom: '48px' }}>
 
@@ -32,7 +32,22 @@ export default function Footer() {
                 </div>
               </div>
             </div>
-            <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '14px', lineHeight: 1.8 }}>Online diamond grading & gemology courses for the modern digital marketplace.</p>
+            <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '14px', lineHeight: 1.8 }}>Online diamond grading courses for the modern digital marketplace.</p>
+            {/* Social Media Links */}
+            <div style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
+              <a href="https://www.instagram.com/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ width: '36px', height: '36px', background: 'rgba(255,255,255,0.08)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s' }}
+                onMouseOver={e => e.currentTarget.style.background = 'rgba(232,131,90,0.3)'} onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.08)'}>
+                <InstagramSVG size={17} color="rgba(255,255,255,0.7)" />
+              </a>
+              <a href="https://www.facebook.com/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style={{ width: '36px', height: '36px', background: 'rgba(255,255,255,0.08)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s' }}
+                onMouseOver={e => e.currentTarget.style.background = 'rgba(232,131,90,0.3)'} onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.08)'}>
+                <FacebookSVG size={17} color="rgba(255,255,255,0.7)" />
+              </a>
+              <a href="https://www.linkedin.com/company/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{ width: '36px', height: '36px', background: 'rgba(255,255,255,0.08)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s' }}
+                onMouseOver={e => e.currentTarget.style.background = 'rgba(232,131,90,0.3)'} onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.08)'}>
+                <LinkedInSVG size={17} color="rgba(255,255,255,0.7)" />
+              </a>
+            </div>
           </div>
 
           {/* Quick Links */}

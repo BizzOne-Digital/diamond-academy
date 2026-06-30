@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import api from '../../utils/api';
 
-const C = { navy: '#2C3E50', coral: '#E8835A', light: '#E8F6F8' };
+const C = { navy: '#1B2B4B', coral: '#E8835A', light: '#EAF0F8' };
 
 export default function AdminCourses() {
   const [courses, setCourses] = useState([]);

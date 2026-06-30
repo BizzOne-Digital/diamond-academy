@@ -211,6 +211,28 @@ export const CelebrationSVG = ({ size = 24, color = 'currentColor', style = {} }
   </Icon>
 );
 
+export const InstagramSVG = ({ size = 24, color = 'currentColor', style = {} }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke={color} strokeWidth="1.5"/>
+    <circle cx="12" cy="12" r="4" stroke={color} strokeWidth="1.5"/>
+    <circle cx="17.5" cy="6.5" r="1" fill={color}/>
+  </svg>
+);
+
+export const FacebookSVG = ({ size = 24, color = 'currentColor', style = {} }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
+    <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const LinkedInSVG = ({ size = 24, color = 'currentColor', style = {} }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
+    <path d="M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <rect x="2" y="9" width="4" height="12" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="4" cy="4" r="2" stroke={color} strokeWidth="1.5"/>
+  </svg>
+);
+
 export const GemSVG = ({ size = 24, color = 'currentColor', style = {} }) => (
   <Icon size={size} color={color} style={style}>
     <path d="M6 3H18L22 9L12 22L2 9L6 3Z" />

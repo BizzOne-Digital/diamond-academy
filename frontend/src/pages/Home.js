@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { GraduationSVG, DiamondSVG, BoltSVG, EmailSVG } from '../components/Icons';
+import { GraduationSVG, GemSVG, BoltSVG, EmailSVG } from '../components/Icons';
 import toast from 'react-hot-toast';
 import api from '../utils/api';
 
@@ -42,7 +42,7 @@ function DiamondShapesCarousel({ C }) {
         }} />
       ))}
       {/* Dark overlay */}
-      <div style={{ position: 'absolute', inset: 0, background: 'rgba(44,62,80,0.45)' }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(27,43,75,0.45)' }} />
       {/* Dots */}
       <div style={{ position: 'absolute', bottom: '24px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '10px', zIndex: 2 }}>
         {shapes.map((_, i) => (
@@ -62,7 +62,7 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [newsletter, setNewsletter] = useState({ name: '', email: '' });
   const [subscribing, setSubscribing] = useState(false);
-  const C = { navy: '#2C3E50', coral: '#E8835A', light: '#E8F6F8' };
+  const C = { navy: '#1B2B4B', coral: '#E8835A', light: '#EAF0F8' };
 
   useEffect(() => {
     api.get('/courses').then(r => setCourses(r.data.courses?.slice(0, 3) || [])).catch(() => {});
@@ -89,7 +89,7 @@ export default function Home() {
 
   const features = [
     { Icon: GraduationSVG, title: 'Certified Expertise', desc: 'Certified gemologist translating technical gem knowledge into clear, practical buying insight.' },
-    { Icon: DiamondSVG, title: 'Street-Smart Clarity', desc: 'Learn how professionals read diamonds quickly and spot real value in the market.' },
+    { Icon: GemSVG, title: 'Street-Smart Clarity', desc: 'Learn how professionals read diamonds quickly and spot real value in the market.' },
     { Icon: BoltSVG, title: 'Fast Impact Learning', desc: 'Short, focused training built for immediate real-world application.' },
   ];
 
@@ -99,45 +99,35 @@ export default function Home() {
     <>
       <Helmet><title>American Diamond Academy | Online Diamond Grading Courses</title></Helmet>
 
-      {/* HERO */}
-      <section style={{ position: 'relative', background: C.navy, minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${heroBg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.2 }} />
-        {/* Dark overlay */}
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(44,62,80,0.55)' }} />
-        <div className="container" style={{ position: 'relative', zIndex: 1, padding: '80px 20px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          {/* Badge */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px', justifyContent: 'center' }}>
-            <div style={{ height: '1px', width: '40px', background: C.coral }} />
-            <span style={{ color: C.coral, fontSize: '13px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '3px' }}>American Diamond Academy</span>
-            <div style={{ height: '1px', width: '40px', background: C.coral }} />
-          </div>
-          {/* Heading */}
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(40px, 6vw, 72px)', fontWeight: 400, color: 'white', lineHeight: 1.1, marginBottom: '28px', maxWidth: '860px' }}>
-            Diamond Learning,<br /><em>Reimagined.</em>
+      {/* HERO — full-width image with academy name overlaid, matching original CDA style */}
+      <section style={{ position: 'relative', width: '100%', minHeight: '480px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${heroBg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(27,43,75,0.55)' }} />
+        <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '80px 20px' }}>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(48px, 8vw, 96px)', fontWeight: 700, color: 'white', lineHeight: 1.1, letterSpacing: '-1px' }}>
+            American Diamond<br />Academy
           </h1>
-          {/* Subtext */}
-          <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '18px', lineHeight: 1.85, marginBottom: '16px', maxWidth: '680px' }}>
-            Diamonds are more than grades — they&apos;re light, structure, and brilliance.
+        </div>
+      </section>
+
+      {/* BELOW HERO — "Diamond Learning, Reimagined." + description + CTA buttons */}
+      <section style={{ background: C.light, padding: '72px 20px' }}>
+        <div className="container" style={{ maxWidth: '860px', textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(32px,4vw,56px)', fontWeight: 400, color: C.navy, marginBottom: '24px', lineHeight: 1.15 }}>
+            Diamond Learning, <em>Reimagined.</em>
+          </h2>
+          <p style={{ color: '#374151', fontSize: '17px', lineHeight: 1.9, marginBottom: '40px', maxWidth: '720px', margin: '0 auto 40px' }}>
+            Diamonds are more than grades—they&apos;re light, structure, and brilliance. As the trade shifts from physical counters to virtual screens, the way we learn must evolve too. The American Diamond Academy teaches the visual skills and judgment today&apos;s digital marketplace demands—so you can evaluate diamonds confidently, even without holding them in your hand. Whether you&apos;re a buyer, seller, or enthusiast, you&apos;ll gain clarity and a skill that lasts a lifetime.
           </p>
-          <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '16px', lineHeight: 1.8, marginBottom: '48px', maxWidth: '640px' }}>
-            The American Diamond Academy teaches the visual skills and judgment today&apos;s digital marketplace demands — so you can evaluate diamonds confidently, even without holding them in your hand. Whether you&apos;re a buyer, seller, or enthusiast, you&apos;ll gain clarity and a skill that lasts a lifetime.
-          </p>
-          {/* Buttons */}
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <Link to="/education" className="btn btn-primary btn-lg">Explore Courses</Link>
-            <Link to="/about" className="btn btn-outline-white btn-lg">Learn More</Link>
-            <Link to="/contact" className="btn btn-outline-white btn-lg">Contact Us</Link>
+            <Link to="/about" className="btn btn-outline btn-lg">Learn More</Link>
+            <Link to="/contact" className="btn btn-outline btn-lg">Contact Us</Link>
           </div>
         </div>
       </section>
 
-      {/* REIMAGINED */}
-      <section style={{ background: C.light, padding: '80px 0' }}>
-        <div className="container" style={{ maxWidth: '900px', textAlign: 'center' }}>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(32px,4vw,52px)', fontWeight: 400, color: C.navy, marginBottom: '24px' }}>Diamond Learning, Reimagined.</h2>
-          <p style={{ color: '#4b5563', fontSize: '17px', lineHeight: 1.9 }}>Diamonds are more than grades—they're light, structure, and brilliance. As the trade shifts from physical counters to virtual screens, the way we learn must evolve too. The American Diamond Academy teaches the visual skills and judgment today's digital marketplace demands.</p>
-        </div>
-      </section>
+      {/* REIMAGINED — removed duplicate section per client feedback */}
 
       {/* FEATURES */}
       <section style={{ background: C.navy, padding: '80px 0' }}>
@@ -233,7 +223,7 @@ export default function Home() {
           </div>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,40px)', fontWeight: 400, color: 'white', marginBottom: '12px' }}>Diamond Digest</h2>
           <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '16px', lineHeight: 1.8, marginBottom: '36px' }}>
-            Stay ahead in the diamond world. Subscribe to our newsletter for industry insights, grading tips, new course announcements, and exclusive offers.
+            Get diamond education updates, course openings, and important Academy announcements.
           </p>
           <form onSubmit={handleNewsletter} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <input

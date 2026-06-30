@@ -40,7 +40,7 @@ export default function Navbar() {
     { href: '/faq', label: 'FAQ' },
   ];
 
-  const navBg = scrolled ? 'rgba(44,62,80,0.97)' : '#2C3E50';
+  const navBg = scrolled ? 'rgba(27,43,75,0.97)' : '#1B2B4B';
 
   return (
     <nav style={{ background: navBg, position: 'sticky', top: 0, zIndex: 1000, boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.15)' : 'none', backdropFilter: scrolled ? 'blur(10px)' : 'none', transition: 'all 0.3s ease' }}>
@@ -125,7 +125,7 @@ export default function Navbar() {
 
       {/* MOBILE MENU */}
       {isMobile && (
-        <div style={{ overflow: 'hidden', maxHeight: isOpen ? '600px' : '0', transition: 'max-height 0.3s ease', background: '#1a2532', borderTop: isOpen ? '1px solid rgba(255,255,255,0.08)' : 'none' }}>
+        <div style={{ overflow: 'hidden', maxHeight: isOpen ? '600px' : '0', transition: 'max-height 0.3s ease', background: '#111e35', borderTop: isOpen ? '1px solid rgba(255,255,255,0.08)' : 'none' }}>
           <div style={{ padding: '12px 16px 20px' }}>
             {/* Nav links */}
             {navLinks.map(l => (

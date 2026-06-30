@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-const C = { navy: '#2C3E50', coral: '#E8835A', light: '#E8F6F8' };
+const C = { navy: '#1B2B4B', coral: '#E8835A', light: '#EAF0F8' };
 
 const Section = ({ title, children }) => (
   <div style={{ marginBottom: '40px' }}>
@@ -41,6 +41,8 @@ export function Terms() {
 
             <Section title="3. Intellectual Property">
               <P>All course content, materials, videos, images, and resources provided by American Diamond Academy are the exclusive intellectual property of ADA. You may not copy, reproduce, distribute, or create derivative works without prior written consent from ADA.</P>
+              <P>No rights or ownership are transferred to you by accessing this website or enrolling in any course.</P>
+              <P>Unauthorized use of our name, branding, or materials may result in legal action.</P>
             </Section>
 
             <Section title="4. User Accounts">
@@ -77,7 +79,11 @@ export function Terms() {
               <P>ADA reserves the right to update these Terms at any time. Continued use of the website after changes constitutes acceptance of the revised Terms.</P>
             </Section>
 
-            <Section title="11. Contact Us">
+            <Section title="11. Language">
+              <P>These Terms, if provided in other languages, are for user convenience. In case of any differences, the English version will prevail.</P>
+            </Section>
+
+            <Section title="12. Contact Us">
               <P>For any questions about these Terms, please contact us at: jaswani@angeldiamondinc.com or WhatsApp: +1 (437) 269-7007</P>
             </Section>
 
@@ -207,7 +213,7 @@ export function PrivacyPolicy() {
             </Section>
 
             <Section title="9. Children's Privacy">
-              <P>Our services are not directed at individuals under the age of 18. We do not knowingly collect personal information from minors.</P>
+              <P>Our courses are open to learners of all ages. We do not knowingly collect personal information from minors without parental consent. Payment processing via Stripe requires a valid credit or debit card, and card holders must meet the minimum age requirements set by their card issuer and applicable law in their jurisdiction.</P>
             </Section>
 
             <Section title="10. Changes to This Policy">
