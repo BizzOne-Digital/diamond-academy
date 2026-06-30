@@ -40,18 +40,18 @@ export default function Navbar() {
     { href: '/faq', label: 'FAQ' },
   ];
 
-  const navBg = scrolled ? 'rgba(27,43,75,0.97)' : '#1B2B4B';
+  const navBg = '#ffffff';
 
   return (
-    <nav style={{ background: navBg, position: 'sticky', top: 0, zIndex: 1000, boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.15)' : 'none', backdropFilter: scrolled ? 'blur(10px)' : 'none', transition: 'all 0.3s ease' }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '68px' }}>
+    <nav style={{ background: navBg, position: 'sticky', top: 0, zIndex: 1000, boxShadow: '0 2px 18px rgba(27,43,75,0.08)', transition: 'all 0.3s ease' }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '78px' }}>
 
         {/* LOGO — uses logo.png if exists, falls back to SVG text */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>
           <img
             src="/logo.png"
             alt="American Diamond Academy"
-            style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
+            style={{ height: '58px', width: 'auto', objectFit: 'contain' }}
             onError={e => {
               e.target.style.display = 'none';
               e.target.nextSibling.style.display = 'flex';
@@ -77,9 +77,9 @@ export default function Navbar() {
               <Link
                 key={l.href}
                 to={l.href}
-                style={{ padding: '8px 14px', fontSize: '14px', color: 'white', opacity: location.pathname === l.href ? 1 : 0.75, fontWeight: location.pathname === l.href ? 600 : 400, borderRadius: '6px', background: location.pathname === l.href ? 'rgba(255,255,255,0.1)' : 'transparent', transition: 'all 0.2s', textDecoration: 'none', whiteSpace: 'nowrap' }}
-                onMouseOver={e => { if (location.pathname !== l.href) { e.currentTarget.style.opacity = '1'; e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; } }}
-                onMouseOut={e => { if (location.pathname !== l.href) { e.currentTarget.style.opacity = '0.75'; e.currentTarget.style.background = 'transparent'; } }}
+                style={{ padding: '8px 14px', fontSize: '14px', color: '#1B2B4B', opacity: location.pathname === l.href ? 1 : 0.8, fontWeight: location.pathname === l.href ? 600 : 400, borderRadius: '6px', background: location.pathname === l.href ? 'rgba(27,43,75,0.08)' : 'transparent', transition: 'all 0.2s', textDecoration: 'none', whiteSpace: 'nowrap' }}
+                onMouseOver={e => { if (location.pathname !== l.href) { e.currentTarget.style.opacity = '1'; e.currentTarget.style.background = 'rgba(27,43,75,0.08)'; } }}
+                onMouseOut={e => { if (location.pathname !== l.href) { e.currentTarget.style.opacity = '0.8'; e.currentTarget.style.background = 'transparent'; } }}
               >
                 {l.label}
               </Link>
@@ -93,15 +93,15 @@ export default function Navbar() {
           {!isMobile && isAuthenticated && (
             <>
               {isAdmin && (
-                <Link to="/admin" style={{ padding: '7px 14px', background: 'rgba(232,131,90,0.2)', color: '#E8835A', borderRadius: '6px', fontSize: '13px', fontWeight: 600, textDecoration: 'none' }}>Admin</Link>
+                <Link to="/admin" style={{ padding: '7px 14px', background: 'rgba(232,131,90,0.12)', color: '#E8835A', borderRadius: '6px', fontSize: '13px', fontWeight: 600, textDecoration: 'none' }}>Admin</Link>
               )}
-              <Link to="/dashboard" style={{ padding: '7px 14px', background: 'rgba(255,255,255,0.1)', color: 'white', borderRadius: '6px', fontSize: '13px', textDecoration: 'none' }}>Dashboard</Link>
+              <Link to="/dashboard" style={{ padding: '7px 14px', background: 'rgba(27,43,75,0.08)', color: '#1B2B4B', borderRadius: '6px', fontSize: '13px', textDecoration: 'none' }}>Dashboard</Link>
               <button onClick={handleLogout} style={{ padding: '7px 16px', background: '#E8835A', color: 'white', border: 'none', borderRadius: '20px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>Logout</button>
             </>
           )}
           {!isMobile && !isAuthenticated && (
             <>
-              <Link to="/login" style={{ color: 'white', fontSize: '14px', opacity: 0.8, textDecoration: 'none', padding: '7px 10px' }}>Login</Link>
+              <Link to="/login" style={{ color: '#1B2B4B', fontSize: '14px', opacity: 0.85, textDecoration: 'none', padding: '7px 10px' }}>Login</Link>
               <Link to="/register" style={{ padding: '8px 18px', background: '#E8835A', color: 'white', borderRadius: '20px', fontSize: '13px', fontWeight: 600, textDecoration: 'none' }}>Enroll Now</Link>
             </>
           )}
@@ -110,13 +110,13 @@ export default function Navbar() {
           {isMobile && (
             <button
               onClick={() => setIsOpen(!isOpen)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1B2B4B' }}
               aria-label="Toggle menu"
             >
               {isOpen ? (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6L18 18" stroke="#1B2B4B" strokeWidth="2" strokeLinecap="round"/></svg>
               ) : (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 12H21M3 6H21M3 18H21" stroke="white" strokeWidth="2" strokeLinecap="round"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 12H21M3 6H21M3 18H21" stroke="#1B2B4B" strokeWidth="2" strokeLinecap="round"/></svg>
               )}
             </button>
           )}
@@ -125,34 +125,34 @@ export default function Navbar() {
 
       {/* MOBILE MENU */}
       {isMobile && (
-        <div style={{ overflow: 'hidden', maxHeight: isOpen ? '600px' : '0', transition: 'max-height 0.3s ease', background: '#111e35', borderTop: isOpen ? '1px solid rgba(255,255,255,0.08)' : 'none' }}>
+        <div style={{ overflow: 'hidden', maxHeight: isOpen ? '600px' : '0', transition: 'max-height 0.3s ease', background: '#ffffff', borderTop: isOpen ? '1px solid rgba(27,43,75,0.08)' : 'none' }}>
           <div style={{ padding: '12px 16px 20px' }}>
             {/* Nav links */}
             {navLinks.map(l => (
               <Link
                 key={l.href}
                 to={l.href}
-                style={{ display: 'block', padding: '13px 16px', fontSize: '15px', color: 'white', background: location.pathname === l.href ? 'rgba(232,131,90,0.15)' : 'transparent', borderRadius: '8px', fontWeight: location.pathname === l.href ? 600 : 400, textDecoration: 'none', marginBottom: '2px' }}
+                style={{ display: 'block', padding: '13px 16px', fontSize: '15px', color: '#1B2B4B', background: location.pathname === l.href ? 'rgba(232,131,90,0.12)' : 'transparent', borderRadius: '8px', fontWeight: location.pathname === l.href ? 600 : 400, textDecoration: 'none', marginBottom: '2px' }}
               >
                 {l.label}
               </Link>
             ))}
 
             {/* Divider */}
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', margin: '10px 0' }} />
+            <div style={{ borderTop: '1px solid rgba(27,43,75,0.08)', margin: '10px 0' }} />
 
             {/* Auth buttons */}
             {isAuthenticated ? (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {isAdmin && (
-                  <Link to="/admin" style={{ display: 'block', padding: '12px 16px', color: '#E8835A', background: 'rgba(232,131,90,0.1)', borderRadius: '8px', fontWeight: 600, textDecoration: 'none', fontSize: '14px' }}>Admin Panel</Link>
+                  <Link to="/admin" style={{ display: 'block', padding: '12px 16px', color: '#E8835A', background: 'rgba(232,131,90,0.12)', borderRadius: '8px', fontWeight: 600, textDecoration: 'none', fontSize: '14px' }}>Admin Panel</Link>
                 )}
-                <Link to="/dashboard" style={{ display: 'block', padding: '12px 16px', color: 'white', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>My Dashboard</Link>
+                <Link to="/dashboard" style={{ display: 'block', padding: '12px 16px', color: '#1B2B4B', background: 'rgba(27,43,75,0.06)', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>My Dashboard</Link>
                 <button onClick={handleLogout} style={{ padding: '13px 16px', background: '#E8835A', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', fontSize: '14px', textAlign: 'center', width: '100%', fontFamily: 'Inter, sans-serif' }}>Logout</button>
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <Link to="/login" style={{ display: 'block', padding: '12px 16px', color: 'white', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', textDecoration: 'none', fontSize: '14px', textAlign: 'center' }}>Login</Link>
+                <Link to="/login" style={{ display: 'block', padding: '12px 16px', color: '#1B2B4B', background: 'rgba(27,43,75,0.06)', borderRadius: '8px', textDecoration: 'none', fontSize: '14px', textAlign: 'center' }}>Login</Link>
                 <Link to="/register" style={{ display: 'block', padding: '13px 16px', background: '#E8835A', color: 'white', borderRadius: '8px', fontWeight: 600, textDecoration: 'none', fontSize: '14px', textAlign: 'center' }}>Enroll Now</Link>
               </div>
             )}

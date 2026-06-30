@@ -21,7 +21,7 @@ export default function Footer() {
               <img
                 src="/logo.png"
                 alt="American Diamond Academy"
-                style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
+                style={{ height: '64px', width: 'auto', objectFit: 'contain' }}
                 onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
               />
               <div style={{ display: 'none', alignItems: 'center', gap: '10px' }}>
