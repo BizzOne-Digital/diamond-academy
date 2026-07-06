@@ -97,26 +97,26 @@ export default function Home() {
         <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('/hero-diamonds.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(27,43,75,0.55)' }} />
         <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '80px 20px' }}>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(48px, 8vw, 96px)', fontWeight: 700, color: 'white', lineHeight: 1.1, letterSpacing: '-1px' }}>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(48px, 8vw, 96px)', fontWeight: 700, color: 'white', lineHeight: 1.1, letterSpacing: '-1px', marginBottom: '36px' }}>
             American Diamond<br />Academy
           </h1>
+          <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Link to="/education" className="btn btn-primary btn-lg">Explore Courses</Link>
+            <Link to="/contact" className="btn btn-outline-white btn-lg">Contact Us</Link>
+          </div>
         </div>
       </section>
 
-      {/* BELOW HERO — "Diamond Learning, Reimagined." + description + CTA buttons */}
+      {/* BELOW HERO — "Diamond Learning, Reimagined." + description + Learn More */}
       <section style={{ background: C.light, padding: '110px 20px' }}>
-        <div className="container" style={{ maxWidth: '960px', textAlign: 'center' }}>
+        <div className="container" style={{ maxWidth: '1100px', textAlign: 'center' }}>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(34px,4.5vw,60px)', fontWeight: 400, color: C.navy, marginBottom: '36px', lineHeight: 1.15 }}>
             Diamond Learning, <em>Reimagined.</em>
           </h2>
-          <p style={{ color: '#374151', fontSize: '18px', lineHeight: 2.1, marginBottom: '56px', maxWidth: '780px', margin: '0 auto 56px' }}>
-            Diamonds are more than grades—they&apos;re light, structure, and brilliance. As the trade shifts from physical counters to virtual screens, the way we learn must evolve too. The American Diamond Academy teaches the visual skills and judgment today&apos;s digital marketplace demands—so you can evaluate diamonds confidently, even without holding them in your hand. Whether you&apos;re a buyer, seller, or enthusiast, you&apos;ll gain clarity and a skill that lasts a lifetime.
+          <p style={{ color: '#374151', fontSize: '16px', lineHeight: 1.95, maxWidth: '980px', margin: '0 auto 40px' }}>
+            Diamonds are more than grades, they&apos;re light, structure, and brilliance. As the trade shifts from physical counters to virtual screens, the way we learn must evolve too. The American Diamond Academy teaches the visual skills and judgment today&apos;s digital marketplace demands, so you can evaluate diamonds confidently, even without holding them in your hand. Whether you&apos;re a buyer, seller, or enthusiast, you&apos;ll gain clarity and a skill that lasts a lifetime.
           </p>
-          <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <Link to="/education" className="btn btn-primary btn-lg">Explore Courses</Link>
-            <Link to="/about" className="btn btn-outline btn-lg">Learn More</Link>
-            <Link to="/contact" className="btn btn-outline btn-lg">Contact Us</Link>
-          </div>
+          <Link to="/about" className="btn btn-outline btn-lg">Learn More</Link>
         </div>
       </section>
 
@@ -150,9 +150,7 @@ export default function Home() {
             <div className="grid-3">
               {courses.map(course => (
                 <div key={course._id} className="card" style={{ overflow: 'hidden' }}>
-                  <div style={{ height: '200px', background: `url(${course.image || 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600&q=80'}) center/cover no-repeat`, position: 'relative' }}>
-                    <div style={{ position: 'absolute', top: '12px', left: '12px' }}><span className="badge badge-coral">{course.level}</span></div>
-                  </div>
+                  <div style={{ height: '200px', background: `url(${course.image || 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600&q=80'}) center/cover no-repeat` }} />
                   <div style={{ padding: '24px' }}>
                     <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '20px', fontWeight: 500, color: C.navy, marginBottom: '8px' }}>{course.title}</h3>
                     <p style={{ color: '#6b7280', fontSize: '14px', lineHeight: 1.7, marginBottom: '20px' }}>{course.shortDescription || course.description?.substring(0, 100)}...</p>
@@ -181,21 +179,21 @@ export default function Home() {
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', justifyContent: 'center' }}>
               {comingSoon.map(c => (
-                <div key={c._id} style={{ background: 'white', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e5e7eb', width: 'clamp(280px, calc(50% - 12px), 560px)', flexShrink: 0 }}>
+                <div key={c._id} style={{ background: 'white', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e5e7eb', width: '100%', maxWidth: '340px' }}>
                   {/* Course image */}
                   {c.image ? (
-                    <div style={{ height: '220px', background: `url(${c.image}) center/cover no-repeat` }} />
+                    <div style={{ height: '160px', background: `url(${c.image}) center/cover no-repeat` }} />
                   ) : (
-                    <div style={{ height: '160px', background: `linear-gradient(135deg, ${C.navy}, ${C.coral})`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 9L12 22L22 9L12 2Z" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" strokeLinejoin="round"/></svg>
+                    <div style={{ height: '130px', background: `linear-gradient(135deg, ${C.navy}, ${C.coral})`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 9L12 22L22 9L12 2Z" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" strokeLinejoin="round"/></svg>
                     </div>
                   )}
-                  <div style={{ padding: '28px' }}>
-                    <div style={{ display: 'inline-block', background: C.coral, color: 'white', padding: '4px 14px', borderRadius: '20px', fontSize: '11px', fontWeight: 700, letterSpacing: '1px', marginBottom: '14px' }}>COMING SOON</div>
-                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(22px,2.5vw,28px)', fontWeight: 400, color: C.navy, marginBottom: '6px' }}>{c.title}</h3>
-                    {c.subtitle && <p style={{ color: C.coral, fontSize: '13px', fontWeight: 600, marginBottom: '14px' }}>{c.subtitle}</p>}
-                    <p style={{ color: '#4b5563', fontSize: '15px', lineHeight: 1.8, marginBottom: '20px' }}>{c.description}</p>
-                    <div style={{ padding: '12px 16px', background: C.light, borderRadius: '8px', fontSize: '13px', color: '#6b7280' }}>
+                  <div style={{ padding: '20px' }}>
+                    <div style={{ display: 'inline-block', background: C.coral, color: 'white', padding: '3px 12px', borderRadius: '20px', fontSize: '10px', fontWeight: 700, letterSpacing: '1px', marginBottom: '10px' }}>COMING SOON</div>
+                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '19px', fontWeight: 400, color: C.navy, marginBottom: '4px' }}>{c.title}</h3>
+                    {c.subtitle && <p style={{ color: C.coral, fontSize: '12px', fontWeight: 600, marginBottom: '10px' }}>{c.subtitle}</p>}
+                    <p style={{ color: '#4b5563', fontSize: '13px', lineHeight: 1.7, marginBottom: '14px' }}>{c.description?.length > 120 ? `${c.description.substring(0, 120)}...` : c.description}</p>
+                    <div style={{ padding: '10px 14px', background: C.light, borderRadius: '8px', fontSize: '12px', color: '#6b7280' }}>
                       Join our newsletter to be notified when this course launches.
                     </div>
                   </div>

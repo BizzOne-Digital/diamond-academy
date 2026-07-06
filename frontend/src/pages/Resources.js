@@ -43,9 +43,13 @@ function Gia4CsTool({ tool, label }) {
   }, [tool]);
 
   return (
-    <div style={{ background: 'white', borderRadius: '12px', padding: '24px', boxShadow: '0 2px 12px rgba(27,43,75,0.06)' }}>
-      <h4 style={{ fontFamily: "'Playfair Display', serif", fontSize: '18px', color: C.navy, marginBottom: '14px' }}>{label}</h4>
-      <div ref={containerRef} style={{ width: '100%', minHeight: '80px' }} />
+    <div style={{ background: 'white', borderRadius: '12px', padding: '24px', boxShadow: '0 2px 12px rgba(27,43,75,0.06)', display: 'flex', flexDirection: 'column', height: '560px' }}>
+      <h4 style={{ fontFamily: "'Playfair Display', serif", fontSize: '18px', color: C.navy, marginBottom: '14px', flexShrink: 0 }}>{label}</h4>
+      {/* Each GIA tool has a different natural height (cross-origin iframe, can't be controlled) —
+          this fixed-height, scrollable window keeps all 5 cards the same size so the grid lines up. */}
+      <div style={{ flex: 1, overflowY: 'auto' }}>
+        <div ref={containerRef} style={{ width: '100%' }} />
+      </div>
     </div>
   );
 }
