@@ -8,6 +8,7 @@ const C = { navy: '#2C3E50', coral: '#E8835A', navyDark: '#1a2532' };
 const navItems = [
   { path: '/admin', label: 'Dashboard', Icon: BarChartSVG, exact: true },
   { path: '/admin/courses', label: 'Courses', Icon: BookSVG },
+  { path: '/admin/diamonds', label: 'Diamonds', Icon: DiamondSVG },
   { path: '/admin/leads', label: 'Leads', Icon: InboxSVG },
   { path: '/admin/resources', label: 'Resources', Icon: GlobeSVG },
   { path: '/admin/blog', label: 'Blog', Icon: MessageSVG },

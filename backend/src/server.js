@@ -13,7 +13,7 @@ app.use(helmet());
 app.use(morgan('dev'));
 
 // Rate limiting
-const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100, message: 'Too many requests' });
+const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 300, message: 'Too many requests' });
 app.use('/api/', limiter);
 
 // CORS
@@ -38,6 +38,8 @@ app.use('/api/leads', require('./routes/leads'));
 app.use('/api/resources', require('./routes/resources'));
 app.use('/api/blogs', require('./routes/blogs'));
 app.use('/api/comingsoon', require('./routes/comingsoon'));
+app.use('/api/diamonds', require('./routes/diamonds'));
+app.use('/api/cart', require('./routes/cart'));
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'OK', timestamp: new Date() }));

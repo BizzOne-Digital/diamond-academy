@@ -2,12 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
+import { InstagramSVG, FacebookSVG, LinkedInSVG } from './Icons';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const { user, logout, isAdmin, isAuthenticated } = useAuth();
+  const { count: cartCount } = useCart();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -44,14 +47,14 @@ export default function Navbar() {
 
   return (
     <nav style={{ background: navBg, position: 'sticky', top: 0, zIndex: 1000, boxShadow: '0 2px 18px rgba(27,43,75,0.08)', transition: 'all 0.3s ease' }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '78px' }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '94px' }}>
 
         {/* LOGO — uses logo.png if exists, falls back to SVG text */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>
           <img
             src="/logo.png"
             alt="American Diamond Academy"
-            style={{ height: '58px', width: 'auto', objectFit: 'contain' }}
+            style={{ height: '78px', width: 'auto', objectFit: 'contain' }}
             onError={e => {
               e.target.style.display = 'none';
               e.target.nextSibling.style.display = 'flex';
@@ -89,6 +92,29 @@ export default function Navbar() {
 
         {/* RIGHT SIDE ACTIONS */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+          {/* Social media icons — desktop only */}
+          {!isMobile && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginRight: '6px', paddingRight: '10px', borderRight: '1px solid rgba(27,43,75,0.12)' }}>
+              <a href="https://www.instagram.com/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'rgba(27,43,75,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <InstagramSVG size={15} color="#1B2B4B" />
+              </a>
+              <a href="https://www.facebook.com/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'rgba(27,43,75,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <FacebookSVG size={15} color="#1B2B4B" />
+              </a>
+              <a href="https://www.linkedin.com/company/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'rgba(27,43,75,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <LinkedInSVG size={15} color="#1B2B4B" />
+              </a>
+            </div>
+          )}
+          {/* Cart icon — desktop */}
+          {!isMobile && isAuthenticated && (
+            <Link to="/cart" aria-label="Cart" style={{ position: 'relative', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1B2B4B' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" /><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" /></svg>
+              {cartCount > 0 && (
+                <span style={{ position: 'absolute', top: '-2px', right: '-2px', background: '#E8835A', color: 'white', borderRadius: '50%', width: '16px', height: '16px', fontSize: '10px', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{cartCount}</span>
+              )}
+            </Link>
+          )}
           {/* Desktop auth buttons */}
           {!isMobile && isAuthenticated && (
             <>
@@ -148,6 +174,7 @@ export default function Navbar() {
                   <Link to="/admin" style={{ display: 'block', padding: '12px 16px', color: '#E8835A', background: 'rgba(232,131,90,0.12)', borderRadius: '8px', fontWeight: 600, textDecoration: 'none', fontSize: '14px' }}>Admin Panel</Link>
                 )}
                 <Link to="/dashboard" style={{ display: 'block', padding: '12px 16px', color: '#1B2B4B', background: 'rgba(27,43,75,0.06)', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>My Dashboard</Link>
+                <Link to="/cart" style={{ display: 'block', padding: '12px 16px', color: '#1B2B4B', background: 'rgba(27,43,75,0.06)', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>Cart {cartCount > 0 ? `(${cartCount})` : ''}</Link>
                 <button onClick={handleLogout} style={{ padding: '13px 16px', background: '#E8835A', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', fontSize: '14px', textAlign: 'center', width: '100%', fontFamily: 'Inter, sans-serif' }}>Logout</button>
               </div>
             ) : (
@@ -156,6 +183,19 @@ export default function Navbar() {
                 <Link to="/register" style={{ display: 'block', padding: '13px 16px', background: '#E8835A', color: 'white', borderRadius: '8px', fontWeight: 600, textDecoration: 'none', fontSize: '14px', textAlign: 'center' }}>Enroll Now</Link>
               </div>
             )}
+
+            {/* Social icons */}
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '16px' }}>
+              <a href="https://www.instagram.com/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'rgba(27,43,75,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <InstagramSVG size={16} color="#1B2B4B" />
+              </a>
+              <a href="https://www.facebook.com/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'rgba(27,43,75,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <FacebookSVG size={16} color="#1B2B4B" />
+              </a>
+              <a href="https://www.linkedin.com/company/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'rgba(27,43,75,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <LinkedInSVG size={16} color="#1B2B4B" />
+              </a>
+            </div>
           </div>
         </div>
       )}

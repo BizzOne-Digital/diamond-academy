@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
+const orderItemSchema = new mongoose.Schema({
+  course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course', required: true },
+  title: { type: String, required: true },
+  price: { type: Number, required: true },
+}, { _id: false });
+
 const orderSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course', required: true },
+  items: { type: [orderItemSchema], required: true, validate: v => v.length > 0 },
   amount: { type: Number, required: true },
   currency: { type: String, default: 'USD' },
   status: { type: String, enum: ['pending', 'paid', 'failed', 'refunded'], default: 'pending' },

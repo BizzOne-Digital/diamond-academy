@@ -12,7 +12,7 @@ const courses = [
     level: 'Beginner',
     price: 399,
     currency: 'USD',
-    image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80',
+    image: '/course-fundamentals.png',
     whatYouLearn: [
       'Understand diamond light performance beyond the 4Cs',
       'Evaluate cut quality using visual intelligence',
@@ -51,7 +51,7 @@ const courses = [
     level: 'Intermediate',
     price: 699,
     currency: 'USD',
-    image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80',
+    image: '/course-intelligence.png',
     whatYouLearn: [
       'Apply 4Cs with professional accuracy in digital environments',
       'Develop consistent grading judgment across stone types',

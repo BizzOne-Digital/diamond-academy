@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   phone: { type: String, trim: true },
   country: { type: String, default: 'USA' },
   enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
+  cart: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
   isActive: { type: Boolean, default: true },
   resetPasswordToken: String,
   resetPasswordExpire: Date,

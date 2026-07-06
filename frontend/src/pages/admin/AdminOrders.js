@@ -111,7 +111,7 @@ export default function AdminOrders() {
             {filtered.map((order, i) => (
               <tr key={order._id} style={{ borderTop: '1px solid #f3f4f6', background: i % 2 === 0 ? 'white' : '#fafafa' }}>
                 <td style={{ padding: '14px 16px' }}><div style={{ fontWeight: 500, fontSize: '14px', color: C.navy }}>{order.user?.name}</div><div style={{ color: '#9ca3af', fontSize: '12px' }}>{order.user?.email}</div></td>
-                <td style={{ padding: '14px 16px', color: '#4b5563', fontSize: '14px' }}>{order.course?.title}</td>
+                <td style={{ padding: '14px 16px', color: '#4b5563', fontSize: '14px' }}>{order.items?.map(i => i.course?.title || i.title).join(', ')}</td>
                 <td style={{ padding: '14px 16px', fontWeight: 700, color: C.navy, fontSize: '15px' }}>${order.amount}</td>
                 <td style={{ padding: '14px 16px' }}>
                   <span style={{ padding: '4px 10px', borderRadius: '12px', fontSize: '12px', fontWeight: 600, background: order.status === 'paid' ? '#dcfce7' : order.status === 'pending' ? '#fef3c7' : '#fee2e2', color: order.status === 'paid' ? '#16a34a' : order.status === 'pending' ? '#d97706' : '#dc2626' }}>{order.status}</span>

@@ -9,7 +9,9 @@ import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Education from './pages/Education';
 import CourseDetail from './pages/CourseDetail';
+import DiamondDetail from './pages/DiamondDetail';
 import Resources from './pages/Resources';
+import Cart from './pages/Cart';
 import { Blog, BlogPost } from './pages/Blog';
 import { About } from './pages/About';
 import { Contact } from './pages/About';
@@ -26,6 +28,8 @@ import AdminLayout from './pages/admin/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminCourses from './pages/admin/AdminCourses';
 import AdminCourseForm from './pages/admin/AdminCourseForm';
+import AdminDiamonds from './pages/admin/AdminDiamonds';
+import AdminDiamondForm from './pages/admin/AdminDiamondForm';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminLeads from './pages/admin/AdminLeads';
@@ -55,6 +59,9 @@ export default function App() {
         <Route path="courses" element={<AdminCourses />} />
         <Route path="courses/new" element={<AdminCourseForm />} />
         <Route path="courses/edit/:id" element={<AdminCourseForm />} />
+        <Route path="diamonds" element={<AdminDiamonds />} />
+        <Route path="diamonds/new" element={<AdminDiamondForm />} />
+        <Route path="diamonds/edit/:id" element={<AdminDiamondForm />} />
         <Route path="users" element={<AdminUsers />} />
         <Route path="orders" element={<AdminOrders />} />
         <Route path="leads" element={<AdminLeads />} />
@@ -74,7 +81,10 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/education" element={<Education />} />
               <Route path="/education/:slug" element={<CourseDetail />} />
+              <Route path="/diamonds" element={<Navigate to="/resources" replace />} />
+              <Route path="/diamonds/:id" element={<DiamondDetail />} />
               <Route path="/resources" element={<Resources />} />
+              <Route path="/cart" element={<Cart />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/about" element={<About />} />

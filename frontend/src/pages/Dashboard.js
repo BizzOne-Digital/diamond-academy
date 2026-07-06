@@ -82,7 +82,7 @@ export default function Dashboard() {
                 {orders.map(order => (
                   <div key={order._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px', flexWrap: 'wrap', gap: '8px' }}>
                     <div>
-                      <div style={{ fontWeight: 600, color: C.navy }}>{order.course?.title}</div>
+                      <div style={{ fontWeight: 600, color: C.navy }}>{order.items?.map(i => i.course?.title || i.title).join(', ')}</div>
                       <div style={{ color: '#6b7280', fontSize: '13px' }}>{new Date(order.createdAt).toLocaleDateString()}</div>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>

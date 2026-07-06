@@ -4,6 +4,7 @@ const User = require('../models/User');
 const Course = require('../models/Course');
 const Order = require('../models/Order');
 const Lead = require('../models/Lead');
+const Diamond = require('../models/Diamond');
 const { protect, admin } = require('../middleware/auth');
 
 // All admin routes require auth + admin role
@@ -20,7 +21,7 @@ router.get('/dashboard', async (req, res) => {
       Lead.countDocuments({ status: 'new' }),
     ]);
     const totalRevenue = revenueResult[0]?.total || 0;
-    const recentOrders = await Order.find({ status: 'paid' }).populate('user', 'name email').populate('course', 'title').sort('-paidAt').limit(10);
+    const recentOrders = await Order.find({ status: 'paid' }).populate('user', 'name email').populate('items.course', 'title').sort('-paidAt').limit(10);
     res.json({ success: true, stats: { totalUsers, totalCourses, totalOrders, totalRevenue, newLeads }, recentOrders });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -54,6 +55,16 @@ router.get('/courses', async (req, res) => {
   try {
     const courses = await Course.find().sort('-createdAt');
     res.json({ success: true, courses });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// GET /api/admin/diamonds (all, including inactive)
+router.get('/diamonds', async (req, res) => {
+  try {
+    const diamonds = await Diamond.find().sort('-createdAt');
+    res.json({ success: true, diamonds });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

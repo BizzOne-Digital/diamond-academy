@@ -62,7 +62,7 @@ export default function AdminDashboard() {
                 <div key={order._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', background: '#f8fafc', borderRadius: '8px', flexWrap: 'wrap', gap: '8px' }}>
                   <div>
                     <div style={{ fontWeight: 600, color: C.navy, fontSize: '14px' }}>{order.user?.name}</div>
-                    <div style={{ color: '#6b7280', fontSize: '12px' }}>{order.course?.title} · {new Date(order.paidAt).toLocaleDateString()}</div>
+                    <div style={{ color: '#6b7280', fontSize: '12px' }}>{order.items?.map(i => i.course?.title || i.title).join(', ')} · {new Date(order.paidAt).toLocaleDateString()}</div>
                   </div>
                   <span style={{ fontWeight: 700, color: '#059669', fontSize: '15px' }}>${order.amount}</span>
                 </div>

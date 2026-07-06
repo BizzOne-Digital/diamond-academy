@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import toast from 'react-hot-toast';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 
 export default function CourseDetail() {
   const { slug } = useParams();
   const { isAuthenticated, user } = useAuth();
+  const { addToCart, isInCart } = useCart();
   const navigate = useNavigate();
   const [course, setCourse] = useState(null);
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [paying, setPaying] = useState(false);
+  const [addingToCart, setAddingToCart] = useState(false);
 
   const C = { navy: '#1B2B4B', coral: '#E8835A', light: '#EAF0F8' };
 
@@ -27,17 +28,14 @@ export default function CourseDetail() {
   }, [isAuthenticated, course]);
 
   const isEnrolled = user?.enrolledCourses?.some(c => c._id === course?._id || c === course?._id);
+  const inCart = isInCart(course?._id);
 
-  const handleEnroll = async () => {
+  const handleAddToCart = async () => {
     if (!isAuthenticated) { navigate('/login'); return; }
-    setPaying(true);
-    try {
-      const { data } = await api.post('/payments/create-checkout-session', { courseId: course._id });
-      window.location.href = data.sessionUrl;
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Payment error. Please try again.');
-      setPaying(false);
-    }
+    setAddingToCart(true);
+    const ok = await addToCart(course._id);
+    setAddingToCart(false);
+    if (ok) navigate('/cart');
   };
 
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', padding: '100px' }}><div className="spinner" /></div>;
@@ -63,9 +61,11 @@ export default function CourseDetail() {
                 <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '36px', fontWeight: 600 }}>${course.price.toFixed(2)}</span>
                 {isEnrolled ? (
                   <span style={{ background: '#22c55e', color: 'white', padding: '10px 24px', borderRadius: '30px', fontWeight: 600, fontSize: '14px' }}>✓ Enrolled</span>
+                ) : inCart ? (
+                  <Link to="/cart" className="btn btn-primary btn-lg">View Cart</Link>
                 ) : (
-                  <button onClick={handleEnroll} disabled={paying} className="btn btn-primary btn-lg" style={{ opacity: paying ? 0.7 : 1 }}>
-                    {paying ? 'Redirecting...' : 'Enroll Now — Pay Securely'}
+                  <button onClick={handleAddToCart} disabled={addingToCart} className="btn btn-primary btn-lg" style={{ opacity: addingToCart ? 0.7 : 1 }}>
+                    {addingToCart ? 'Adding...' : 'Add to Cart'}
                   </button>
                 )}
               </div>
@@ -131,13 +131,15 @@ export default function CourseDetail() {
                 <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 600, color: C.navy, marginBottom: '20px' }}>${course.price.toFixed(2)}</p>
                 {isEnrolled ? (
                   <div style={{ background: '#dcfce7', color: '#16a34a', padding: '12px 16px', borderRadius: '8px', fontWeight: 600, textAlign: 'center', marginBottom: '16px' }}>✓ You are enrolled!</div>
+                ) : inCart ? (
+                  <Link to="/cart" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', marginBottom: '16px' }}>View Cart</Link>
                 ) : (
-                  <button onClick={handleEnroll} disabled={paying} className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', marginBottom: '16px', opacity: paying ? 0.7 : 1 }}>
-                    {paying ? 'Processing...' : 'Enroll Now'}
+                  <button onClick={handleAddToCart} disabled={addingToCart} className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', marginBottom: '16px', opacity: addingToCart ? 0.7 : 1 }}>
+                    {addingToCart ? 'Adding...' : 'Add to Cart'}
                   </button>
                 )}
                 <div style={{ fontSize: '12px', color: '#6b7280', textAlign: 'center', marginBottom: '24px' }}>
-                  🔒 Secure payment via Stripe
+                  🔒 Secure payment via Stripe at checkout
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {[

@@ -12,15 +12,15 @@ function DiamondShapesCarousel({ C }) {
   const shapes = [
     {
       name: 'Round Brilliant',
-      img: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80',
+      img: '/slider-2.jpg',
     },
     {
       name: 'Fancy Shapes',
-      img: 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80',
+      img: '/slider-3.webp',
     },
     {
       name: 'Diamond Sizes',
-      img: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80',
+      img: '/course-intelligence.png',
     },
   ];
 
@@ -59,7 +59,6 @@ function DiamondShapesCarousel({ C }) {
 
 export default function Home() {
   const [courses, setCourses] = useState([]);
-  const [isMobile, setIsMobile] = useState(false);
   const [newsletter, setNewsletter] = useState({ name: '', email: '' });
   const [subscribing, setSubscribing] = useState(false);
   const C = { navy: '#1B2B4B', coral: '#E8835A', light: '#EAF0F8' };
@@ -67,13 +66,7 @@ export default function Home() {
   useEffect(() => {
     api.get('/courses').then(r => setCourses(r.data.courses?.slice(0, 3) || [])).catch(() => {});
     api.get('/comingsoon').then(r => setComingSoon(r.data.items || [])).catch(() => {});
-    const onResize = () => setIsMobile(window.innerWidth < 768);
-    onResize();
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
   }, []);
-
-  const heroBg = isMobile ? '/bg1.png' : '/bg.png';
 
   const handleNewsletter = async (e) => {
     e.preventDefault();
@@ -101,7 +94,7 @@ export default function Home() {
 
       {/* HERO — full-width image with academy name overlaid, matching original CDA style */}
       <section style={{ position: 'relative', width: '100%', minHeight: '480px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${heroBg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }} />
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('/hero-diamonds.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(27,43,75,0.55)' }} />
         <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '80px 20px' }}>
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(48px, 8vw, 96px)', fontWeight: 700, color: 'white', lineHeight: 1.1, letterSpacing: '-1px' }}>
@@ -111,15 +104,15 @@ export default function Home() {
       </section>
 
       {/* BELOW HERO — "Diamond Learning, Reimagined." + description + CTA buttons */}
-      <section style={{ background: C.light, padding: '72px 20px' }}>
-        <div className="container" style={{ maxWidth: '860px', textAlign: 'center' }}>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(32px,4vw,56px)', fontWeight: 400, color: C.navy, marginBottom: '24px', lineHeight: 1.15 }}>
+      <section style={{ background: C.light, padding: '110px 20px' }}>
+        <div className="container" style={{ maxWidth: '960px', textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(34px,4.5vw,60px)', fontWeight: 400, color: C.navy, marginBottom: '36px', lineHeight: 1.15 }}>
             Diamond Learning, <em>Reimagined.</em>
           </h2>
-          <p style={{ color: '#374151', fontSize: '17px', lineHeight: 1.9, marginBottom: '40px', maxWidth: '720px', margin: '0 auto 40px' }}>
+          <p style={{ color: '#374151', fontSize: '18px', lineHeight: 2.1, marginBottom: '56px', maxWidth: '780px', margin: '0 auto 56px' }}>
             Diamonds are more than grades—they&apos;re light, structure, and brilliance. As the trade shifts from physical counters to virtual screens, the way we learn must evolve too. The American Diamond Academy teaches the visual skills and judgment today&apos;s digital marketplace demands—so you can evaluate diamonds confidently, even without holding them in your hand. Whether you&apos;re a buyer, seller, or enthusiast, you&apos;ll gain clarity and a skill that lasts a lifetime.
           </p>
-          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <Link to="/education" className="btn btn-primary btn-lg">Explore Courses</Link>
             <Link to="/about" className="btn btn-outline btn-lg">Learn More</Link>
             <Link to="/contact" className="btn btn-outline btn-lg">Contact Us</Link>
