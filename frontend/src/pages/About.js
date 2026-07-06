@@ -96,9 +96,9 @@ export function About() {
       <section className="section" style={{ background: 'white' }}>
         <div className="container">
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, color: C.navy, marginBottom: '40px', textAlign: 'center' }}>Industry Engagement</h2>
-          <div style={{ borderRadius: '12px', overflow: 'hidden', maxHeight: '500px' }}>
+          <div style={{ borderRadius: '12px', overflow: 'hidden' }}>
             <img src="/industry.webp" alt="Industry Engagement"
-              style={{ width: '100%', height: '500px', objectFit: 'cover', display: 'block' }}
+              style={{ width: '100%', height: 'auto', display: 'block' }}
               onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
             />
             <div style={{ display: 'none', height: '300px', background: C.light, alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '12px', borderRadius: '12px' }}>

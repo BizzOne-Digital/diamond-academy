@@ -54,6 +54,9 @@ export default function CourseDetail() {
               <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
                 <span style={{ background: C.coral, color: 'white', padding: '4px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 600 }}>{course.level}</span>
                 {course.totalSessions > 0 && <span style={{ background: 'rgba(255,255,255,0.15)', color: 'white', padding: '4px 12px', borderRadius: '20px', fontSize: '12px' }}>{course.totalSessions} Sessions</span>}
+                <span style={{ background: 'rgba(255,255,255,0.15)', color: 'white', padding: '4px 12px', borderRadius: '20px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} /> Live Interactive Zoom Classes
+                </span>
               </div>
               <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,4vw,48px)', fontWeight: 400, marginBottom: '16px', lineHeight: 1.2 }}>{course.title}</h1>
               <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '16px', lineHeight: 1.8, marginBottom: '32px' }}>{course.shortDescription || course.description?.substring(0, 200)}</p>
@@ -85,6 +88,17 @@ export default function CourseDetail() {
             <div>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '28px', fontWeight: 400, color: C.navy, marginBottom: '20px' }}>About This Course</h2>
               <p style={{ color: '#4b5563', lineHeight: 1.9, fontSize: '16px', marginBottom: '32px' }}>{course.description}</p>
+
+              {/* Live Zoom classes callout */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', background: `linear-gradient(135deg, ${C.navy}, #263a5e)`, borderRadius: '8px', padding: '24px 28px', marginBottom: '32px', flexWrap: 'wrap' }}>
+                <div style={{ width: '48px', height: '48px', background: 'rgba(232,131,90,0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={C.coral} strokeWidth="1.8"><rect x="2" y="5" width="14" height="14" rx="2" /><path d="M16 9l6-4v14l-6-4" /></svg>
+                </div>
+                <div>
+                  <div style={{ color: 'white', fontWeight: 700, fontSize: '16px', marginBottom: '2px' }}>Live, Interactive Zoom Classes</div>
+                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px' }}>Learn face-to-face with a certified gemologist in real time — ask questions live, not pre-recorded video.</div>
+                </div>
+              </div>
 
               {course.whatYouLearn?.length > 0 && (
                 <div style={{ background: C.light, borderRadius: '8px', padding: '32px', marginBottom: '32px' }}>
@@ -145,7 +159,7 @@ export default function CourseDetail() {
                   {[
                     ['', 'Level', course.level],
                     ['🎯', 'Sessions', course.totalSessions ? `${course.totalSessions} live sessions` : 'TBD'],
-                    ['', 'Format', 'Online via Zoom'],
+                    ['📹', 'Format', 'Live Interactive Zoom Classes'],
                     ['', 'Language', 'English'],
                     ['⏱️', 'Duration', '5 hours'],
                   ].map(([icon, label, value]) => (
