@@ -97,9 +97,12 @@ export default function Home() {
         <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('/hero-diamonds.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(27,43,75,0.55)' }} />
         <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '80px 20px' }}>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(48px, 8vw, 96px)', fontWeight: 700, color: 'white', lineHeight: 1.1, letterSpacing: '-1px', marginBottom: '36px' }}>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(36px, 6vw, 72px)', fontWeight: 700, color: 'white', lineHeight: 1.1, letterSpacing: '-1px', marginBottom: '20px' }}>
             American Diamond<br />Academy
           </h1>
+          <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 'clamp(15px,1.8vw,18px)', maxWidth: '600px', margin: '0 auto 36px', lineHeight: 1.6 }}>
+            Online diamond grading education for buyers, sellers, and enthusiasts navigating today&apos;s digital marketplace.
+          </p>
           <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <Link to="/education" className="btn btn-primary btn-lg">Explore Courses</Link>
             <Link to="/contact" className="btn btn-outline-white btn-lg">Contact Us</Link>
