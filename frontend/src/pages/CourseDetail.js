@@ -31,9 +31,8 @@ export default function CourseDetail() {
   const inCart = isInCart(course?._id);
 
   const handleAddToCart = async () => {
-    if (!isAuthenticated) { navigate('/login'); return; }
     setAddingToCart(true);
-    const ok = await addToCart(course._id);
+    const ok = await addToCart(isAuthenticated ? course._id : course);
     setAddingToCart(false);
     if (ok) navigate('/cart');
   };

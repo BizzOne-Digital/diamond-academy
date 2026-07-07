@@ -13,7 +13,7 @@ function ComingSoonSection({ C }) {
       if (r.data.items?.length) setItems(r.data.items);
       else setItems([
         { _id: '1', title: 'Diamond Precision', subtitle: 'Applied Diamond Measurement & Valuation', description: 'This masterclass integrates advanced diamond grading knowledge with the quantitative tools used in real-world diamond evaluation and pricing. Building on Cut, Colour, Clarity, and Carat interpretation, the course introduces key analytical frameworks including proportion analysis, carat weight estimation logic, and value impact assessments based on cut performance and light efficiency. You will also explore advanced evaluation models for fancy-cut diamonds, along with an introduction to fancy colour grading considerations and how structure influences perceived value. A core component of the program focuses on how grading outcomes influence market pricing, including value adjustments tied to cut quality, proportion efficiency, and trade benchmarks similar to Rapaport-style pricing structures. Designed as the final stage of the Diamond Intelligence framework, this course moves beyond visual interpretation into structured calculation — connecting how a diamond looks with how it is measured, compared, and valued in the global trade. Pre-requisite: Diamond Intelligence', image: '/course-precision.png' },
-        { _id: '2', title: 'Diamond Fancy Shapes', subtitle: 'Visual Evaluation', description: 'Develop expert visual evaluation skills for fancy-shaped diamonds — from pear and oval to marquise, cushion, and beyond. Learn how to assess cut quality, symmetry, and light performance across the full range of fancy shapes in today’s digital marketplace.', image: '/course-fancy-shapes.jpeg' },
+        { _id: '2', title: 'Diamond Shape Intelligence – Visual Evaluation and Grading', subtitle: 'Beyond Round Brilliants', description: 'Beyond Round Brilliants—learn to evaluate fancy-shaped diamonds through proportion, outline, light performance, and visual balance. Develop the confidence to assess every shape using the principles professionals rely on. Course Highlights: Evaluate the world\'s most popular fancy diamond shapes. Understand preferred proportions and length-to-width ratios. Analyze outline, symmetry, and overall visual appeal. Learn how proportions influence brilliance, fire, scintillation, and spread. Develop grading skills through guided visual exercises. Access interactive proportion analysis tools exclusive to Canadian Diamond Academy (Tools coming soon).', image: '/course-fancy-shapes.jpeg' },
       ]);
     }).catch(() => {
       setItems([
@@ -86,7 +86,11 @@ export default function Education() {
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(27,43,75,0.72)' }} />
         <div className="container" style={{ position: 'relative', zIndex: 1, padding: '80px 40px', maxWidth: '860px' }}>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(32px,4vw,52px)', fontWeight: 400, color: 'white', marginBottom: '20px', lineHeight: 1.2 }}>Learning beyond the 4 Cs</h2>
-          <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '17px', lineHeight: 1.9, maxWidth: '640px' }}>Stop relying on certificates alone—learn how diamonds are truly assessed through light, structure, and visual intelligence. We teach you what you were never taught to see.</p>
+          <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '17px', lineHeight: 1.9, maxWidth: '640px', marginBottom: '24px' }}>Stop relying on certificates alone—learn how diamonds are truly assessed through light, structure, and visual intelligence. We teach you what you were never taught to see.</p>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', background: 'rgba(232,131,90,0.18)', border: `1px solid ${C.coral}`, borderRadius: '30px', padding: '10px 22px', maxWidth: '640px' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e', flexShrink: 0 }} />
+            <span style={{ color: 'white', fontSize: '14px', lineHeight: 1.6 }}>Live, gemmologist-led Zoom sessions with real-time interaction, discussions, and Q&amp;A.</span>
+          </div>
         </div>
       </section>
 

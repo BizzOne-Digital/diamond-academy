@@ -23,7 +23,6 @@ export default function Cart() {
   const sessionOptions = items.length === 1 ? (items[0].sessions || []) : [];
 
   const handleProceedClick = () => {
-    if (!isAuthenticated) { navigate('/login'); return; }
     setDetails(d => ({
       name: d.name || user?.name || '',
       email: d.email || user?.email || '',
@@ -47,7 +46,10 @@ export default function Cart() {
     }
     setCheckingOut(true);
     try {
-      const { data } = await api.post('/payments/create-checkout-session', { customerDetails: details });
+      const { data } = await api.post('/payments/create-checkout-session', {
+        courseIds: items.map(c => c._id),
+        customerDetails: details,
+      });
       window.location.href = data.sessionUrl;
     } catch (err) {
       toast.error(err.response?.data?.message || 'Checkout error. Please try again.');
@@ -114,9 +116,16 @@ export default function Cart() {
                       <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '26px', color: C.navy, marginBottom: '8px' }}>Customer Information</h3>
                       <p style={{ color: '#6b7280', fontSize: '14px' }}>
                         Please complete all required fields before proceeding to checkout.
-                        {sessionOptions.length > 0 && " We'll need your contact details to send your Zoom access link."}
+                        {!isAuthenticated && ' After completing your payment, please create your login credentials to access your student dashboard.'}
                       </p>
                     </div>
+
+                    {items.some(c => c.financingAvailable) && (
+                      <div style={{ background: C.light, border: `1px solid ${C.coral}`, borderRadius: '8px', padding: '16px 20px', marginBottom: '24px' }}>
+                        <div style={{ fontWeight: 700, color: C.navy, fontSize: '14px', marginBottom: '2px' }}>Flexible Payment Plans Available</div>
+                        <div style={{ color: '#6b7280', fontSize: '13px' }}>Learn now and pay overtime with convenient financing options.</div>
+                      </div>
+                    )}
 
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', marginBottom: '24px' }}>
                       <div>

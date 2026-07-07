@@ -14,7 +14,7 @@ export default function AdminCourseForm() {
   const [form, setForm] = useState({
     title: '', slug: '', description: '', shortDescription: '',
     level: 'Beginner', price: '', currency: 'USD', duration: '',
-    image: '', imagePublicId: '', isActive: true, isFeatured: false,
+    image: '', imagePublicId: '', isActive: true, isFeatured: false, financingAvailable: false,
     whatYouLearn: [''], requirements: [''],
   });
 
@@ -93,6 +93,7 @@ export default function AdminCourseForm() {
           <div style={{ display: 'flex', gap: '24px', marginTop: '16px' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px' }}><input type="checkbox" checked={form.isActive} onChange={e => set('isActive', e.target.checked)} />Active (visible to students)</label>
             <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px' }}><input type="checkbox" checked={form.isFeatured} onChange={e => set('isFeatured', e.target.checked)} />Featured on homepage</label>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px' }}><input type="checkbox" checked={form.financingAvailable} onChange={e => set('financingAvailable', e.target.checked)} />Financing available (bundle offers — shows "Flexible Payment Plans" at checkout)</label>
           </div>
         </div>
 

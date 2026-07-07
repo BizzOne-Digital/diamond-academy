@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import api from '../../utils/api';
 
 const C = { navy: '#2C3E50', coral: '#E8835A', light: '#E8F6F8' };
@@ -121,9 +123,47 @@ export function AdminBlogForm() {
     finally { setImageUploading(false); }
   };
 
+  const quillRef = useRef(null);
+
+  const handleContentImageInsert = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.onchange = async () => {
+      const file = input.files[0];
+      if (!file) return;
+      const editor = quillRef.current?.getEditor();
+      const range = editor?.getSelection(true);
+      const formData = new FormData();
+      formData.append('image', file);
+      try {
+        toast.loading('Uploading image...', { id: 'quill-img' });
+        const { data } = await api.post('/upload/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+        editor.insertEmbed(range ? range.index : editor.getLength(), 'image', data.url);
+        editor.setSelection((range ? range.index : editor.getLength()) + 1);
+        toast.success('Image inserted', { id: 'quill-img' });
+      } catch { toast.error('Image upload failed', { id: 'quill-img' }); }
+    };
+    input.click();
+  };
+
+  const quillModules = useMemo(() => ({
+    toolbar: {
+      container: [
+        [{ header: [2, 3, false] }],
+        ['bold', 'italic', 'underline'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['link', 'image'],
+        ['clean'],
+      ],
+      handlers: { image: handleContentImageInsert },
+    },
+  }), []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.title || !form.slug || !form.content) { toast.error('Title, slug and content are required'); return; }
+    const contentIsEmpty = !form.content || form.content.replace(/<(.|\n)*?>/g, '').trim().length === 0 && !form.content.includes('<img');
+    if (!form.title || !form.slug || contentIsEmpty) { toast.error('Title, slug and content are required'); return; }
     setLoading(true);
     const payload = { ...form, tags: form.tags ? form.tags.split(',').map(t => t.trim()).filter(Boolean) : [] };
     try {
@@ -177,13 +217,15 @@ export function AdminBlogForm() {
         {/* Content */}
         <div style={{ background: 'white', borderRadius: '12px', padding: '32px', boxShadow: '0 2px 10px rgba(0,0,0,0.06)', marginBottom: '20px' }}>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '18px', color: C.navy, marginBottom: '8px', paddingBottom: '12px', borderBottom: '1px solid #e5e7eb' }}>Content *</h2>
-          <p style={{ color: '#9ca3af', fontSize: '13px', marginBottom: '16px' }}>You can use basic HTML tags: &lt;p&gt;, &lt;h2&gt;, &lt;h3&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;a&gt;</p>
-          <textarea
+          <p style={{ color: '#9ca3af', fontSize: '13px', marginBottom: '16px' }}>Use the image icon in the toolbar to insert pictures anywhere inside the article, exactly where you want them to appear.</p>
+          <ReactQuill
+            ref={quillRef}
+            theme="snow"
             value={form.content}
-            onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
-            placeholder="<p>Write your blog post content here...</p>"
-            required
-            style={{ width: '100%', minHeight: '400px', padding: '16px', border: '1px solid #d1d5db', borderRadius: '8px', fontSize: '14px', fontFamily: 'monospace', lineHeight: 1.6, resize: 'vertical' }}
+            onChange={val => setForm(f => ({ ...f, content: val }))}
+            modules={quillModules}
+            placeholder="Write your blog post content here..."
+            style={{ background: 'white' }}
           />
         </div>
 

@@ -39,6 +39,7 @@ export default function Navbar() {
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
     { href: '/resources', label: 'Resources' },
+    { href: '/tools', label: 'Tools' },
     { href: '/blog', label: 'Blog' },
     { href: '/faq', label: 'FAQ' },
   ];
@@ -47,14 +48,41 @@ export default function Navbar() {
 
   return (
     <nav style={{ background: navBg, position: 'sticky', top: 0, zIndex: 1000, boxShadow: '0 2px 18px rgba(27,43,75,0.08)', transition: 'all 0.3s ease' }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '94px' }}>
+
+      {/* TOP UTILITY BAR — phone numbers + social media */}
+      <div style={{ background: '#1B2B4B', color: 'white' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '8px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap', fontSize: '13px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '10px' : '20px', flexWrap: 'wrap' }}>
+            <a href="tel:+18889211786" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              +1-888-921-1786
+            </a>
+            {!isMobile && (
+              <a href="tel:+12124701321" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none' }}>+1-212-470-1321</a>
+            )}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <a href="https://www.instagram.com/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <InstagramSVG size={12} color="#ffffff" />
+            </a>
+            <a href="https://www.facebook.com/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <FacebookSVG size={12} color="#ffffff" />
+            </a>
+            <a href="https://www.linkedin.com/company/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <LinkedInSVG size={12} color="#ffffff" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '108px' }}>
 
         {/* LOGO — uses logo.png if exists, falls back to SVG text */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>
           <img
             src="/logo.png"
             alt="American Diamond Academy"
-            style={{ height: '78px', width: 'auto', objectFit: 'contain' }}
+            style={{ height: '96px', width: 'auto', objectFit: 'contain' }}
             onError={e => {
               e.target.style.display = 'none';
               e.target.nextSibling.style.display = 'flex';
@@ -92,20 +120,6 @@ export default function Navbar() {
 
         {/* RIGHT SIDE ACTIONS */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-          {/* Social media icons — desktop only */}
-          {!isMobile && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginRight: '6px', paddingRight: '10px', borderRight: '1px solid rgba(27,43,75,0.12)' }}>
-              <a href="https://www.instagram.com/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'rgba(27,43,75,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <InstagramSVG size={15} color="#1B2B4B" />
-              </a>
-              <a href="https://www.facebook.com/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'rgba(27,43,75,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <FacebookSVG size={15} color="#1B2B4B" />
-              </a>
-              <a href="https://www.linkedin.com/company/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'rgba(27,43,75,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <LinkedInSVG size={15} color="#1B2B4B" />
-              </a>
-            </div>
-          )}
           {/* Cart icon — desktop */}
           {!isMobile && isAuthenticated && (
             <Link to="/cart" aria-label="Cart" style={{ position: 'relative', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1B2B4B' }}>

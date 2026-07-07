@@ -47,6 +47,13 @@ export const AuthProvider = ({ children }) => {
     return data;
   };
 
+  const setSession = (newToken, newUser) => {
+    setToken(newToken);
+    setUser(newUser);
+    localStorage.setItem('ada_token', newToken);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+  };
+
   const logout = () => {
     setToken(null);
     setUser(null);
@@ -55,7 +62,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, register, logout, isAdmin: user?.role === 'admin', isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, token, loading, login, register, logout, setSession, isAdmin: user?.role === 'admin', isAuthenticated: !!user }}>
       {children}
     </AuthContext.Provider>
   );

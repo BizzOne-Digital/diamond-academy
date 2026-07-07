@@ -4,6 +4,12 @@ import api from '../utils/api';
 import { useAuth } from './AuthContext';
 
 const CartContext = createContext();
+const GUEST_CART_KEY = 'ada_guest_cart';
+
+const readGuestCart = () => {
+  try { return JSON.parse(localStorage.getItem(GUEST_CART_KEY)) || []; } catch { return []; }
+};
+const writeGuestCart = (items) => localStorage.setItem(GUEST_CART_KEY, JSON.stringify(items));
 
 export const CartProvider = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -11,7 +17,8 @@ export const CartProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   const refreshCart = useCallback(async () => {
-    if (!isAuthenticated) { setItems([]); return; }
+    // No login required to buy: guests keep their cart in this browser until checkout.
+    if (!isAuthenticated) { setItems(readGuestCart()); return; }
     setLoading(true);
     try {
       const { data } = await api.get('/cart');
@@ -22,7 +29,17 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => { refreshCart(); }, [refreshCart]);
 
-  const addToCart = async (courseId) => {
+  const addToCart = async (course) => {
+    const courseId = typeof course === 'string' ? course : course._id;
+    if (!isAuthenticated) {
+      const current = readGuestCart();
+      if (current.some(c => c._id === courseId)) { toast.error('Already in your cart'); return false; }
+      const next = [...current, course];
+      writeGuestCart(next);
+      setItems(next);
+      toast.success('Added to cart');
+      return true;
+    }
     try {
       const { data } = await api.post('/cart', { courseId });
       setItems(data.items || []);
@@ -35,6 +52,12 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = async (courseId) => {
+    if (!isAuthenticated) {
+      const next = readGuestCart().filter(c => c._id !== courseId);
+      writeGuestCart(next);
+      setItems(next);
+      return;
+    }
     try {
       const { data } = await api.delete(`/cart/${courseId}`);
       setItems(data.items || []);
@@ -42,6 +65,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const clearCart = async () => {
+    if (!isAuthenticated) { writeGuestCart([]); setItems([]); return; }
     try {
       await api.delete('/cart');
       setItems([]);

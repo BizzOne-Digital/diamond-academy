@@ -111,6 +111,7 @@ export function BlogPost() {
       <section className="section" style={{ background: 'white' }}>
         <div className="container" style={{ maxWidth: '760px' }}>
           <div
+            className="blog-article-content"
             style={{ fontSize: '16px', lineHeight: 1.9, color: '#374151' }}
             dangerouslySetInnerHTML={{ __html: post.content }}
           />

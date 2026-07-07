@@ -1,18 +1,20 @@
+const crypto = require('crypto');
 const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { protect } = require('../middleware/auth');
+const { protect, optionalAuth } = require('../middleware/auth');
 const Order = require('../models/Order');
 const Course = require('../models/Course');
 const User = require('../models/User');
 
 // POST /api/payments/create-checkout-session
 // Body: { courseIds: [id, ...] } — if omitted, checks out the user's current cart.
-router.post('/create-checkout-session', protect, async (req, res) => {
+// Login is optional — guests can buy first and create their login credentials after payment.
+router.post('/create-checkout-session', optionalAuth, async (req, res) => {
   try {
     let courseIds = req.body.courseIds;
     if (!courseIds || !courseIds.length) {
-      courseIds = req.user.cart.map(id => id.toString());
+      courseIds = req.user ? req.user.cart.map(id => id.toString()) : [];
     }
     if (!courseIds.length) return res.status(400).json({ success: false, message: 'Your cart is empty' });
 
@@ -24,7 +26,24 @@ router.post('/create-checkout-session', protect, async (req, res) => {
     const courses = await Course.find({ _id: { $in: courseIds } });
     if (courses.length !== courseIds.length) return res.status(404).json({ success: false, message: 'One or more courses were not found' });
 
-    const alreadyEnrolled = courses.filter(c => req.user.enrolledCourses.some(id => id.toString() === c._id.toString()));
+    // Resolve which account this order belongs to: the logged-in user, an existing
+    // account matching this email, or a brand-new guest account that gets a
+    // "create your password" prompt after payment succeeds.
+    let buyer = req.user;
+    let isNewGuestAccount = false;
+    if (!buyer) {
+      buyer = await User.findOne({ email: email.toLowerCase().trim() });
+      if (!buyer) {
+        buyer = await User.create({
+          name, email, phone,
+          password: crypto.randomBytes(24).toString('hex'),
+          needsPasswordSetup: true,
+        });
+        isNewGuestAccount = true;
+      }
+    }
+
+    const alreadyEnrolled = courses.filter(c => buyer.enrolledCourses.some(id => id.toString() === c._id.toString()));
     if (alreadyEnrolled.length) {
       return res.status(400).json({ success: false, message: `Already enrolled in: ${alreadyEnrolled.map(c => c.title).join(', ')}` });
     }
@@ -59,12 +78,12 @@ router.post('/create-checkout-session', protect, async (req, res) => {
       line_items,
       success_url: `${process.env.FRONTEND_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL}/cart`,
-      metadata: { courseIds: courseIds.join(','), userId: req.user._id.toString(), customerName: name, customerPhone: phone },
+      metadata: { courseIds: courseIds.join(','), userId: buyer._id.toString(), customerName: name, customerPhone: phone },
     });
 
     // Create pending order with one line item per course
     await Order.create({
-      user: req.user._id,
+      user: buyer._id,
       items: courses.map(c => ({ course: c._id, title: c.title, price: c.price })),
       amount: courses.reduce((sum, c) => sum + c.price, 0),
       status: 'pending',
@@ -72,7 +91,7 @@ router.post('/create-checkout-session', protect, async (req, res) => {
       customerDetails: { name, email, phone, session: selectedSession },
     });
 
-    res.json({ success: true, sessionUrl: session.url, sessionId: session.id });
+    res.json({ success: true, sessionUrl: session.url, sessionId: session.id, isNewGuestAccount });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -112,11 +131,24 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
 });
 
 // GET /api/payments/verify/:sessionId
-router.get('/verify/:sessionId', protect, async (req, res) => {
+// Public: the Stripe session id itself is the capability handed back on the success
+// redirect, so a logged-out guest can use it to confirm payment and, if they bought
+// as a guest, receive a one-time token to set their account password.
+router.get('/verify/:sessionId', async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
     const order = await Order.findOne({ stripeSessionId: req.params.sessionId }).populate('items.course', 'title slug');
-    res.json({ success: true, status: session.payment_status, order });
+    let passwordSetupToken;
+    if (order && session.payment_status === 'paid') {
+      const buyer = await User.findById(order.user);
+      if (buyer && buyer.needsPasswordSetup) {
+        passwordSetupToken = crypto.randomBytes(32).toString('hex');
+        buyer.resetPasswordToken = crypto.createHash('sha256').update(passwordSetupToken).digest('hex');
+        buyer.resetPasswordExpire = Date.now() + 24 * 60 * 60 * 1000;
+        await buyer.save();
+      }
+    }
+    res.json({ success: true, status: session.payment_status, order, passwordSetupToken });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

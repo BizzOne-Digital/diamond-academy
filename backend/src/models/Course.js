@@ -28,6 +28,8 @@ const courseSchema = new mongoose.Schema({
   requirements: [{ type: String }],
   isActive: { type: Boolean, default: true },
   isFeatured: { type: Boolean, default: false },
+  // Shows "Flexible Payment Plans Available" at checkout — intended for bundle offers only.
+  financingAvailable: { type: Boolean, default: false },
   enrollmentCount: { type: Number, default: 0 },
   stripeProductId: { type: String },
   stripePriceId: { type: String },

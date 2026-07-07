@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { PhoneSVG, EmailSVG, WhatsAppSVG, LocationSVG, MessageSVG, CelebrationSVG } from '../components/Icons';
 import api from '../utils/api';
+import { useAuth } from '../context/AuthContext';
 
 const C = { navy: '#1B2B4B', coral: '#E8835A', light: '#EAF0F8' };
 
@@ -292,6 +293,10 @@ export function FAQ() {
       a: 'At this time, we accept full payment at the time of enrollment. All payments are processed securely through Stripe.'
     },
     {
+      q: 'I have a problem with my purchase. What should I do?',
+      a: 'If you experience any issues with your order, course access, or payment, please contact us first at info@canadiandiamondacademy.ca. Our team is committed to resolving concerns as quickly as possible. Most issues can be resolved directly without the need for a payment dispute. If a chargeback is initiated without first contacting us, we reserve the right to provide supporting documentation to the payment processor to verify the transaction and the services provided.'
+    },
+    {
       q: 'I have more questions. How can I reach you?',
       a: 'You can contact us through our Contact page, by email at jaswani@angeldiamondinc.com, or via WhatsApp at +1 (437) 269-7007. We are happy to help.'
     },
@@ -333,18 +338,73 @@ export function FAQ() {
 
 // ---------- PAYMENT SUCCESS ----------
 export function PaymentSuccess() {
+  const [status, setStatus] = React.useState('checking'); // checking | needsPassword | done | error
+  const [setupToken, setSetupToken] = React.useState(null);
+  const [pw, setPw] = React.useState({ password: '', confirm: '' });
+  const [submitting, setSubmitting] = React.useState(false);
+  const { setSession } = useAuth();
+
+  React.useEffect(() => {
+    localStorage.removeItem('ada_guest_cart');
+    const sessionId = new URLSearchParams(window.location.search).get('session_id');
+    if (!sessionId) { setStatus('done'); return; }
+    api.get(`/payments/verify/${sessionId}`)
+      .then(({ data }) => {
+        if (data.passwordSetupToken) {
+          setSetupToken(data.passwordSetupToken);
+          setStatus('needsPassword');
+        } else {
+          setStatus('done');
+        }
+      })
+      .catch(() => setStatus('done'));
+  }, []);
+
+  const handleSetPassword = async (e) => {
+    e.preventDefault();
+    if (pw.password.length < 6) { toast.error('Password must be at least 6 characters'); return; }
+    if (pw.password !== pw.confirm) { toast.error('Passwords do not match'); return; }
+    setSubmitting(true);
+    try {
+      const { data } = await api.post('/auth/set-password', { token: setupToken, password: pw.password });
+      setSession(data.token, data.user);
+      toast.success('Login credentials created!');
+      setStatus('done');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Could not set your password. Please contact us.');
+    } finally { setSubmitting(false); }
+  };
+
   return (
     <>
       <Helmet><title>Payment Successful | American Diamond Academy</title></Helmet>
-      <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: C.light }}>
+      <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: C.light, padding: '40px 20px' }}>
         <div style={{ background: 'white', borderRadius: '12px', padding: '60px 48px', textAlign: 'center', maxWidth: '500px', boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}>
           <CelebrationSVG size={72} color={C.coral} style={{ margin: '0 auto 24px', display: 'block' }} />
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, color: C.navy, marginBottom: '16px' }}>Enrollment Successful!</h1>
-          <p style={{ color: '#4b5563', fontSize: '16px', lineHeight: 1.8, marginBottom: '32px' }}>Welcome to American Diamond Academy. Your course access has been activated. Check your dashboard for session details and Zoom links.</p>
-          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/dashboard" className="btn btn-primary">Go to Dashboard</Link>
-            <Link to="/education" className="btn btn-outline">Browse More Courses</Link>
-          </div>
+
+          {status === 'needsPassword' ? (
+            <>
+              <p style={{ color: '#4b5563', fontSize: '15px', lineHeight: 1.8, marginBottom: '28px' }}>
+                Your payment was received. Please create your login credentials to access your student dashboard.
+              </p>
+              <form onSubmit={handleSetPassword} style={{ textAlign: 'left' }}>
+                <div className="form-group"><label>Password</label><input type="password" required minLength={6} value={pw.password} onChange={e => setPw(p => ({ ...p, password: e.target.value }))} /></div>
+                <div className="form-group"><label>Confirm Password</label><input type="password" required minLength={6} value={pw.confirm} onChange={e => setPw(p => ({ ...p, confirm: e.target.value }))} /></div>
+                <button type="submit" disabled={submitting} className="btn btn-primary btn-lg" style={{ width: '100%', marginTop: '8px', opacity: submitting ? 0.7 : 1 }}>
+                  {submitting ? 'Creating account...' : 'Create Login & Continue'}
+                </button>
+              </form>
+            </>
+          ) : (
+            <>
+              <p style={{ color: '#4b5563', fontSize: '16px', lineHeight: 1.8, marginBottom: '32px' }}>Welcome to American Diamond Academy. Your course access has been activated. Check your dashboard for session details and Zoom links.</p>
+              <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <Link to="/dashboard" className="btn btn-primary">Go to Dashboard</Link>
+                <Link to="/education" className="btn btn-outline">Browse More Courses</Link>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

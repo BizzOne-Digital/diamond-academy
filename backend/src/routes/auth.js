@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
@@ -30,6 +31,32 @@ router.post('/login', async (req, res) => {
     if (!user.isActive) return res.status(401).json({ success: false, message: 'Account deactivated' });
     const token = signToken(user._id);
     res.json({ success: true, token, user: { id: user._id, name: user.name, email: user.email, role: user.role, enrolledCourses: user.enrolledCourses } });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// POST /api/auth/set-password
+// Used after a guest checkout: exchanges the one-time token issued by
+// GET /api/payments/verify/:sessionId for a real password + login session.
+router.post('/set-password', async (req, res) => {
+  try {
+    const { token, password } = req.body;
+    if (!token || !password || password.length < 6) {
+      return res.status(400).json({ success: false, message: 'A valid token and a password of at least 6 characters are required' });
+    }
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+    const user = await User.findOne({ resetPasswordToken: hashedToken, resetPasswordExpire: { $gt: Date.now() } });
+    if (!user) return res.status(400).json({ success: false, message: 'This link has expired. Please contact us to regain access.' });
+
+    user.password = password;
+    user.needsPasswordSetup = false;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+
+    const jwtToken = signToken(user._id);
+    res.json({ success: true, token: jwtToken, user: { id: user._id, name: user.name, email: user.email, role: user.role, enrolledCourses: user.enrolledCourses } });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

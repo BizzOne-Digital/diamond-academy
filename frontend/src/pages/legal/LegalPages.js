@@ -71,19 +71,25 @@ export function Terms() {
               <P>To the maximum extent permitted by law, American Diamond Academy shall not be liable for any indirect, incidental, or consequential damages arising from your use of our platform or courses.</P>
             </Section>
 
-            <Section title="9. Governing Law">
+            <Section title="9. Chargebacks &amp; Payment Disputes">
+              <P>If you experience any issues with your purchase, we encourage you to contact American Diamond Academy before initiating a chargeback or payment dispute. Our goal is to resolve concerns promptly and fairly.</P>
+              <P>By completing a purchase, you agree to provide us with a reasonable opportunity to address your concern before contacting your payment provider.</P>
+              <P>American Diamond Academy reserves the right to dispute any chargeback that we believe is inaccurate, fraudulent, or inconsistent with these Terms &amp; Conditions, our Refund Policy, or the services provided. In the event of a chargeback, we may submit supporting documentation to the payment processor or financial institution, including proof of purchase, course access records, attendance records, download history, email correspondence, and acceptance of our Terms &amp; Conditions and Refund Policy.</P>
+            </Section>
+
+            <Section title="10. Governing Law">
               <P>These Terms shall be governed by and construed in accordance with the laws of the Province of Ontario, Canada, without regard to conflict of law principles.</P>
             </Section>
 
-            <Section title="10. Changes to Terms">
+            <Section title="11. Changes to Terms">
               <P>ADA reserves the right to update these Terms at any time. Continued use of the website after changes constitutes acceptance of the revised Terms.</P>
             </Section>
 
-            <Section title="11. Language">
+            <Section title="12. Language">
               <P>These Terms, if provided in other languages, are for user convenience. In case of any differences, the English version will prevail.</P>
             </Section>
 
-            <Section title="12. Contact Us">
+            <Section title="13. Contact Us">
               <P>For any questions about these Terms, please contact us at: jaswani@angeldiamondinc.com or WhatsApp: +1 (437) 269-7007</P>
             </Section>
 
@@ -120,6 +126,11 @@ export function RefundPolicy() {
                 <Li>Session changes are subject to availability.</Li>
               </ul>
               <P>To request a session change, please contact us at jaswani@angeldiamondinc.com or WhatsApp +1 (437) 269-7007 with your name, course, and preferred new date.</P>
+            </Section>
+
+            <Section title="Chargebacks">
+              <P>If you have any questions or concerns regarding your purchase, please contact American Diamond Academy before requesting a chargeback through your credit card issuer or payment provider. Many issues can be resolved quickly through our support team.</P>
+              <P>Initiating a chargeback without first contacting us may delay the resolution process. We reserve the right to dispute chargebacks that are inconsistent with this Refund Policy or where the purchased products or services have been provided in accordance with our published policies.</P>
             </Section>
 
             <Section title="Session Cancellation by ADA">

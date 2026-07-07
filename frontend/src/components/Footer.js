@@ -82,8 +82,11 @@ export default function Footer() {
           <div>
             <h4 style={{ fontWeight: 600, marginBottom: '16px', fontSize: '15px' }}>Contact</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <a href="tel:+14372697007" style={{ color: 'rgba(255,255,255,0.55)', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-                <PhoneSVG size={16} color="#E8835A" /><span>+1 (437) 269-7007</span>
+              <a href="tel:+18889211786" style={{ color: 'rgba(255,255,255,0.55)', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+                <PhoneSVG size={16} color="#E8835A" /><span>+1-888-921-1786</span>
+              </a>
+              <a href="tel:+12124701321" style={{ color: 'rgba(255,255,255,0.55)', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+                <PhoneSVG size={16} color="#E8835A" /><span>+1-212-470-1321</span>
               </a>
               <a href="mailto:jaswani@angeldiamondinc.com" style={{ color: 'rgba(255,255,255,0.55)', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
                 <EmailSVG size={16} color="#E8835A" /><span>jaswani@angeldiamondinc.com</span>

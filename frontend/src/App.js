@@ -11,6 +11,7 @@ import Education from './pages/Education';
 import CourseDetail from './pages/CourseDetail';
 import DiamondDetail from './pages/DiamondDetail';
 import Resources from './pages/Resources';
+import Tools from './pages/Tools';
 import Cart from './pages/Cart';
 import { Blog, BlogPost } from './pages/Blog';
 import { About } from './pages/About';
@@ -36,6 +37,7 @@ import AdminLeads from './pages/admin/AdminLeads';
 import AdminResources from './pages/admin/AdminResources';
 import AdminBlog, { AdminBlogForm } from './pages/admin/AdminBlog';
 import AdminComingSoon from './pages/admin/AdminComingSoon';
+import AdminTools from './pages/admin/AdminTools';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -70,6 +72,7 @@ export default function App() {
         <Route path="blog/new" element={<AdminBlogForm />} />
         <Route path="blog/edit/:id" element={<AdminBlogForm />} />
         <Route path="comingsoon" element={<AdminComingSoon />} />
+        <Route path="tools" element={<AdminTools />} />
       </Route>
 
       <Route path="*" element={
@@ -84,6 +87,7 @@ export default function App() {
               <Route path="/diamonds" element={<Navigate to="/resources" replace />} />
               <Route path="/diamonds/:id" element={<DiamondDetail />} />
               <Route path="/resources" element={<Resources />} />
+              <Route path="/tools" element={<Tools />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
@@ -95,7 +99,7 @@ export default function App() {
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/payment/success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
+              <Route path="/payment/success" element={<PaymentSuccess />} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="*" element={<div style={{textAlign:'center',padding:'100px 20px'}}><h2>404 — Page not found</h2></div>} />
             </Routes>

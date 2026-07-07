@@ -40,6 +40,8 @@ app.use('/api/blogs', require('./routes/blogs'));
 app.use('/api/comingsoon', require('./routes/comingsoon'));
 app.use('/api/diamonds', require('./routes/diamonds'));
 app.use('/api/cart', require('./routes/cart'));
+app.use('/api/stuller', require('./routes/stuller'));
+app.use('/api/tool-skus', require('./routes/toolSkus'));
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'OK', timestamp: new Date() }));

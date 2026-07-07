@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema({
   isActive: { type: Boolean, default: true },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
+  // Set for accounts auto-created during guest checkout (no login before purchase).
+  // The customer sets a real password after payment to unlock their student dashboard.
+  needsPasswordSetup: { type: Boolean, default: false },
 }, { timestamps: true });
 
 userSchema.pre('save', async function(next) {
