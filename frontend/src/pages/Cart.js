@@ -10,23 +10,53 @@ const C = { navy: '#1B2B4B', coral: '#E8835A', light: '#EAF0F8' };
 
 export default function Cart() {
   const { items, loading, removeFromCart } = useCart();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
   const [checkingOut, setCheckingOut] = useState(false);
+  const [showDetailsForm, setShowDetailsForm] = useState(false);
+  const [details, setDetails] = useState({ name: '', email: '', phone: '', sessionIndex: '' });
 
   const total = items.reduce((sum, c) => sum + (c.price || 0), 0);
 
-  const handleCheckout = async () => {
+  // A session picker only makes sense when checking out a single course that offers
+  // multiple live-class time slots (e.g. different timezones).
+  const sessionOptions = items.length === 1 ? (items[0].sessions || []) : [];
+
+  const handleProceedClick = () => {
     if (!isAuthenticated) { navigate('/login'); return; }
+    setDetails(d => ({
+      name: d.name || user?.name || '',
+      email: d.email || user?.email || '',
+      phone: d.phone || user?.phone || '',
+      sessionIndex: d.sessionIndex || '',
+    }));
+    setShowDetailsForm(true);
+  };
+
+  const handleDetailsChange = (field) => (e) => setDetails(d => ({ ...d, [field]: e.target.value }));
+
+  const handleCheckout = async (e) => {
+    e.preventDefault();
+    if (!details.name.trim() || !details.email.trim() || !details.phone.trim()) {
+      toast.error('Please fill in your name, email, and phone number');
+      return;
+    }
+    if (sessionOptions.length > 0 && details.sessionIndex === '') {
+      toast.error('Please select a session');
+      return;
+    }
     setCheckingOut(true);
     try {
-      const { data } = await api.post('/payments/create-checkout-session', {});
+      const { data } = await api.post('/payments/create-checkout-session', { customerDetails: details });
       window.location.href = data.sessionUrl;
     } catch (err) {
       toast.error(err.response?.data?.message || 'Checkout error. Please try again.');
       setCheckingOut(false);
     }
   };
+
+  const inputStyle = { width: '100%', padding: '12px 14px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '15px', boxSizing: 'border-box' };
+  const labelStyle = { display: 'block', marginBottom: '6px', fontSize: '14px', color: C.navy, fontWeight: 500 };
 
   return (
     <>
@@ -70,10 +100,63 @@ export default function Cart() {
                   <span style={{ fontSize: '16px', fontWeight: 600, color: C.navy }}>Subtotal</span>
                   <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '26px', fontWeight: 700, color: C.navy }}>${total} USD</span>
                 </div>
-                <button onClick={handleCheckout} disabled={checkingOut} className="btn btn-primary btn-lg" style={{ width: '100%', opacity: checkingOut ? 0.7 : 1 }}>
-                  {checkingOut ? 'Redirecting to payment...' : 'Proceed to Checkout'}
-                </button>
-                <Link to="/education" style={{ display: 'block', textAlign: 'center', marginTop: '14px', color: '#6b7280', fontSize: '14px' }}>← Continue browsing courses</Link>
+
+                {!showDetailsForm ? (
+                  <>
+                    <button onClick={handleProceedClick} className="btn btn-primary btn-lg" style={{ width: '100%' }}>
+                      Proceed to Checkout
+                    </button>
+                    <Link to="/education" style={{ display: 'block', textAlign: 'center', marginTop: '14px', color: '#6b7280', fontSize: '14px' }}>← Continue browsing courses</Link>
+                  </>
+                ) : (
+                  <form onSubmit={handleCheckout}>
+                    <div style={{ borderTop: '1px solid #e5e7eb', paddingTop: '24px', marginBottom: '24px' }}>
+                      <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '26px', color: C.navy, marginBottom: '8px' }}>Customer Information</h3>
+                      <p style={{ color: '#6b7280', fontSize: '14px' }}>
+                        Please complete all required fields before proceeding to checkout.
+                        {sessionOptions.length > 0 && " We'll need your contact details to send your Zoom access link."}
+                      </p>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', marginBottom: '24px' }}>
+                      <div>
+                        <label style={labelStyle}>Full Name <span style={{ color: '#dc2626' }}>*</span></label>
+                        <input type="text" required value={details.name} onChange={handleDetailsChange('name')} style={inputStyle} />
+                      </div>
+                      <div>
+                        <label style={labelStyle}>Email Address <span style={{ color: '#dc2626' }}>*</span></label>
+                        <input type="email" required value={details.email} onChange={handleDetailsChange('email')} style={inputStyle} />
+                      </div>
+                      <div>
+                        <label style={labelStyle}>Phone Number <span style={{ color: '#dc2626' }}>*</span></label>
+                        <input type="tel" required value={details.phone} onChange={handleDetailsChange('phone')} style={inputStyle} />
+                      </div>
+                      {sessionOptions.length > 0 && (
+                        <div>
+                          <label style={labelStyle}>Session <span style={{ color: '#dc2626' }}>*</span></label>
+                          <select required value={details.sessionIndex} onChange={handleDetailsChange('sessionIndex')} style={inputStyle}>
+                            <option value="">Select a session</option>
+                            {sessionOptions.map((s, idx) => (
+                              <option key={idx} value={idx}>
+                                {s.time}{s.timezone ? ` — ${s.timezone}` : ''}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
+                    </div>
+
+                    <button type="submit" disabled={checkingOut} className="btn btn-primary btn-lg" style={{ width: '100%', opacity: checkingOut ? 0.7 : 1 }}>
+                      {checkingOut ? 'Redirecting to payment...' : 'Continue to Payment'}
+                    </button>
+                    <button
+                      type="button" onClick={() => setShowDetailsForm(false)}
+                      style={{ display: 'block', width: '100%', textAlign: 'center', marginTop: '14px', color: '#6b7280', fontSize: '14px', background: 'none', border: 'none', cursor: 'pointer' }}
+                    >
+                      ← Back to cart
+                    </button>
+                  </form>
+                )}
               </div>
             </>
           )}

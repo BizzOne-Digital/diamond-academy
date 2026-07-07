@@ -27,7 +27,7 @@ function loadGiaTool(container, tool, isActiveRef) {
   return giaLoadQueue;
 }
 
-function Gia4CsTool({ tool, label }) {
+function Gia4CsTool({ tool, label, noScroll, matchHeight }) {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -42,12 +42,16 @@ function Gia4CsTool({ tool, label }) {
     };
   }, [tool]);
 
+  const height = matchHeight ? matchHeight : (noScroll ? 'auto' : '560px');
+
   return (
-    <div style={{ background: 'white', borderRadius: '12px', padding: '24px', boxShadow: '0 2px 12px rgba(27,43,75,0.06)', display: 'flex', flexDirection: 'column', height: '560px' }}>
+    <div style={{ background: 'white', borderRadius: '12px', padding: '24px', boxShadow: '0 2px 12px rgba(27,43,75,0.06)', display: 'flex', flexDirection: 'column', height }}>
       <h4 style={{ fontFamily: "'Playfair Display', serif", fontSize: '18px', color: C.navy, marginBottom: '14px', flexShrink: 0 }}>{label}</h4>
-      {/* Each GIA tool has a different natural height (cross-origin iframe, can't be controlled) —
-          this fixed-height, scrollable window keeps all 5 cards the same size so the grid lines up. */}
-      <div style={{ flex: 1, overflowY: 'auto' }}>
+      {/* GIA's widget renders inside a cross-origin iframe, so its content (including where
+          the "Courtesy of GIA" bar lands) can't be read or restyled from here. noScroll lets
+          each card grow to its own natural height so the bar sits right after its own content
+          instead of floating in leftover blank space from a shared fixed height. */}
+      <div style={{ flex: 1, overflowY: noScroll ? 'visible' : 'auto', overflowX: 'auto' }}>
         <div ref={containerRef} style={{ width: '100%' }} />
       </div>
     </div>
@@ -112,12 +116,14 @@ export default function Resources() {
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,40px)', fontWeight: 400, color: C.navy, marginBottom: '12px' }}>Explore the 4Cs</h2>
             <p style={{ color: '#6b7280', fontSize: '16px', maxWidth: '640px', margin: '0 auto' }}>Interactive tools from GIA — drag the sliders to see how Cut, Color, Clarity, and Carat Weight affect a diamond's appearance and value.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', alignItems: 'start' }}>
-            <Gia4CsTool tool="cut" label="Cut" />
-            <Gia4CsTool tool="color" label="Color" />
-            <Gia4CsTool tool="clarity" label="Clarity" />
-            <Gia4CsTool tool="carat-weight" label="Carat Weight" />
-            <Gia4CsTool tool="anatomy" label="Diamond Anatomy" />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(460px, 1fr))', gap: '24px', alignItems: 'start' }}>
+            <Gia4CsTool tool="cut" label="Cut" noScroll />
+            <Gia4CsTool tool="color" label="Color" noScroll />
+            <Gia4CsTool tool="clarity" label="Clarity" noScroll />
+            <Gia4CsTool tool="carat-weight" label="Carat Weight" noScroll />
+          </div>
+          <div style={{ marginTop: '24px' }}>
+            <Gia4CsTool tool="anatomy" label="Diamond Anatomy" noScroll />
           </div>
         </div>
       </section>

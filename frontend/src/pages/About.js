@@ -24,7 +24,7 @@ export function About() {
   return (
     <>
       <Helmet><title>About | American Diamond Academy</title></Helmet>
-      <div className="page-hero" style={{ background: `linear-gradient(rgba(27,43,75,0.82), rgba(27,43,75,0.82)), url(/industry.webp) center/cover`, backgroundSize: 'cover' }}>
+      <div className="page-hero" style={{ background: `linear-gradient(rgba(27,43,75,0.82), rgba(27,43,75,0.82)), url(/hero-diamonds.jpg) center/cover`, backgroundSize: 'cover' }}>
         <div className="container"><h1>Behind the Shift</h1><p>Because the diamond world is changing, meet the gemmologist who decided learning should change with it.</p></div>
       </div>
 

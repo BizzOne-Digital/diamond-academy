@@ -6,9 +6,23 @@ const orderItemSchema = new mongoose.Schema({
   price: { type: Number, required: true },
 }, { _id: false });
 
+const selectedSessionSchema = new mongoose.Schema({
+  date: { type: Date },
+  time: { type: String },
+  timezone: { type: String },
+}, { _id: false });
+
+const customerDetailsSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  phone: { type: String, required: true },
+  session: { type: selectedSessionSchema },
+}, { _id: false });
+
 const orderSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   items: { type: [orderItemSchema], required: true, validate: v => v.length > 0 },
+  customerDetails: { type: customerDetailsSchema },
   amount: { type: Number, required: true },
   currency: { type: String, default: 'USD' },
   status: { type: String, enum: ['pending', 'paid', 'failed', 'refunded'], default: 'pending' },

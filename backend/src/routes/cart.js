@@ -9,7 +9,7 @@ router.use(protect);
 // GET /api/cart — current user's cart, populated with course details
 router.get('/', async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).populate('cart', 'title slug image price currency shortDescription');
+    const user = await User.findById(req.user._id).populate('cart', 'title slug image price currency shortDescription sessions');
     res.json({ success: true, items: user.cart });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
       req.user._id,
       { $addToSet: { cart: courseId } },
       { new: true }
-    ).populate('cart', 'title slug image price currency shortDescription');
+    ).populate('cart', 'title slug image price currency shortDescription sessions');
     res.json({ success: true, items: user.cart });
   } catch (err) {
     res.status(400).json({ success: false, message: err.message });
@@ -43,7 +43,7 @@ router.delete('/:courseId', async (req, res) => {
       req.user._id,
       { $pull: { cart: req.params.courseId } },
       { new: true }
-    ).populate('cart', 'title slug image price currency shortDescription');
+    ).populate('cart', 'title slug image price currency shortDescription sessions');
     res.json({ success: true, items: user.cart });
   } catch (err) {
     res.status(400).json({ success: false, message: err.message });

@@ -16,12 +16,27 @@ router.post('/create-checkout-session', protect, async (req, res) => {
     }
     if (!courseIds.length) return res.status(400).json({ success: false, message: 'Your cart is empty' });
 
+    const { name, email, phone, sessionIndex } = req.body.customerDetails || {};
+    if (!name || !email || !phone) {
+      return res.status(400).json({ success: false, message: 'Please provide your name, email, and phone number before checkout' });
+    }
+
     const courses = await Course.find({ _id: { $in: courseIds } });
     if (courses.length !== courseIds.length) return res.status(404).json({ success: false, message: 'One or more courses were not found' });
 
     const alreadyEnrolled = courses.filter(c => req.user.enrolledCourses.some(id => id.toString() === c._id.toString()));
     if (alreadyEnrolled.length) {
       return res.status(400).json({ success: false, message: `Already enrolled in: ${alreadyEnrolled.map(c => c.title).join(', ')}` });
+    }
+
+    // When checking out a single course that offers multiple session slots (e.g. different
+    // timezones), the customer must pick one before paying.
+    let selectedSession;
+    if (courses.length === 1 && courses[0].sessions && courses[0].sessions.length > 0) {
+      const idx = Number(sessionIndex);
+      const session = courses[0].sessions[idx];
+      if (!session) return res.status(400).json({ success: false, message: 'Please select a session' });
+      selectedSession = { date: session.date, time: session.time, timezone: session.timezone };
     }
 
     const line_items = courses.map(course => ({
@@ -40,11 +55,11 @@ router.post('/create-checkout-session', protect, async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      customer_email: req.user.email,
+      customer_email: email,
       line_items,
       success_url: `${process.env.FRONTEND_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL}/cart`,
-      metadata: { courseIds: courseIds.join(','), userId: req.user._id.toString() },
+      metadata: { courseIds: courseIds.join(','), userId: req.user._id.toString(), customerName: name, customerPhone: phone },
     });
 
     // Create pending order with one line item per course
@@ -54,6 +69,7 @@ router.post('/create-checkout-session', protect, async (req, res) => {
       amount: courses.reduce((sum, c) => sum + c.price, 0),
       status: 'pending',
       stripeSessionId: session.id,
+      customerDetails: { name, email, phone, session: selectedSession },
     });
 
     res.json({ success: true, sessionUrl: session.url, sessionId: session.id });
