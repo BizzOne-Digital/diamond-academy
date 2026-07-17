@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import api from '../utils/api';
+import WhopCheckout, { WHOP_PLAN_BY_COMING_SOON_TITLE } from '../components/WhopCheckout';
 
+const findWhopPlanForComingSoonTitle = (title = '') => {
+  const key = Object.keys(WHOP_PLAN_BY_COMING_SOON_TITLE).find(k => title.startsWith(k));
+  return key ? WHOP_PLAN_BY_COMING_SOON_TITLE[key] : null;
+};
 
 function ComingSoonSection({ C }) {
   const [items, setItems] = React.useState([]);
@@ -18,7 +23,7 @@ function ComingSoonSection({ C }) {
     }).catch(() => {
       setItems([
         { _id: '1', title: 'Diamond Precision', subtitle: 'Applied Diamond Measurement & Valuation', description: 'This masterclass integrates advanced diamond grading knowledge with the quantitative tools used in real-world diamond evaluation and pricing. Building on Cut, Colour, Clarity, and Carat interpretation, the course introduces key analytical frameworks including proportion analysis, carat weight estimation logic, and value impact assessments based on cut performance and light efficiency. Designed as the final stage of the Diamond Intelligence framework. Pre-requisite: Diamond Intelligence', image: '/course-precision.png' },
-        { _id: '2', title: 'Diamond Fancy Shapes', subtitle: 'Visual Evaluation', description: 'Develop expert visual evaluation skills for fancy-shaped diamonds — from pear and oval to marquise, cushion, and beyond.', image: '/course-fancy-shapes.jpeg' },
+        { _id: '2', title: 'Diamond Shape Intelligence – Visual Evaluation and Grading', subtitle: 'Beyond Round Brilliants', description: 'Develop expert visual evaluation skills for fancy-shaped diamonds — from pear and oval to marquise, cushion, and beyond.', image: '/course-fancy-shapes.jpeg' },
       ]);
     });
   }, []);
@@ -27,7 +32,9 @@ function ComingSoonSection({ C }) {
 
   return (
     <div>
-      {items.map((item, i) => (
+      {items.map((item, i) => {
+        const whopPlanId = findWhopPlanForComingSoonTitle(item.title);
+        return (
         <section key={item._id} style={{ background: i % 2 === 0 ? C.navy : 'white', padding: '0' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
             {/* Image side - alternates */}
@@ -39,6 +46,7 @@ function ComingSoonSection({ C }) {
                   <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(32px,4vw,52px)', fontWeight: 400, marginBottom: '8px', lineHeight: 1.15 }}>{item.title}</h2>
                   {item.subtitle && <p style={{ fontWeight: 700, color: C.coral, marginBottom: '20px', fontSize: '15px' }}>{item.subtitle}</p>}
                   <p style={{ color: 'rgba(255,255,255,0.75)', lineHeight: 1.85, fontSize: '15px' }}>{item.description}</p>
+                  {whopPlanId && <div style={{ marginTop: '24px', maxWidth: '420px', minHeight: '400px' }}><WhopCheckout planId={whopPlanId} /></div>}
                 </div>
               </>
             ) : (
@@ -48,13 +56,15 @@ function ComingSoonSection({ C }) {
                   <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(32px,4vw,52px)', fontWeight: 400, color: C.navy, marginBottom: '8px', lineHeight: 1.15 }}>{item.title}</h2>
                   {item.subtitle && <p style={{ fontWeight: 700, color: C.coral, marginBottom: '20px', fontSize: '15px' }}>{item.subtitle}</p>}
                   <p style={{ color: '#4b5563', lineHeight: 1.85, fontSize: '15px' }}>{item.description}</p>
+                  {whopPlanId && <div style={{ marginTop: '24px', maxWidth: '420px', minHeight: '400px' }}><WhopCheckout planId={whopPlanId} /></div>}
                 </div>
                 <div style={{ position: 'relative', minHeight: '420px', background: `url(${item.image || '/course-fancy-shapes.jpeg'}) center/cover no-repeat` }} />
               </>
             )}
           </div>
         </section>
-      ))}
+        );
+      })}
     </div>
   );
 }

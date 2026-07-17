@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import WhopCheckout, { WHOP_PLAN_BY_SLUG } from '../components/WhopCheckout';
 
 export default function CourseDetail() {
   const { slug } = useParams();
@@ -29,6 +30,7 @@ export default function CourseDetail() {
 
   const isEnrolled = user?.enrolledCourses?.some(c => c._id === course?._id || c === course?._id);
   const inCart = isInCart(course?._id);
+  const whopPlanId = WHOP_PLAN_BY_SLUG[slug];
 
   const handleAddToCart = async () => {
     setAddingToCart(true);
@@ -61,7 +63,9 @@ export default function CourseDetail() {
               <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '16px', lineHeight: 1.8, marginBottom: '32px' }}>{course.shortDescription || course.description?.substring(0, 200)}</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
                 <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '36px', fontWeight: 600 }}>${course.price.toFixed(2)}</span>
-                {isEnrolled ? (
+                {whopPlanId ? (
+                  <a href="#enroll" className="btn btn-primary btn-lg">Enroll Now ↓</a>
+                ) : isEnrolled ? (
                   <span style={{ background: '#22c55e', color: 'white', padding: '10px 24px', borderRadius: '30px', fontWeight: 600, fontSize: '14px' }}>✓ Enrolled</span>
                 ) : inCart ? (
                   <Link to="/cart" className="btn btn-primary btn-lg">View Cart</Link>
@@ -139,10 +143,12 @@ export default function CourseDetail() {
             </div>
 
             {/* Sidebar */}
-            <div>
-              <div style={{ position: 'sticky', top: '90px', background: C.light, borderRadius: '12px', padding: '32px', border: '1px solid #e5e7eb' }}>
+            <div id="enroll">
+              <div style={{ position: whopPlanId ? 'static' : 'sticky', top: '90px', background: C.light, borderRadius: '12px', padding: '32px', border: '1px solid #e5e7eb' }}>
                 <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 600, color: C.navy, marginBottom: '20px' }}>${course.price.toFixed(2)}</p>
-                {isEnrolled ? (
+                {whopPlanId ? (
+                  <div style={{ marginBottom: '16px', minHeight: '400px' }}><WhopCheckout planId={whopPlanId} /></div>
+                ) : isEnrolled ? (
                   <div style={{ background: '#dcfce7', color: '#16a34a', padding: '12px 16px', borderRadius: '8px', fontWeight: 600, textAlign: 'center', marginBottom: '16px' }}>✓ You are enrolled!</div>
                 ) : inCart ? (
                   <Link to="/cart" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', marginBottom: '16px' }}>View Cart</Link>
@@ -151,9 +157,11 @@ export default function CourseDetail() {
                     {addingToCart ? 'Adding...' : 'Add to Cart'}
                   </button>
                 )}
-                <div style={{ fontSize: '12px', color: '#6b7280', textAlign: 'center', marginBottom: '24px' }}>
-                  🔒 Secure payment via Stripe at checkout
-                </div>
+                {!whopPlanId && (
+                  <div style={{ fontSize: '12px', color: '#6b7280', textAlign: 'center', marginBottom: '24px' }}>
+                    🔒 Secure payment via Stripe at checkout
+                  </div>
+                )}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {[
                     ['', 'Level', course.level],
