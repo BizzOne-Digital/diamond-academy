@@ -17,16 +17,16 @@ const Li = ({ children }) => <li style={{ color: '#4b5563', fontSize: '15px', li
 export function Terms() {
   return (
     <>
-      <Helmet><title>Terms & Conditions | American Diamond Academy</title></Helmet>
+      <Helmet><title>Terms & Conditions | American Diamonds Academy</title></Helmet>
       <div className="page-hero"><div className="container"><h1>Terms &amp; Conditions</h1><p>Last updated: June 2025</p></div></div>
       <section className="section" style={{ background: C.light }}>
         <div className="container" style={{ maxWidth: '860px' }}>
           <div style={{ background: 'white', borderRadius: '12px', padding: '48px', boxShadow: '0 2px 10px rgba(0,0,0,0.06)' }}>
 
-            <P>Welcome to American Diamond Academy ("ADA", "we", "us", or "our"). By accessing or purchasing from our website americandiamondacademy.com, you agree to be bound by these Terms and Conditions. Please read them carefully before enrolling in any course.</P>
+            <P>Welcome to American Diamonds Academy ("ADA", "we", "us", or "our"). By accessing or purchasing from our website americandiamondsacademy.com, you agree to be bound by these Terms and Conditions. Please read them carefully before enrolling in any course.</P>
 
             <Section title="1. Acceptance of Terms">
-              <P>By registering for an account or purchasing a course, you agree to these Terms and Conditions in full. Our courses are open to learners of all ages. Please note that payment processing via Stripe requires the use of a valid credit or debit card. Credit card holders must meet the minimum age requirements set by their card issuer and applicable law in their jurisdiction. If you do not agree to these Terms, please do not use our services.</P>
+              <P>By registering for an account or purchasing a course, you agree to these Terms and Conditions in full. Our courses are open to learners of all ages. Please note that payment processing via Whop requires the use of a valid credit or debit card. Credit card holders must meet the minimum age requirements set by their card issuer and applicable law in their jurisdiction. If you do not agree to these Terms, please do not use our services.</P>
             </Section>
 
             <Section title="2. Course Access & Delivery">
@@ -40,7 +40,7 @@ export function Terms() {
             </Section>
 
             <Section title="3. Intellectual Property">
-              <P>All course content, materials, videos, images, and resources provided by American Diamond Academy are the exclusive intellectual property of ADA. You may not copy, reproduce, distribute, or create derivative works without prior written consent from ADA.</P>
+              <P>All course content, materials, videos, images, and resources provided by American Diamonds Academy are the exclusive intellectual property of ADA. You may not copy, reproduce, distribute, or create derivative works without prior written consent from ADA.</P>
               <P>No rights or ownership are transferred to you by accessing this website or enrolling in any course.</P>
               <P>Unauthorized use of our name, branding, or materials may result in legal action.</P>
             </Section>
@@ -50,7 +50,7 @@ export function Terms() {
             </Section>
 
             <Section title="5. Payment">
-              <P>All payments are processed securely via Stripe. Prices are listed in USD and are subject to change without notice. Payment must be completed in full before course access is granted.</P>
+              <P>All payments are processed securely via Whop. Prices are listed in USD and are subject to change without notice. Payment must be completed in full before course access is granted.</P>
             </Section>
 
             <Section title="6. Prohibited Conduct">
@@ -68,13 +68,13 @@ export function Terms() {
             </Section>
 
             <Section title="8. Limitation of Liability">
-              <P>To the maximum extent permitted by law, American Diamond Academy shall not be liable for any indirect, incidental, or consequential damages arising from your use of our platform or courses.</P>
+              <P>To the maximum extent permitted by law, American Diamonds Academy shall not be liable for any indirect, incidental, or consequential damages arising from your use of our platform or courses.</P>
             </Section>
 
             <Section title="9. Chargebacks &amp; Payment Disputes">
-              <P>If you experience any issues with your purchase, we encourage you to contact American Diamond Academy before initiating a chargeback or payment dispute. Our goal is to resolve concerns promptly and fairly.</P>
+              <P>If you experience any issues with your purchase, we encourage you to contact American Diamonds Academy before initiating a chargeback or payment dispute. Our goal is to resolve concerns promptly and fairly.</P>
               <P>By completing a purchase, you agree to provide us with a reasonable opportunity to address your concern before contacting your payment provider.</P>
-              <P>American Diamond Academy reserves the right to dispute any chargeback that we believe is inaccurate, fraudulent, or inconsistent with these Terms &amp; Conditions, our Refund Policy, or the services provided. In the event of a chargeback, we may submit supporting documentation to the payment processor or financial institution, including proof of purchase, course access records, attendance records, download history, email correspondence, and acceptance of our Terms &amp; Conditions and Refund Policy.</P>
+              <P>American Diamonds Academy reserves the right to dispute any chargeback that we believe is inaccurate, fraudulent, or inconsistent with these Terms &amp; Conditions, our Refund Policy, or the services provided. In the event of a chargeback, we may submit supporting documentation to the payment processor or financial institution, including proof of purchase, course access records, attendance records, download history, email correspondence, and acceptance of our Terms &amp; Conditions and Refund Policy.</P>
             </Section>
 
             <Section title="10. Governing Law">
@@ -104,13 +104,13 @@ export function Terms() {
 export function RefundPolicy() {
   return (
     <>
-      <Helmet><title>Refund Policy | American Diamond Academy</title></Helmet>
+      <Helmet><title>Refund Policy | American Diamonds Academy</title></Helmet>
       <div className="page-hero"><div className="container"><h1>Refund Policy</h1><p>Last updated: June 2025</p></div></div>
       <section className="section" style={{ background: C.light }}>
         <div className="container" style={{ maxWidth: '860px' }}>
           <div style={{ background: 'white', borderRadius: '12px', padding: '48px', boxShadow: '0 2px 10px rgba(0,0,0,0.06)' }}>
 
-            <P>At American Diamond Academy, we are committed to delivering a high-quality learning experience. Please read our refund policy carefully before making a purchase.</P>
+            <P>At American Diamonds Academy, we are committed to delivering a high-quality learning experience. Please read our refund policy carefully before making a purchase.</P>
 
             <Section title="All Sales Are Final">
               <P>All course purchases are final and non-refundable. Once you have completed your purchase and received access to your course materials and session details, we do not offer refunds or exchanges.</P>
@@ -129,12 +129,12 @@ export function RefundPolicy() {
             </Section>
 
             <Section title="Chargebacks">
-              <P>If you have any questions or concerns regarding your purchase, please contact American Diamond Academy before requesting a chargeback through your credit card issuer or payment provider. Many issues can be resolved quickly through our support team.</P>
+              <P>If you have any questions or concerns regarding your purchase, please contact American Diamonds Academy before requesting a chargeback through your credit card issuer or payment provider. Many issues can be resolved quickly through our support team.</P>
               <P>Initiating a chargeback without first contacting us may delay the resolution process. We reserve the right to dispute chargebacks that are inconsistent with this Refund Policy or where the purchased products or services have been provided in accordance with our published policies.</P>
             </Section>
 
             <Section title="Session Cancellation by ADA">
-              <P>In the rare event that American Diamond Academy must cancel a scheduled session due to unforeseen circumstances, enrolled students will be offered a seat in the next available session of the same course at no additional charge.</P>
+              <P>In the rare event that American Diamonds Academy must cancel a scheduled session due to unforeseen circumstances, enrolled students will be offered a seat in the next available session of the same course at no additional charge.</P>
             </Section>
 
             <Section title="Contact Us">
@@ -156,19 +156,19 @@ export function RefundPolicy() {
 export function PrivacyPolicy() {
   return (
     <>
-      <Helmet><title>Privacy Policy | American Diamond Academy</title></Helmet>
+      <Helmet><title>Privacy Policy | American Diamonds Academy</title></Helmet>
       <div className="page-hero"><div className="container"><h1>Privacy Policy</h1><p>Last updated: June 2025</p></div></div>
       <section className="section" style={{ background: C.light }}>
         <div className="container" style={{ maxWidth: '860px' }}>
           <div style={{ background: 'white', borderRadius: '12px', padding: '48px', boxShadow: '0 2px 10px rgba(0,0,0,0.06)' }}>
 
-            <P>American Diamond Academy ("ADA", "we", "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your personal information when you use americandiamondacademy.com.</P>
+            <P>American Diamonds Academy ("ADA", "we", "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your personal information when you use americandiamondsacademy.com.</P>
 
             <Section title="1. Information We Collect">
               <P>We collect the following personal information:</P>
               <ul style={{ paddingLeft: '20px', marginBottom: '12px' }}>
                 <Li><strong>Account Information:</strong> Name, email address, phone number, and country when you register.</Li>
-                <Li><strong>Payment Information:</strong> Payment is processed by Stripe. ADA does not store your credit card details.</Li>
+                <Li><strong>Payment Information:</strong> Payment is processed by Whop. ADA does not store your credit card details.</Li>
                 <Li><strong>Communication Data:</strong> Messages submitted via our contact form.</Li>
                 <Li><strong>Usage Data:</strong> Pages visited, session attendance, and course progress.</Li>
               </ul>
@@ -189,7 +189,7 @@ export function PrivacyPolicy() {
             <Section title="3. Sharing of Information">
               <P>We do not sell, rent, or trade your personal information to third parties. We may share information with:</P>
               <ul style={{ paddingLeft: '20px', marginBottom: '12px' }}>
-                <Li><strong>Stripe</strong> — for secure payment processing.</Li>
+                <Li><strong>Whop</strong> — for secure payment processing.</Li>
                 <Li><strong>Zoom</strong> — for delivering live course sessions.</Li>
                 <Li><strong>Cloudinary</strong> — for image storage.</Li>
                 <Li>Legal authorities if required by law.</Li>
@@ -204,8 +204,8 @@ export function PrivacyPolicy() {
               <P>Our website uses essential cookies to maintain your login session. We do not use tracking or advertising cookies. By using our website, you consent to our use of essential cookies.</P>
             </Section>
 
-            <Section title="6. Your Rights (PIPEDA & CASL — Canada)">
-              <P>As a user in Canada or North America, you have the right to:</P>
+            <Section title="6. Your Rights">
+              <P>As a user in the United States or elsewhere, you have the right to:</P>
               <ul style={{ paddingLeft: '20px', marginBottom: '12px' }}>
                 <Li>Access the personal information we hold about you.</Li>
                 <Li>Request correction of inaccurate information.</Li>
@@ -224,7 +224,7 @@ export function PrivacyPolicy() {
             </Section>
 
             <Section title="9. Children's Privacy">
-              <P>Our courses are open to learners of all ages. We do not knowingly collect personal information from minors without parental consent. Payment processing via Stripe requires a valid credit or debit card, and card holders must meet the minimum age requirements set by their card issuer and applicable law in their jurisdiction.</P>
+              <P>Our courses are open to learners of all ages. We do not knowingly collect personal information from minors without parental consent. Payment processing via Whop requires a valid credit or debit card, and card holders must meet the minimum age requirements set by their card issuer and applicable law in their jurisdiction.</P>
             </Section>
 
             <Section title="10. Changes to This Policy">

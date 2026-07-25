@@ -10,6 +10,7 @@ const blogSchema = new mongoose.Schema({
   category: { type: String, default: 'General' },
   tags: [{ type: String }],
   isPublished: { type: Boolean, default: false },
+  isPinned: { type: Boolean, default: false }, // shown first on the blog list, ahead of publish date
   publishedAt: { type: Date },
   author: { type: String, default: 'Archana Jaswani' },
 }, { timestamps: true });

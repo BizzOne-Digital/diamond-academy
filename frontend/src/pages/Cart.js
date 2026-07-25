@@ -62,7 +62,7 @@ export default function Cart() {
 
   return (
     <>
-      <Helmet><title>Your Cart | American Diamond Academy</title></Helmet>
+      <Helmet><title>Your Cart | American Diamonds Academy</title></Helmet>
       <div className="page-hero">
         <div className="container">
           <h1>Your Cart</h1>

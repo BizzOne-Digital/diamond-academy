@@ -18,7 +18,7 @@ export default function Tools() {
 
   return (
     <>
-      <Helmet><title>Tools &amp; Supplies | American Diamond Academy</title></Helmet>
+      <Helmet><title>Tools &amp; Supplies | American Diamonds Academy</title></Helmet>
       <div className="page-hero">
         <div className="container">
           <h1>Tools &amp; Supplies</h1>
@@ -42,16 +42,26 @@ export default function Tools() {
             </div>
           ) : (
             <div className="grid-3">
-              {products.map((p, i) => (
-                <div key={p.Id || p.SKU || i} className="card" style={{ overflow: 'hidden' }}>
-                  <div style={{ height: '200px', background: `url(${p.ImageUrl || p.ImagePath || ''}) center/cover no-repeat`, backgroundColor: '#f3f4f6' }} />
-                  <div style={{ padding: '20px' }}>
-                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '17px', color: C.navy, marginBottom: '6px' }}>{p.Description || p.Title || 'Product'}</h3>
-                    {p.SKU && <p style={{ color: '#9ca3af', fontSize: '12px', marginBottom: '8px' }}>SKU: {p.SKU}</p>}
-                    {(p.Price || p.YourPrice) && <p style={{ fontWeight: 700, color: C.coral, fontSize: '16px' }}>${p.Price || p.YourPrice}</p>}
+              {products.map((p, i) => {
+                const name = p.Description || p.ShortDescription || p.Title || 'Product';
+                const image = p.ImageUrl || p.ImagePath || p.FullySetImages?.[0]?.Url || p.FullySetImages?.[0] || '';
+                return (
+                  <div key={p.Id || p.SKU || i} className="card" style={{ overflow: 'hidden' }}>
+                    {image ? (
+                      <div style={{ height: '200px', background: `url(${image}) center/cover no-repeat`, backgroundColor: '#f3f4f6' }} />
+                    ) : (
+                      <div style={{ height: '200px', background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <span style={{ fontSize: '36px', opacity: 0.25 }}>🧰</span>
+                      </div>
+                    )}
+                    <div style={{ padding: '20px' }}>
+                      <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '17px', color: C.navy, marginBottom: '6px' }}>{name}</h3>
+                      {p.SKU && <p style={{ color: '#9ca3af', fontSize: '12px', marginBottom: '8px' }}>SKU: {p.SKU}</p>}
+                      {(p.Price || p.YourPrice) && <p style={{ fontWeight: 700, color: C.coral, fontSize: '16px' }}>${p.Price || p.YourPrice}</p>}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

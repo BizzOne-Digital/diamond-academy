@@ -66,6 +66,7 @@ export default function AdminBlog() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                   <h3 style={{ fontWeight: 600, color: C.navy, fontSize: '15px', margin: 0 }}>{post.title}</h3>
                   <span style={{ padding: '2px 8px', borderRadius: '10px', fontSize: '11px', fontWeight: 600, background: post.isPublished ? '#dcfce7' : '#f3f4f6', color: post.isPublished ? '#16a34a' : '#6b7280' }}>{post.isPublished ? 'Published' : 'Draft'}</span>
+                  {post.isPinned && <span style={{ padding: '2px 8px', borderRadius: '10px', fontSize: '11px', fontWeight: 600, background: '#fef3c7', color: '#d97706' }}>📌 Main Article</span>}
                 </div>
                 <p style={{ color: '#6b7280', fontSize: '13px', margin: 0 }}>{post.category} · {post.author} · {new Date(post.createdAt).toLocaleDateString()}</p>
               </div>
@@ -91,7 +92,7 @@ export function AdminBlogForm() {
   const [imageUploading, setImageUploading] = useState(false);
   const [form, setForm] = useState({
     title: '', slug: '', excerpt: '', content: '', coverImage: '',
-    coverImagePublicId: '', category: 'Diamond Education', tags: '', isPublished: false, author: 'Archana Jaswani',
+    coverImagePublicId: '', category: 'Diamond Education', tags: '', isPublished: false, isPinned: false, author: 'Archana Jaswani',
   });
 
   useEffect(() => {
@@ -229,9 +230,14 @@ export function AdminBlogForm() {
           />
         </div>
 
-        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', cursor: 'pointer', marginBottom: '20px' }}>
+        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', cursor: 'pointer', marginBottom: '12px' }}>
           <input type="checkbox" checked={form.isPublished} onChange={e => setForm(f => ({ ...f, isPublished: e.target.checked }))} />
           Publish immediately (visible to all visitors)
+        </label>
+
+        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', cursor: 'pointer', marginBottom: '20px' }}>
+          <input type="checkbox" checked={form.isPinned} onChange={e => setForm(f => ({ ...f, isPinned: e.target.checked }))} />
+          Pin as the main article (shown first on the blog list, ahead of newer posts)
         </label>
 
         <div style={{ display: 'flex', gap: '12px' }}>

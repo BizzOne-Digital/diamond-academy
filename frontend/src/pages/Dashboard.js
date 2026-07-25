@@ -23,7 +23,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <Helmet><title>My Dashboard | American Diamond Academy</title></Helmet>
+      <Helmet><title>My Dashboard | American Diamonds Academy</title></Helmet>
       <div style={{ minHeight: '80vh', background: C.light }}>
         <div style={{ background: C.navy, padding: '40px 0', color: 'white' }}>
           <div className="container">

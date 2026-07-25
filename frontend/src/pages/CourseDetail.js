@@ -44,7 +44,7 @@ export default function CourseDetail() {
 
   return (
     <>
-      <Helmet><title>{course.title} | American Diamond Academy</title></Helmet>
+      <Helmet><title>{course.title} | American Diamonds Academy</title></Helmet>
 
       {/* Hero */}
       <section style={{ background: C.navy, padding: '60px 0 0' }}>
@@ -64,7 +64,7 @@ export default function CourseDetail() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
                 <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '36px', fontWeight: 600 }}>${course.price.toFixed(2)}</span>
                 {whopPlanId ? (
-                  <a href="#enroll" className="btn btn-primary btn-lg">Enroll Now ↓</a>
+                  <WhopCheckout planId={whopPlanId} />
                 ) : isEnrolled ? (
                   <span style={{ background: '#22c55e', color: 'white', padding: '10px 24px', borderRadius: '30px', fontWeight: 600, fontSize: '14px' }}>✓ Enrolled</span>
                 ) : inCart ? (
@@ -144,10 +144,10 @@ export default function CourseDetail() {
 
             {/* Sidebar */}
             <div id="enroll">
-              <div style={{ position: whopPlanId ? 'static' : 'sticky', top: '90px', background: C.light, borderRadius: '12px', padding: '32px', border: '1px solid #e5e7eb' }}>
+              <div style={{ position: 'sticky', top: '90px', background: C.light, borderRadius: '12px', padding: '32px', border: '1px solid #e5e7eb' }}>
                 <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 600, color: C.navy, marginBottom: '20px' }}>${course.price.toFixed(2)}</p>
                 {whopPlanId ? (
-                  <div style={{ marginBottom: '16px', minHeight: '400px' }}><WhopCheckout planId={whopPlanId} /></div>
+                  <WhopCheckout planId={whopPlanId} className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', marginBottom: '16px' }} />
                 ) : isEnrolled ? (
                   <div style={{ background: '#dcfce7', color: '#16a34a', padding: '12px 16px', borderRadius: '8px', fontWeight: 600, textAlign: 'center', marginBottom: '16px' }}>✓ You are enrolled!</div>
                 ) : inCart ? (
@@ -159,7 +159,7 @@ export default function CourseDetail() {
                 )}
                 {!whopPlanId && (
                   <div style={{ fontSize: '12px', color: '#6b7280', textAlign: 'center', marginBottom: '24px' }}>
-                    🔒 Secure payment via Stripe at checkout
+                    🔒 Secure payment via Whop at checkout
                   </div>
                 )}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>

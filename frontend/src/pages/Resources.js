@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import api from '../utils/api';
-import DiamondBrowser from '../components/DiamondBrowser';
+import { DiamondSVG } from '../components/Icons';
 
 const C = { navy: '#1B2B4B', coral: '#E8835A', light: '#EAF0F8' };
 
@@ -98,7 +98,7 @@ export default function Resources() {
 
   return (
     <>
-      <Helmet><title>Educational Resources | American Diamond Academy</title></Helmet>
+      <Helmet><title>Educational Resources | American Diamonds Academy</title></Helmet>
       <div className="page-hero">
         <div className="container">
           <h1>Educational Resources</h1>
@@ -106,24 +106,24 @@ export default function Resources() {
         </div>
       </div>
 
-      {/* Browse Natural Diamonds */}
-      <DiamondBrowser />
-
-      {/* GIA 4Cs Interactive Tools */}
+      {/* GIA 4Cs Interactive Tools — one per row. GIA's iframes each have a different
+          natural height (cut/color/clarity/carat all render different content), so
+          placing them side-by-side in a multi-column grid produced uneven, misaligned
+          card bottoms. A single column keeps every tool's full height visible and
+          properly aligned. */}
       <section className="section" style={{ background: 'white' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,40px)', fontWeight: 400, color: C.navy, marginBottom: '12px' }}>Explore the 4Cs</h2>
             <p style={{ color: '#6b7280', fontSize: '16px', maxWidth: '640px', margin: '0 auto' }}>Interactive tools from GIA — drag the sliders to see how Cut, Color, Clarity, and Carat Weight affect a diamond's appearance and value.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(460px, 1fr))', gap: '24px', alignItems: 'start' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <Gia4CsTool tool="cut" label="Cut" noScroll />
             <Gia4CsTool tool="color" label="Color" noScroll />
             <Gia4CsTool tool="clarity" label="Clarity" noScroll />
             <Gia4CsTool tool="carat-weight" label="Carat Weight" noScroll />
-          </div>
-          <div style={{ marginTop: '24px' }}>
             <Gia4CsTool tool="anatomy" label="Diamond Anatomy" noScroll />
+            <Gia4CsTool tool={null} label="Complete 4Cs Tool" noScroll />
           </div>
         </div>
       </section>
@@ -134,9 +134,9 @@ export default function Resources() {
             <div style={{ textAlign: 'center', padding: '60px' }}><div className="spinner" style={{ margin: '0 auto' }} /></div>
           ) : resources.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '80px', background: 'white', borderRadius: '12px' }}>
-              <div style={{ fontSize: '48px', marginBottom: '16px', opacity: 0.3 }}>🎬</div>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '24px', color: C.navy, marginBottom: '12px' }}>Coming Soon</h3>
-              <p style={{ color: '#6b7280' }}>Educational resources and videos will be published here soon. Check back shortly.</p>
+              <DiamondSVG size={44} color={C.coral} style={{ marginBottom: '16px', opacity: 0.6 }} />
+              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '24px', color: C.navy, marginBottom: '12px' }}>More Resources Coming Soon</h3>
+              <p style={{ color: '#6b7280' }}>Educational videos and downloadable guides will be published here soon. Check back shortly.</p>
             </div>
           ) : (
             <div className="grid-3">

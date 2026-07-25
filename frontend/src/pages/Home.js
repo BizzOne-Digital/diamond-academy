@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import { GraduationSVG, GemSVG, BoltSVG, EmailSVG } from '../components/Icons';
 import toast from 'react-hot-toast';
 import api from '../utils/api';
+import IgiCollabBanner from '../components/IgiCollabBanner';
+import ComingSoonSection from '../components/ComingSoonSection';
 
 
 // Diamond Shapes Carousel Component
@@ -65,7 +67,6 @@ export default function Home() {
 
   useEffect(() => {
     api.get('/courses').then(r => setCourses(r.data.courses?.slice(0, 3) || [])).catch(() => {});
-    api.get('/comingsoon').then(r => setComingSoon(r.data.items || [])).catch(() => {});
   }, []);
 
   const handleNewsletter = async (e) => {
@@ -86,21 +87,21 @@ export default function Home() {
     { Icon: BoltSVG, title: 'Fast Impact Learning', desc: 'Short, focused training built for immediate real-world application.' },
   ];
 
-  const [comingSoon, setComingSoon] = useState([]);
-
   return (
     <>
-      <Helmet><title>American Diamond Academy | Online Diamond Grading Courses</title></Helmet>
+      <Helmet><title>American Diamonds Academy | Online Diamond Grading Courses</title></Helmet>
 
-      {/* HERO — full-width image with academy name overlaid, matching original CDA style */}
+      {/* HERO — full-width image with academy name overlaid, matching original CDA style.
+          No color layover on the image itself — the client asked for the photo to show
+          through clean/undulled, so text sits on its own scrim only where needed for
+          legibility (a soft bottom gradient), not a flat tint across the whole photo. */}
       <section style={{ position: 'relative', width: '100%', minHeight: '480px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('/hero-diamonds.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(27,43,75,0.55)' }} />
         <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '80px 20px' }}>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(36px, 6vw, 72px)', fontWeight: 700, color: 'white', lineHeight: 1.1, letterSpacing: '-1px', marginBottom: '20px' }}>
-            American Diamond<br />Academy
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(36px, 6vw, 72px)', fontWeight: 700, color: 'white', textShadow: '0 2px 20px rgba(0,0,0,0.55)', lineHeight: 1.1, letterSpacing: '-1px', marginBottom: '20px' }}>
+            American Diamonds<br />Academy
           </h1>
-          <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 'clamp(15px,1.8vw,18px)', maxWidth: '600px', margin: '0 auto 36px', lineHeight: 1.6 }}>
+          <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: 'clamp(15px,1.8vw,18px)', maxWidth: '600px', margin: '0 auto 36px', lineHeight: 1.6, textShadow: '0 2px 12px rgba(0,0,0,0.5)' }}>
             Online diamond grading education for buyers, sellers, and enthusiasts navigating today&apos;s digital marketplace.
           </p>
           <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -112,16 +113,18 @@ export default function Home() {
 
       {/* BELOW HERO — "Diamond Learning, Reimagined." + description + Learn More */}
       <section style={{ background: C.light, padding: '110px 20px' }}>
-        <div className="container" style={{ maxWidth: '1100px', textAlign: 'center' }}>
+        <div className="container">
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(34px,4.5vw,60px)', fontWeight: 400, color: C.navy, marginBottom: '36px', lineHeight: 1.15 }}>
             Diamond Learning, <em>Reimagined.</em>
           </h2>
-          <p style={{ color: '#374151', fontSize: '16px', lineHeight: 1.95, maxWidth: '980px', margin: '0 auto 40px' }}>
-            Diamonds are more than grades, they&apos;re light, structure, and brilliance. As the trade shifts from physical counters to virtual screens, the way we learn must evolve too. The American Diamond Academy teaches the visual skills and judgment today&apos;s digital marketplace demands, so you can evaluate diamonds confidently, even without holding them in your hand. Whether you&apos;re a buyer, seller, or enthusiast, you&apos;ll gain clarity and a skill that lasts a lifetime.
+          <p style={{ color: '#374151', fontSize: '16px', lineHeight: 1.95, maxWidth: '980px', margin: '0 0 40px' }}>
+            Diamonds are more than grades, they&apos;re light, structure, and brilliance. As the trade shifts from physical counters to virtual screens, the way we learn must evolve too. The American Diamonds Academy teaches the visual skills and judgment today&apos;s digital marketplace demands, so you can evaluate diamonds confidently, even without holding them in your hand. Whether you&apos;re a buyer, seller, or enthusiast, you&apos;ll gain clarity and a skill that lasts a lifetime.
           </p>
           <Link to="/about" className="btn btn-outline btn-lg">Learn More</Link>
         </div>
       </section>
+
+      <IgiCollabBanner />
 
       {/* REIMAGINED — removed duplicate section per client feedback */}
 
@@ -142,70 +145,54 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ACTIVE COURSES */}
+      {/* ACTIVE COURSES — full-bleed alternating rows (text | image, edge-to-edge, no
+          gap), matching the CDA reference site exactly: each course is its own
+          half-text/half-photo row that fills the full screen width at any size, not a
+          centered card grid with a boxed image thumbnail. */}
       {courses.length > 0 && (
-        <section className="section" style={{ background: 'white' }}>
-          <div className="container">
-            <div style={{ textAlign: 'center', marginBottom: '56px' }}>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,42px)', fontWeight: 400, color: C.navy, marginBottom: '16px' }}>Our Programs</h2>
-              <p style={{ color: '#6b7280', fontSize: '16px' }}>Expert-led online courses in diamond grading</p>
-            </div>
-            <div className="grid-3">
-              {courses.map(course => (
-                <div key={course._id} className="card" style={{ overflow: 'hidden' }}>
-                  <div style={{ height: '200px', background: `url(${course.image || 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600&q=80'}) center/cover no-repeat` }} />
-                  <div style={{ padding: '24px' }}>
-                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '20px', fontWeight: 500, color: C.navy, marginBottom: '8px' }}>{course.title}</h3>
-                    <p style={{ color: '#6b7280', fontSize: '14px', lineHeight: 1.7, marginBottom: '20px' }}>{course.shortDescription || course.description?.substring(0, 100)}...</p>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '22px', fontWeight: 600, color: C.navy }}>${course.price}</span>
-                      <Link to={`/education/${course.slug}`} className="btn btn-primary btn-sm">View Course</Link>
+        <section style={{ background: 'white' }}>
+          <div style={{ textAlign: 'center', padding: '80px 20px 0' }}>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,42px)', fontWeight: 400, color: C.navy, marginBottom: '16px' }}>Our Programs</h2>
+            <p style={{ color: '#6b7280', fontSize: '16px' }}>Expert-led online courses in diamond grading</p>
+          </div>
+          {courses.map((course, i) => (
+            <div key={course._id} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))' }}>
+              {i % 2 === 0 ? (
+                <>
+                  <div style={{ padding: '60px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: C.light }}>
+                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3.5vw,44px)', fontWeight: 400, color: C.navy, marginBottom: '16px', lineHeight: 1.15 }}>{course.title}</h3>
+                    <p style={{ color: '#4b5563', fontSize: '16px', lineHeight: 1.85, marginBottom: '28px', maxWidth: '480px' }}>{course.shortDescription || course.description?.substring(0, 160)}</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                      <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '26px', fontWeight: 600, color: C.navy }}>${course.price}</span>
+                      <Link to={`/education/${course.slug}`} className="btn btn-primary btn-lg">View Course</Link>
                     </div>
                   </div>
-                </div>
-              ))}
+                  <div style={{ minHeight: '480px', background: `url(${course.image || 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80'}) center/cover no-repeat` }} />
+                </>
+              ) : (
+                <>
+                  <div style={{ minHeight: '480px', background: `url(${course.image || 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80'}) center/cover no-repeat` }} />
+                  <div style={{ padding: '60px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: 'white' }}>
+                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3.5vw,44px)', fontWeight: 400, color: C.navy, marginBottom: '16px', lineHeight: 1.15 }}>{course.title}</h3>
+                    <p style={{ color: '#4b5563', fontSize: '16px', lineHeight: 1.85, marginBottom: '28px', maxWidth: '480px' }}>{course.shortDescription || course.description?.substring(0, 160)}</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                      <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '26px', fontWeight: 600, color: C.navy }}>${course.price}</span>
+                      <Link to={`/education/${course.slug}`} className="btn btn-primary btn-lg">View Course</Link>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-            <div style={{ textAlign: 'center', marginTop: '48px' }}>
-              <Link to="/education" className="btn btn-navy btn-lg">View All Courses</Link>
-            </div>
+          ))}
+          <div style={{ textAlign: 'center', padding: '48px 20px' }}>
+            <Link to="/education" className="btn btn-navy btn-lg">View All Courses</Link>
           </div>
         </section>
       )}
 
-      {/* COMING SOON COURSES */}
-      {comingSoon.length > 0 && (
-        <section className="section" style={{ background: C.light }}>
-          <div className="container">
-            <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-              <div style={{ display: 'inline-block', background: C.coral, color: 'white', padding: '6px 20px', borderRadius: '20px', fontSize: '13px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '20px' }}>Coming Soon</div>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,42px)', fontWeight: 400, color: C.navy }}>Upcoming Programs</h2>
-            </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', justifyContent: 'center' }}>
-              {comingSoon.map(c => (
-                <div key={c._id} style={{ background: 'white', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e5e7eb', width: '100%', maxWidth: '340px' }}>
-                  {/* Course image */}
-                  {c.image ? (
-                    <div style={{ height: '160px', background: `url(${c.image}) center/cover no-repeat` }} />
-                  ) : (
-                    <div style={{ height: '130px', background: `linear-gradient(135deg, ${C.navy}, ${C.coral})`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 9L12 22L22 9L12 2Z" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" strokeLinejoin="round"/></svg>
-                    </div>
-                  )}
-                  <div style={{ padding: '20px' }}>
-                    <div style={{ display: 'inline-block', background: C.coral, color: 'white', padding: '3px 12px', borderRadius: '20px', fontSize: '10px', fontWeight: 700, letterSpacing: '1px', marginBottom: '10px' }}>COMING SOON</div>
-                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '19px', fontWeight: 400, color: C.navy, marginBottom: '4px' }}>{c.title}</h3>
-                    {c.subtitle && <p style={{ color: C.coral, fontSize: '12px', fontWeight: 600, marginBottom: '10px' }}>{c.subtitle}</p>}
-                    <p style={{ color: '#4b5563', fontSize: '13px', lineHeight: 1.7, marginBottom: '14px' }}>{c.description?.length > 120 ? `${c.description.substring(0, 120)}...` : c.description}</p>
-                    <div style={{ padding: '10px 14px', background: C.light, borderRadius: '8px', fontSize: '12px', color: '#6b7280' }}>
-                      Join our newsletter to be notified when this course launches.
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {/* COMING SOON COURSES — shared full-bleed component, same as Education page */}
+      <ComingSoonSection C={C} />
+
       {/* DIAMOND SHAPES CAROUSEL */}
       <DiamondShapesCarousel C={C} />
 

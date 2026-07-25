@@ -24,7 +24,7 @@ export function About() {
 
   return (
     <>
-      <Helmet><title>About | American Diamond Academy</title></Helmet>
+      <Helmet><title>About | American Diamonds Academy</title></Helmet>
       <div className="page-hero" style={{ background: `linear-gradient(rgba(27,43,75,0.82), rgba(27,43,75,0.82)), url(/hero-diamonds.jpg) center/cover`, backgroundSize: 'cover' }}>
         <div className="container"><h1>Behind the Shift</h1><p>Because the diamond world is changing, meet the gemmologist who decided learning should change with it.</p></div>
       </div>
@@ -43,11 +43,11 @@ export function About() {
               </div>
               <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '20px', color: C.navy, marginTop: '16px' }}>Archana Jaswani</h3>
               <p style={{ color: C.coral, fontSize: '14px', fontWeight: 600, marginTop: '4px' }}>FCGmA, PJA, CPAA</p>
-              <p style={{ color: '#6b7280', fontSize: '14px', marginTop: '4px' }}>Founder, American Diamond Academy</p>
+              <p style={{ color: '#6b7280', fontSize: '14px', marginTop: '4px' }}>Founder, American Diamonds Academy</p>
             </div>
             <div>
               <blockquote style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(20px,2.5vw,26px)', color: C.navy, lineHeight: 1.5, fontStyle: 'italic', marginBottom: '24px', borderLeft: `4px solid ${C.coral}`, paddingLeft: '24px' }}>
-                "American Diamond Academy reimagines diamond learning with an online experience built for the industry's next era."
+                "American Diamonds Academy reimagines diamond learning with an online experience built for the industry's next era."
               </blockquote>
               <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '16px', color: C.navy, marginBottom: '24px', fontWeight: 500 }}>&mdash; Archana Jaswani (FCGmA, PJA, CPAA), Founder of the ADA.</p>
               <p style={{ color: '#4b5563', lineHeight: 1.9, marginBottom: '16px', fontSize: '16px' }}>Where classroom learning stops at theory, ADA teaches diamond grading through advanced 360&deg; visuals that mirror how diamonds are actually bought, sold, and evaluated in today&apos;s digital marketplace &mdash; where decisions rely on trained eyes, not controlled lab setups.</p>
@@ -63,8 +63,8 @@ export function About() {
       <section className="section" style={{ background: C.light }}>
         <div className="container">
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, color: C.navy, marginBottom: '40px' }}>My Certifications</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px', alignItems: 'start' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px', alignItems: 'flex-start' }}>
+            <div style={{ flex: '1 1 320px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {[
                 { org: 'George Brown College', detail: "Graduate Gemmologist (Dean's Award Medal, Honors, Sarah and Arthur Frankel Gemmology Award)" },
                 { org: 'GIA - Gemological Institute of America', detail: 'Diamond Grading Lab\nGem Identification Lab' },
@@ -80,7 +80,7 @@ export function About() {
                 </div>
               ))}
             </div>
-            <div>
+            <div style={{ flex: '1.4 1 380px' }}>
               <img src="/Certificates.webp" alt="Certifications"
                 style={{ width: '100%', borderRadius: '8px', objectFit: 'contain', display: 'block', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}
                 onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
@@ -89,6 +89,50 @@ export function About() {
                 <span style={{ fontSize: '40px', opacity: 0.3 }}>📜</span>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AFFILIATION LOGOS MARQUEE — GIA Alumni Collective (built with CSS/type since
+          it's a typographic lockup, no image asset needed) + a second logo slot for
+          when the client sends it. */}
+      <section style={{ background: 'white', padding: '40px 0', borderTop: '1px solid #eef0f3', borderBottom: '1px solid #eef0f3', overflow: 'hidden' }}>
+        <div style={{ display: 'flex', gap: '100px', width: 'max-content', animation: 'affiliationMarquee 24s linear infinite' }}>
+          {[...Array(2)].map((_, dup) => (
+            <div key={dup} style={{ display: 'flex', alignItems: 'flex-end', gap: '14px', color: C.navy }}>
+              <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '46px', lineHeight: 1 }}>GIA</span>
+              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1, marginBottom: '4px' }}>
+                <span style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', fontSize: '15px' }}>Alumni</span>
+                <span style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', fontSize: '26px' }}>Collective&reg;</span>
+              </div>
+              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '28px', lineHeight: 1 }}>Member</span>
+            </div>
+          ))}
+          {/* Second partner logo — placeholder until the client sends the file */}
+          {[...Array(2)].map((_, dup) => (
+            <div key={`slot2-${dup}`} style={{ display: 'flex', alignItems: 'center', height: '56px' }}>
+              <img src="/partner-logo-2.webp" alt="Partner" style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
+                onError={e => { e.target.style.display = 'none'; }}
+              />
+            </div>
+          ))}
+        </div>
+        <style>{`@keyframes affiliationMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`}</style>
+      </section>
+
+      {/* TIMELINE */}
+      <section className="section" style={{ background: C.navy, color: 'white' }}>
+        <div className="container" style={{ maxWidth: '800px' }}>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, marginBottom: '48px', textAlign: 'center' }}>Journey</h2>
+          <div style={{ position: 'relative', paddingLeft: '32px', borderLeft: `2px solid ${C.coral}` }}>
+            {timeline.map((m, i) => (
+              <div key={m.year} style={{ marginBottom: i < timeline.length - 1 ? '40px' : 0, position: 'relative' }}>
+                <div style={{ position: 'absolute', left: '-40px', width: '14px', height: '14px', background: C.coral, borderRadius: '50%', top: '6px', border: `3px solid ${C.navy}` }} />
+                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: '22px', marginBottom: '4px' }}>{m.year}</div>
+                <div style={{ color: C.coral, fontWeight: 600, fontSize: '14px', marginBottom: '6px' }}>{m.title}</div>
+                <div style={{ color: 'rgba(255,255,255,0.65)', fontSize: '14px', lineHeight: 1.8 }}>{m.desc}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -105,23 +149,6 @@ export function About() {
             <div style={{ display: 'none', height: '300px', background: C.light, alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '12px', borderRadius: '12px' }}>
               <p style={{ color: '#9ca3af', fontSize: '14px' }}>Place industry.webp in the public folder</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* TIMELINE */}
-      <section className="section" style={{ background: C.navy, color: 'white' }}>
-        <div className="container" style={{ maxWidth: '800px' }}>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, marginBottom: '48px', textAlign: 'center' }}>Journey</h2>
-          <div style={{ position: 'relative', paddingLeft: '32px', borderLeft: `2px solid ${C.coral}` }}>
-            {timeline.map((m, i) => (
-              <div key={m.year} style={{ marginBottom: i < timeline.length - 1 ? '40px' : 0, position: 'relative' }}>
-                <div style={{ position: 'absolute', left: '-40px', width: '14px', height: '14px', background: C.coral, borderRadius: '50%', top: '6px', border: `3px solid ${C.navy}` }} />
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: '22px', marginBottom: '4px' }}>{m.year}</div>
-                <div style={{ color: C.coral, fontWeight: 600, fontSize: '14px', marginBottom: '6px' }}>{m.title}</div>
-                <div style={{ color: 'rgba(255,255,255,0.65)', fontSize: '14px', lineHeight: 1.8 }}>{m.desc}</div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -149,7 +176,8 @@ export function Contact() {
   };
 
   const contactInfo = [
-    { Icon: PhoneSVG, title: 'Phone', detail: '+1 (437) 269-7007', href: 'tel:+14372697007' },
+    { Icon: PhoneSVG, title: 'Phone', detail: '+1 (212) 470-1321', href: 'tel:+12124701321' },
+    { Icon: PhoneSVG, title: 'Toll-Free', detail: '+1 (888) 921-1786', href: 'tel:+18889211786' },
     { Icon: WhatsAppSVG, title: 'WhatsApp', detail: '+1 (437) 269-7007', href: 'https://wa.me/14372697007' },
     { Icon: EmailSVG, title: 'Email', detail: 'jaswani@angeldiamondinc.com', href: 'mailto:jaswani@angeldiamondinc.com' },
     { Icon: LocationSVG, title: 'Location', detail: 'USA \u2014 Online Worldwide', href: '#' },
@@ -157,7 +185,7 @@ export function Contact() {
 
   return (
     <>
-      <Helmet><title>Contact | American Diamond Academy</title></Helmet>
+      <Helmet><title>Contact | American Diamonds Academy</title></Helmet>
       <div className="page-hero"><div className="container"><h1>Contact Us</h1><p>Get in touch about courses, enrollment, or any questions.</p></div></div>
       <section className="section" style={{ background: C.light }}>
         <div className="container" style={{ maxWidth: '1000px' }}>
@@ -253,7 +281,7 @@ export function FAQ() {
       a: "Traditional courses rely heavily on in-person stones and lab access. This program is built for today's trade reality\u2014where diamonds are evaluated digitally before they are ever seen physically. You'll learn how to grade, compare, and assess diamonds using the same digital 360\u00b0 videos used in modern sourcing."
     },
     {
-      q: 'Is an American Diamond Academy course the same as formal diamond education? Will I be able to grade diamonds professionally after this?',
+      q: 'Is an American Diamonds Academy course the same as formal diamond education? Will I be able to grade diamonds professionally after this?',
       a: 'This is an independent applied training program focused on modern trade practice and digital evaluation methods. It complements traditional gemmological education rather than replacing institutional certification pathways. The course is designed to build professional-level analytical capability, in digital evaluation environments. It equips you with trade-relevant grading literacy and decision-making skills used in sourcing, retail, and education contexts. While you will be able to evaluate and interpret diamonds with confidence for personal and commercial understanding, you will not be able to issue formal certification, which remains the domain of accredited grading laboratories.'
     },
     {
@@ -278,11 +306,11 @@ export function FAQ() {
     },
     {
       q: 'Are these courses accredited?',
-      a: 'ADA courses are not accredited by a gemological institution such as the GIA or CGA. They are designed as practical, skills-based learning programs focused on real-world application \u2014 specifically visual evaluation in digital environments. Completion certificates are issued by American Diamond Academy.'
+      a: 'ADA courses are not accredited by a gemological institution such as the GIA or CGA. They are designed as practical, skills-based learning programs focused on real-world application \u2014 specifically visual evaluation in digital environments. Completion certificates are issued by American Diamonds Academy.'
     },
     {
       q: 'How long do I have access to the course after purchasing?',
-      a: 'Once enrolled, you have ongoing access to your course materials. We do not set an expiry date on course access.'
+      a: 'Your enrollment provides access to your course workbook and supporting digital resources available through the American Diamonds Academy website. These resources may be updated and expanded over time to reflect evolving industry knowledge and developments. Live instruction is delivered during scheduled sessions and is not recorded or provided for later viewing. Your workbook and course materials are yours to retain and revisit as you continue your diamond education journey.'
     },
     {
       q: 'What is your refund policy?',
@@ -290,11 +318,11 @@ export function FAQ() {
     },
     {
       q: 'Do you offer payment plans?',
-      a: 'At this time, we accept full payment at the time of enrollment. All payments are processed securely through Stripe.'
+      a: 'Yes. We understand that investing in professional education is an important decision. Flexible payment options may be available at checkout through our secure payment provider, subject to eligibility and availability. Students may also choose to complete payment in full at the time of enrollment.'
     },
     {
       q: 'I have a problem with my purchase. What should I do?',
-      a: 'If you experience any issues with your order, course access, or payment, please contact us first at info@canadiandiamondacademy.ca. Our team is committed to resolving concerns as quickly as possible. Most issues can be resolved directly without the need for a payment dispute. If a chargeback is initiated without first contacting us, we reserve the right to provide supporting documentation to the payment processor to verify the transaction and the services provided.'
+      a: 'If you experience any issues with your order, course access, or payment, please contact us first. Our team is committed to resolving concerns as quickly as possible. Most issues can be resolved directly without the need for a payment dispute. If a chargeback is initiated without first contacting us, we reserve the right to provide supporting documentation to the payment processor to verify the transaction and the services provided.'
     },
     {
       q: 'I have more questions. How can I reach you?',
@@ -304,7 +332,7 @@ export function FAQ() {
 
   return (
     <>
-      <Helmet><title>FAQ | American Diamond Academy</title></Helmet>
+      <Helmet><title>FAQ | American Diamonds Academy</title></Helmet>
       <div className="page-hero"><div className="container"><h1>Frequently Asked Questions</h1></div></div>
       <section className="section" style={{ background: C.light }}>
         <div className="container" style={{ maxWidth: '860px' }}>
@@ -377,7 +405,7 @@ export function PaymentSuccess() {
 
   return (
     <>
-      <Helmet><title>Payment Successful | American Diamond Academy</title></Helmet>
+      <Helmet><title>Payment Successful | American Diamonds Academy</title></Helmet>
       <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: C.light, padding: '40px 20px' }}>
         <div style={{ background: 'white', borderRadius: '12px', padding: '60px 48px', textAlign: 'center', maxWidth: '500px', boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}>
           <CelebrationSVG size={72} color={C.coral} style={{ margin: '0 auto 24px', display: 'block' }} />
@@ -398,7 +426,7 @@ export function PaymentSuccess() {
             </>
           ) : (
             <>
-              <p style={{ color: '#4b5563', fontSize: '16px', lineHeight: 1.8, marginBottom: '32px' }}>Welcome to American Diamond Academy. Your course access has been activated. Check your dashboard for session details and Zoom links.</p>
+              <p style={{ color: '#4b5563', fontSize: '16px', lineHeight: 1.8, marginBottom: '32px' }}>Welcome to American Diamonds Academy. Your course access has been activated. Check your dashboard for session details and Zoom links.</p>
               <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <Link to="/dashboard" className="btn btn-primary">Go to Dashboard</Link>
                 <Link to="/education" className="btn btn-outline">Browse More Courses</Link>

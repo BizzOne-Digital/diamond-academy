@@ -16,7 +16,7 @@ export function Blog() {
 
   return (
     <>
-      <Helmet><title>Blog | American Diamond Academy</title></Helmet>
+      <Helmet><title>Blog | American Diamonds Academy</title></Helmet>
       <div className="page-hero">
         <div className="container">
           <h1>Blog</h1>
@@ -86,7 +86,7 @@ export function BlogPost() {
 
   return (
     <>
-      <Helmet><title>{post.title} | American Diamond Academy</title></Helmet>
+      <Helmet><title>{post.title} | American Diamonds Academy</title></Helmet>
 
       {/* Hero */}
       <section style={{ background: C.navy, padding: '60px 0' }}>

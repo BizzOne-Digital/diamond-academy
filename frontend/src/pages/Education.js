@@ -2,72 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import api from '../utils/api';
-import WhopCheckout, { WHOP_PLAN_BY_COMING_SOON_TITLE } from '../components/WhopCheckout';
-
-const findWhopPlanForComingSoonTitle = (title = '') => {
-  const key = Object.keys(WHOP_PLAN_BY_COMING_SOON_TITLE).find(k => title.startsWith(k));
-  return key ? WHOP_PLAN_BY_COMING_SOON_TITLE[key] : null;
-};
-
-function ComingSoonSection({ C }) {
-  const [items, setItems] = React.useState([]);
-
-  React.useEffect(() => {
-    // Fallback to hardcoded if API not yet set up
-    api.get('/comingsoon').then(r => {
-      if (r.data.items?.length) setItems(r.data.items);
-      else setItems([
-        { _id: '1', title: 'Diamond Precision', subtitle: 'Applied Diamond Measurement & Valuation', description: 'This masterclass integrates advanced diamond grading knowledge with the quantitative tools used in real-world diamond evaluation and pricing. Building on Cut, Colour, Clarity, and Carat interpretation, the course introduces key analytical frameworks including proportion analysis, carat weight estimation logic, and value impact assessments based on cut performance and light efficiency. You will also explore advanced evaluation models for fancy-cut diamonds, along with an introduction to fancy colour grading considerations and how structure influences perceived value. A core component of the program focuses on how grading outcomes influence market pricing, including value adjustments tied to cut quality, proportion efficiency, and trade benchmarks similar to Rapaport-style pricing structures. Designed as the final stage of the Diamond Intelligence framework, this course moves beyond visual interpretation into structured calculation — connecting how a diamond looks with how it is measured, compared, and valued in the global trade. Pre-requisite: Diamond Intelligence', image: '/course-precision.png' },
-        { _id: '2', title: 'Diamond Shape Intelligence – Visual Evaluation and Grading', subtitle: 'Beyond Round Brilliants', description: 'Beyond Round Brilliants—learn to evaluate fancy-shaped diamonds through proportion, outline, light performance, and visual balance. Develop the confidence to assess every shape using the principles professionals rely on. Course Highlights: Evaluate the world\'s most popular fancy diamond shapes. Understand preferred proportions and length-to-width ratios. Analyze outline, symmetry, and overall visual appeal. Learn how proportions influence brilliance, fire, scintillation, and spread. Develop grading skills through guided visual exercises. Access interactive proportion analysis tools exclusive to Canadian Diamond Academy (Tools coming soon).', image: '/course-fancy-shapes.jpeg' },
-      ]);
-    }).catch(() => {
-      setItems([
-        { _id: '1', title: 'Diamond Precision', subtitle: 'Applied Diamond Measurement & Valuation', description: 'This masterclass integrates advanced diamond grading knowledge with the quantitative tools used in real-world diamond evaluation and pricing. Building on Cut, Colour, Clarity, and Carat interpretation, the course introduces key analytical frameworks including proportion analysis, carat weight estimation logic, and value impact assessments based on cut performance and light efficiency. Designed as the final stage of the Diamond Intelligence framework. Pre-requisite: Diamond Intelligence', image: '/course-precision.png' },
-        { _id: '2', title: 'Diamond Shape Intelligence – Visual Evaluation and Grading', subtitle: 'Beyond Round Brilliants', description: 'Develop expert visual evaluation skills for fancy-shaped diamonds — from pear and oval to marquise, cushion, and beyond.', image: '/course-fancy-shapes.jpeg' },
-      ]);
-    });
-  }, []);
-
-  if (!items.length) return null;
-
-  return (
-    <div>
-      {items.map((item, i) => {
-        const whopPlanId = findWhopPlanForComingSoonTitle(item.title);
-        return (
-        <section key={item._id} style={{ background: i % 2 === 0 ? C.navy : 'white', padding: '0' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
-            {/* Image side - alternates */}
-            {i % 2 === 0 ? (
-              <>
-                <div style={{ position: 'relative', minHeight: '420px', background: `url(${item.image || '/course-precision.png'}) center/cover no-repeat` }} />
-                <div style={{ padding: '60px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center', color: 'white' }}>
-                  <div style={{ display: 'inline-block', background: C.coral, color: 'white', padding: '5px 16px', borderRadius: '20px', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '20px', width: 'fit-content' }}>COMING SOON</div>
-                  <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(32px,4vw,52px)', fontWeight: 400, marginBottom: '8px', lineHeight: 1.15 }}>{item.title}</h2>
-                  {item.subtitle && <p style={{ fontWeight: 700, color: C.coral, marginBottom: '20px', fontSize: '15px' }}>{item.subtitle}</p>}
-                  <p style={{ color: 'rgba(255,255,255,0.75)', lineHeight: 1.85, fontSize: '15px' }}>{item.description}</p>
-                  {whopPlanId && <div style={{ marginTop: '24px', maxWidth: '420px', minHeight: '400px' }}><WhopCheckout planId={whopPlanId} /></div>}
-                </div>
-              </>
-            ) : (
-              <>
-                <div style={{ padding: '60px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                  <div style={{ display: 'inline-block', background: C.coral, color: 'white', padding: '5px 16px', borderRadius: '20px', fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '20px', width: 'fit-content' }}>COMING SOON</div>
-                  <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(32px,4vw,52px)', fontWeight: 400, color: C.navy, marginBottom: '8px', lineHeight: 1.15 }}>{item.title}</h2>
-                  {item.subtitle && <p style={{ fontWeight: 700, color: C.coral, marginBottom: '20px', fontSize: '15px' }}>{item.subtitle}</p>}
-                  <p style={{ color: '#4b5563', lineHeight: 1.85, fontSize: '15px' }}>{item.description}</p>
-                  {whopPlanId && <div style={{ marginTop: '24px', maxWidth: '420px', minHeight: '400px' }}><WhopCheckout planId={whopPlanId} /></div>}
-                </div>
-                <div style={{ position: 'relative', minHeight: '420px', background: `url(${item.image || '/course-fancy-shapes.jpeg'}) center/cover no-repeat` }} />
-              </>
-            )}
-          </div>
-        </section>
-        );
-      })}
-    </div>
-  );
-}
+import IgiCollabBanner from '../components/IgiCollabBanner';
+import ComingSoonSection from '../components/ComingSoonSection';
 
 export default function Education() {
   const [courses, setCourses] = useState([]);
@@ -81,63 +17,79 @@ export default function Education() {
 
   return (
     <>
-      <Helmet><title>Education | American Diamond Academy</title></Helmet>
+      <Helmet><title>Education | American Diamonds Academy</title></Helmet>
 
       <div className="page-hero">
         <div className="container">
-          <h1>American Diamond Academy</h1>
+          <h1>American Diamonds Academy</h1>
           <p>Expert-led online courses in diamond grading</p>
         </div>
       </div>
 
-      {/* Intro — full-width image with overlay text */}
+      {/* Intro — full-width image, no color layover per client feedback */}
       <section style={{ position: 'relative', width: '100%', minHeight: '420px', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('/education-hero.webp')", backgroundSize: 'cover', backgroundPosition: 'center' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(27,43,75,0.72)' }} />
         <div className="container" style={{ position: 'relative', zIndex: 1, padding: '80px 40px', maxWidth: '860px' }}>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(32px,4vw,52px)', fontWeight: 400, color: 'white', marginBottom: '20px', lineHeight: 1.2 }}>Learning beyond the 4 Cs</h2>
-          <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '17px', lineHeight: 1.9, maxWidth: '640px', marginBottom: '24px' }}>Stop relying on certificates alone—learn how diamonds are truly assessed through light, structure, and visual intelligence. We teach you what you were never taught to see.</p>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', background: 'rgba(232,131,90,0.18)', border: `1px solid ${C.coral}`, borderRadius: '30px', padding: '10px 22px', maxWidth: '640px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e', flexShrink: 0 }} />
-            <span style={{ color: 'white', fontSize: '14px', lineHeight: 1.6 }}>Live, gemmologist-led Zoom sessions with real-time interaction, discussions, and Q&amp;A.</span>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(32px,4vw,52px)', fontWeight: 400, color: 'white', textShadow: '0 2px 16px rgba(0,0,0,0.6)', marginBottom: '20px', lineHeight: 1.2 }}>Learning beyond the 4 Cs</h2>
+          <p style={{ color: 'rgba(255,255,255,0.92)', fontSize: '17px', lineHeight: 1.9, maxWidth: '640px', marginBottom: '28px', textShadow: '0 2px 12px rgba(0,0,0,0.6)' }}>Stop relying on certificates alone—learn how diamonds are truly assessed through light, structure, and visual intelligence. We teach you what you were never taught to see.</p>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '14px', background: C.coral, borderRadius: '30px', padding: '16px 28px', maxWidth: '680px', boxShadow: '0 6px 24px rgba(232,131,90,0.5)' }}>
+            <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ffffff', flexShrink: 0, boxShadow: '0 0 0 4px rgba(255,255,255,0.3)' }} />
+            <span style={{ color: 'white', fontSize: '16px', fontWeight: 700, lineHeight: 1.5 }}>Live, gemmologist-led Zoom sessions with real-time interaction, discussions, and Q&amp;A.</span>
           </div>
         </div>
       </section>
 
+      <IgiCollabBanner />
+
       {/* Courses */}
-      <section className="section" style={{ background: C.light }}>
-        <div className="container">
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,40px)', fontWeight: 400, color: C.navy, marginBottom: '48px', textAlign: 'center' }}>Our Programs</h2>
-          {loading ? (
-            <div style={{ textAlign: 'center', padding: '60px' }}><div className="spinner" style={{ margin: '0 auto' }} /></div>
-          ) : courses.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '60px', color: '#6b7280' }}>
-              <p style={{ fontSize: '18px', marginBottom: '8px' }}>Courses coming soon!</p>
-              <p>Contact us to learn about upcoming programs.</p>
-            </div>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
-              {courses.map((course, i) => (
-                <div key={course._id} className="card" style={{ overflow: 'hidden' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-                    <div style={{ order: i % 2 === 0 ? 1 : 2, minHeight: '320px', background: `url(${course.image || '/course-fundamentals.png'}) center/cover no-repeat` }} />
-                    <div style={{ order: i % 2 === 0 ? 2 : 1, padding: '48px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                      <div style={{ display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap' }}>
-                        <span className="badge badge-navy">{course.level}</span>
-                        {course.totalSessions > 0 && <span className="badge badge-coral">{course.totalSessions} Sessions</span>}
-                      </div>
-                      <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(24px,2.5vw,34px)', fontWeight: 400, color: C.navy, marginBottom: '8px' }}>{course.title}</h3>
-                      <p style={{ fontSize: '26px', fontWeight: 700, color: C.navy, marginBottom: '20px', fontFamily: "'Playfair Display', serif" }}>${course.price.toFixed(2)}</p>
-                      <p style={{ color: '#4b5563', lineHeight: 1.8, marginBottom: '32px', fontSize: '15px' }}>{course.shortDescription || course.description?.substring(0, 180)}...</p>
-                      <Link to={`/education/${course.slug}`} className="btn btn-primary" style={{ alignSelf: 'flex-start', width: '100%', maxWidth: '320px', justifyContent: 'center' }}>View More Details</Link>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+      {/* Our Programs — full-bleed alternating rows (text | image, edge-to-edge, no
+          gap or rounded card), matching the CDA reference site exactly. */}
+      <section style={{ background: C.light }}>
+        <div style={{ textAlign: 'center', padding: '80px 20px 48px' }}>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3vw,40px)', fontWeight: 400, color: C.navy }}>Our Programs</h2>
         </div>
-        
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '60px 20px' }}><div className="spinner" style={{ margin: '0 auto' }} /></div>
+        ) : courses.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '60px 20px', color: '#6b7280' }}>
+            <p style={{ fontSize: '18px', marginBottom: '8px' }}>Courses coming soon!</p>
+            <p>Contact us to learn about upcoming programs.</p>
+          </div>
+        ) : (
+          courses.map((course, i) => (
+            <div key={course._id} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))' }}>
+              {i % 2 === 0 ? (
+                <>
+                  <div style={{ minHeight: '480px', background: `url(${course.image || '/course-fundamentals.png'}) center/cover no-repeat` }} />
+                  <div style={{ padding: '60px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: 'white' }}>
+                    <div style={{ display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap' }}>
+                      <span className="badge badge-navy">{course.level}</span>
+                      {course.totalSessions > 0 && <span className="badge badge-coral">{course.totalSessions} Sessions</span>}
+                    </div>
+                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3.5vw,44px)', fontWeight: 400, color: C.navy, marginBottom: '8px', lineHeight: 1.15 }}>{course.title}</h3>
+                    <p style={{ fontSize: '26px', fontWeight: 700, color: C.navy, marginBottom: '20px', fontFamily: "'Playfair Display', serif" }}>${course.price.toFixed(2)}</p>
+                    <p style={{ color: '#4b5563', lineHeight: 1.85, marginBottom: '28px', fontSize: '16px', maxWidth: '480px' }}>{course.shortDescription || course.description?.substring(0, 180)}...</p>
+                    <Link to={`/education/${course.slug}`} className="btn btn-primary btn-lg" style={{ alignSelf: 'flex-start' }}>View More Details</Link>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div style={{ padding: '60px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: C.light }}>
+                    <div style={{ display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap' }}>
+                      <span className="badge badge-navy">{course.level}</span>
+                      {course.totalSessions > 0 && <span className="badge badge-coral">{course.totalSessions} Sessions</span>}
+                    </div>
+                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3.5vw,44px)', fontWeight: 400, color: C.navy, marginBottom: '8px', lineHeight: 1.15 }}>{course.title}</h3>
+                    <p style={{ fontSize: '26px', fontWeight: 700, color: C.navy, marginBottom: '20px', fontFamily: "'Playfair Display', serif" }}>${course.price.toFixed(2)}</p>
+                    <p style={{ color: '#4b5563', lineHeight: 1.85, marginBottom: '28px', fontSize: '16px', maxWidth: '480px' }}>{course.shortDescription || course.description?.substring(0, 180)}...</p>
+                    <Link to={`/education/${course.slug}`} className="btn btn-primary btn-lg" style={{ alignSelf: 'flex-start' }}>View More Details</Link>
+                  </div>
+                  <div style={{ minHeight: '480px', background: `url(${course.image || '/course-fundamentals.png'}) center/cover no-repeat` }} />
+                </>
+              )}
+            </div>
+          ))
+        )}
       </section>
 
       {/* Coming Soon Ticker */}

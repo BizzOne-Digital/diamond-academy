@@ -81,7 +81,7 @@ export default function Navbar() {
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>
           <img
             src="/logo.png"
-            alt="American Diamond Academy"
+            alt="American Diamonds Academy"
             style={{ height: '96px', width: 'auto', objectFit: 'contain' }}
             onError={e => {
               e.target.style.display = 'none';
@@ -120,8 +120,8 @@ export default function Navbar() {
 
         {/* RIGHT SIDE ACTIONS */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-          {/* Cart icon — desktop */}
-          {!isMobile && isAuthenticated && (
+          {/* Cart icon — desktop, always visible (guest checkout doesn't require login) */}
+          {!isMobile && (
             <Link to="/cart" aria-label="Cart" style={{ position: 'relative', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1B2B4B' }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" /><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" /></svg>
               {cartCount > 0 && (
@@ -129,7 +129,9 @@ export default function Navbar() {
               )}
             </Link>
           )}
-          {/* Desktop auth buttons */}
+          {/* Desktop auth buttons — only shown once a customer is actually logged in
+              (post-purchase). No Login/Register entry point is shown beforehand,
+              matching the CDA reference site. */}
           {!isMobile && isAuthenticated && (
             <>
               {isAdmin && (
@@ -137,12 +139,6 @@ export default function Navbar() {
               )}
               <Link to="/dashboard" style={{ padding: '7px 14px', background: 'rgba(27,43,75,0.08)', color: '#1B2B4B', borderRadius: '6px', fontSize: '13px', textDecoration: 'none' }}>Dashboard</Link>
               <button onClick={handleLogout} style={{ padding: '7px 16px', background: '#E8835A', color: 'white', border: 'none', borderRadius: '20px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>Logout</button>
-            </>
-          )}
-          {!isMobile && !isAuthenticated && (
-            <>
-              <Link to="/login" style={{ color: '#1B2B4B', fontSize: '14px', opacity: 0.85, textDecoration: 'none', padding: '7px 10px' }}>Login</Link>
-              <Link to="/register" style={{ padding: '8px 18px', background: '#E8835A', color: 'white', borderRadius: '20px', fontSize: '13px', fontWeight: 600, textDecoration: 'none' }}>Enroll Now</Link>
             </>
           )}
 
@@ -181,7 +177,8 @@ export default function Navbar() {
             {/* Divider */}
             <div style={{ borderTop: '1px solid rgba(27,43,75,0.08)', margin: '10px 0' }} />
 
-            {/* Auth buttons */}
+            {/* Auth buttons — Login/Register are never shown before a purchase;
+                Cart is always reachable, matching the CDA reference site. */}
             {isAuthenticated ? (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {isAdmin && (
@@ -192,10 +189,7 @@ export default function Navbar() {
                 <button onClick={handleLogout} style={{ padding: '13px 16px', background: '#E8835A', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', fontSize: '14px', textAlign: 'center', width: '100%', fontFamily: 'Inter, sans-serif' }}>Logout</button>
               </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <Link to="/login" style={{ display: 'block', padding: '12px 16px', color: '#1B2B4B', background: 'rgba(27,43,75,0.06)', borderRadius: '8px', textDecoration: 'none', fontSize: '14px', textAlign: 'center' }}>Login</Link>
-                <Link to="/register" style={{ display: 'block', padding: '13px 16px', background: '#E8835A', color: 'white', borderRadius: '8px', fontWeight: 600, textDecoration: 'none', fontSize: '14px', textAlign: 'center' }}>Enroll Now</Link>
-              </div>
+              <Link to="/cart" style={{ display: 'block', padding: '12px 16px', color: '#1B2B4B', background: 'rgba(27,43,75,0.06)', borderRadius: '8px', textDecoration: 'none', fontSize: '14px', textAlign: 'center' }}>Cart {cartCount > 0 ? `(${cartCount})` : ''}</Link>
             )}
 
             {/* Social icons */}

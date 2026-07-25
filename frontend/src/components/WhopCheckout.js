@@ -17,9 +17,33 @@ export const WHOP_PLAN_BY_COMING_SOON_TITLE = {
   'Diamond Precision': 'plan_FoZTxWKKryBxA',           // waitlist, $599 CAD
 };
 
-export default function WhopCheckout({ planId, style }) {
+export const findWhopPlanForComingSoonTitle = (title = '') => {
+  const key = Object.keys(WHOP_PLAN_BY_COMING_SOON_TITLE).find(k => title.startsWith(k));
+  return key ? WHOP_PLAN_BY_COMING_SOON_TITLE[key] : null;
+};
+
+// Renders a plain "Get Started" button that links straight to Whop's hosted checkout
+// page for the plan — the same pattern used on bizzonedigital.com's own pricing page.
+// This replaces the embedded <div data-whop-checkout-plan-id> widget: that widget
+// renders a full inline payment form (card fields, billing address, etc.), which broke
+// card layouts wherever it was dropped next to other content. A button that opens
+// Whop's own checkout page has no layout footprint here at all.
+//
+// Same link works for both buy-now and waitlist plans — Whop decides which form to show
+// based on the plan's release_method on their side. So when a "coming soon" plan is later
+// switched from waitlist to on-sale, this exact link automatically becomes a real payment
+// checkout — no code change needed here.
+export default function WhopCheckout({ planId, label = 'Get Started', className = 'btn btn-primary btn-lg', style }) {
   if (!planId) return null;
-  // key forces a remount if planId ever changes on the same page, so Whop's loader
-  // re-scans and re-renders the widget for the new plan instead of leaving stale markup.
-  return <div key={planId} data-whop-checkout-plan-id={planId} style={{ width: '100%', ...style }} />;
+  return (
+    <a
+      href={`https://whop.com/checkout/${planId}/`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+      style={style}
+    >
+      {label} →
+    </a>
+  );
 }

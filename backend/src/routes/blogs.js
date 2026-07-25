@@ -6,7 +6,7 @@ const { protect, admin } = require('../middleware/auth');
 // GET /api/blogs — public published posts
 router.get('/', async (req, res) => {
   try {
-    const blogs = await Blog.find({ isPublished: true }).select('-content').sort('-publishedAt');
+    const blogs = await Blog.find({ isPublished: true }).select('-content').sort('-isPinned -publishedAt');
     res.json({ success: true, blogs });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -27,7 +27,7 @@ router.get('/:slug', async (req, res) => {
 // GET /api/blogs/admin/all — admin all posts
 router.get('/admin/all', protect, admin, async (req, res) => {
   try {
-    const blogs = await Blog.find().sort('-createdAt');
+    const blogs = await Blog.find().sort('-isPinned -createdAt');
     res.json({ success: true, blogs });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });

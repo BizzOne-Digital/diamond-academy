@@ -26,7 +26,7 @@ export function Login() {
 
   return (
     <>
-      <Helmet><title>Login | American Diamond Academy</title></Helmet>
+      <Helmet><title>Login | American Diamonds Academy</title></Helmet>
       <div style={{ minHeight: '100vh', background: C.light, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
         <div style={{ background: 'white', borderRadius: '12px', padding: '48px', width: '100%', maxWidth: '440px', boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}>
           <div style={{ textAlign: 'center', marginBottom: '36px' }}>
@@ -78,12 +78,12 @@ export default function Register() {
 
   return (
     <>
-      <Helmet><title>Register | American Diamond Academy</title></Helmet>
+      <Helmet><title>Register | American Diamonds Academy</title></Helmet>
       <div style={{ minHeight: '100vh', background: C.light, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
         <div style={{ background: 'white', borderRadius: '12px', padding: '48px', width: '100%', maxWidth: '480px', boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}>
           <div style={{ textAlign: 'center', marginBottom: '36px' }}>
             <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, color: C.navy, marginBottom: '8px' }}>Create Account</h1>
-            <p style={{ color: '#6b7280', fontSize: '15px' }}>Join American Diamond Academy</p>
+            <p style={{ color: '#6b7280', fontSize: '15px' }}>Join American Diamonds Academy</p>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="form-group"><label>Full Name</label><input placeholder="Your full name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required /></div>

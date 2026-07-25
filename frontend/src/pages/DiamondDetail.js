@@ -128,7 +128,7 @@ export default function DiamondDetail() {
 
   return (
     <>
-      <Helmet><title>{`${diamond.caratWeight}ct ${diamond.shape} Natural Diamond | American Diamond Academy`}</title></Helmet>
+      <Helmet><title>{`${diamond.caratWeight}ct ${diamond.shape} Natural Diamond | American Diamonds Academy`}</title></Helmet>
 
       <section className="section" style={{ background: 'white' }}>
         <div className="container">

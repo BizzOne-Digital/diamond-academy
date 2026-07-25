@@ -20,7 +20,7 @@ export default function Footer() {
             <div style={{ marginBottom: '16px' }}>
               <img
                 src="/logo.png"
-                alt="American Diamond Academy"
+                alt="American Diamonds Academy"
                 style={{ height: '64px', width: 'auto', objectFit: 'contain' }}
                 onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
               />
@@ -28,7 +28,7 @@ export default function Footer() {
                 <DiamondSVG size={28} color="#E8835A" />
                 <div>
                   <div style={{ fontFamily: "'Playfair Display', serif", fontSize: '18px', fontWeight: 700, letterSpacing: '1px' }}>ADA</div>
-                  <div style={{ fontSize: '9px', color: '#E8835A', textTransform: 'uppercase', letterSpacing: '3px' }}>American Diamond Academy</div>
+                  <div style={{ fontSize: '9px', color: '#E8835A', textTransform: 'uppercase', letterSpacing: '3px' }}>American Diamonds Academy</div>
                 </div>
               </div>
             </div>
@@ -100,7 +100,7 @@ export default function Footer() {
 
         {/* Bottom bar with legal links */}
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', padding: '24px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>&copy; {new Date().getFullYear()} American Diamond Academy. All rights reserved.</p>
+          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>&copy; {new Date().getFullYear()} American Diamonds Academy. All rights reserved.</p>
           <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
             <Link to="/privacy-policy" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', textDecoration: 'none' }}
               onMouseOver={e => e.target.style.color = '#E8835A'} onMouseOut={e => e.target.style.color = 'rgba(255,255,255,0.4)'}>Privacy Policy</Link>
@@ -108,6 +108,8 @@ export default function Footer() {
               onMouseOver={e => e.target.style.color = '#E8835A'} onMouseOut={e => e.target.style.color = 'rgba(255,255,255,0.4)'}>Terms & Conditions</Link>
             <Link to="/refund-policy" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', textDecoration: 'none' }}
               onMouseOver={e => e.target.style.color = '#E8835A'} onMouseOut={e => e.target.style.color = 'rgba(255,255,255,0.4)'}>Refund Policy</Link>
+            <Link to="/login" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', textDecoration: 'none' }}
+              onMouseOver={e => e.target.style.color = '#E8835A'} onMouseOut={e => e.target.style.color = 'rgba(255,255,255,0.4)'}>Student Login</Link>
           </div>
         </div>
       </div>
