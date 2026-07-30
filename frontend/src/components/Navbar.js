@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
-import { InstagramSVG, FacebookSVG, LinkedInSVG } from './Icons';
+import { InstagramSVG, FacebookSVG, LinkedInSVG, WhatsAppSVG } from './Icons';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,6 +60,10 @@ export default function Navbar() {
             {!isMobile && (
               <a href="tel:+12124701321" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none' }}>+1-212-470-1321</a>
             )}
+            <a href="https://wa.me/14372697007" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <WhatsAppSVG size={13} color="#ffffff" />
+              {!isMobile && '+1-437-269-7007'}
+            </a>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <a href="https://www.instagram.com/americandiamondacademy" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

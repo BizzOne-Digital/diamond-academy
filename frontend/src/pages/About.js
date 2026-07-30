@@ -137,18 +137,17 @@ export function About() {
         </div>
       </section>
 
-      {/* INDUSTRY ENGAGEMENT PHOTO */}
-      <section className="section" style={{ background: 'white' }}>
-        <div className="container">
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, color: C.navy, marginBottom: '40px', textAlign: 'center' }}>Industry Engagement</h2>
-          <div style={{ borderRadius: '12px', overflow: 'hidden' }}>
-            <img src="/industry.webp" alt="Industry Engagement"
-              style={{ width: '100%', height: 'auto', display: 'block' }}
-              onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
-            />
-            <div style={{ display: 'none', height: '300px', background: C.light, alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '12px', borderRadius: '12px' }}>
-              <p style={{ color: '#9ca3af', fontSize: '14px' }}>Place industry.webp in the public folder</p>
-            </div>
+      {/* INDUSTRY ENGAGEMENT PHOTO — full-bleed edge-to-edge, matching CDA (not
+          boxed inside the narrow .container like before). */}
+      <section style={{ background: 'white', padding: '80px 0 0' }}>
+        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, color: C.navy, marginBottom: '40px', textAlign: 'center' }}>Industry Engagement</h2>
+        <div>
+          <img src="/industry.webp" alt="Industry Engagement"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+            onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
+          />
+          <div style={{ display: 'none', height: '300px', background: C.light, alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '12px' }}>
+            <p style={{ color: '#9ca3af', fontSize: '14px' }}>Place industry.webp in the public folder</p>
           </div>
         </div>
       </section>
