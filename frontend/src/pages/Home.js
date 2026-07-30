@@ -111,13 +111,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BELOW HERO — "Diamond Learning, Reimagined." + description + Learn More */}
+      {/* BELOW HERO — "Diamond Learning, Reimagined." + description + Learn More.
+          Wider than the standard .container so the paragraph runs closer to the
+          full screen width on large monitors, per client feedback. */}
       <section style={{ background: C.light, padding: '110px 20px' }}>
-        <div className="container">
+        <div style={{ maxWidth: '1600px', margin: '0 auto' }}>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(34px,4.5vw,60px)', fontWeight: 400, color: C.navy, marginBottom: '36px', lineHeight: 1.15 }}>
             Diamond Learning, <em>Reimagined.</em>
           </h2>
-          <p style={{ color: '#374151', fontSize: '16px', lineHeight: 1.95, maxWidth: '980px', margin: '0 0 40px' }}>
+          <p style={{ color: '#374151', fontSize: '16px', lineHeight: 1.95, margin: '0 0 40px' }}>
             Diamonds are more than grades, they&apos;re light, structure, and brilliance. As the trade shifts from physical counters to virtual screens, the way we learn must evolve too. The American Diamonds Academy teaches the visual skills and judgment today&apos;s digital marketplace demands, so you can evaluate diamonds confidently, even without holding them in your hand. Whether you&apos;re a buyer, seller, or enthusiast, you&apos;ll gain clarity and a skill that lasts a lifetime.
           </p>
           <Link to="/about" className="btn btn-outline btn-lg">Learn More</Link>

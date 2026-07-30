@@ -1,20 +1,18 @@
 import React from 'react';
 
-// IGI collaboration banner — shown on the Homepage and Education page. Displayed in
-// gold per the client's reference site. Falls back to a text lockup until the actual
-// IGI logo file (/igi-collaboration.webp) is placed in /public.
+// IGI authorization banner — exact style/copy pattern from the CDA reference site:
+// solid gold/bronze full-width band with two centered white paragraphs. Shown on the
+// Homepage (right after "Diamond Learning, Reimagined") and the Education page.
 export default function IgiCollabBanner() {
   return (
-    <section style={{ background: '#0f1a2e', padding: '32px 0' }}>
-      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-        <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600 }}>In Collaboration With</span>
-        <img
-          src="/igi-collaboration.webp"
-          alt="IGI Collaboration"
-          style={{ height: '40px', width: 'auto', objectFit: 'contain' }}
-          onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'inline-block'; }}
-        />
-        <span style={{ display: 'none', fontFamily: "'Playfair Display', serif", fontSize: '26px', fontWeight: 700, color: '#D4AF37', letterSpacing: '1px' }}>IGI</span>
+    <section style={{ background: '#96702C', padding: '48px 20px' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', textAlign: 'center' }}>
+        <p style={{ color: 'white', fontWeight: 700, fontSize: '17px', lineHeight: 1.7, marginBottom: '20px' }}>
+          * American Diamonds Academy is honoured to have received authorization from the International Gemological Institute (IGI) to reference selected IGI educational resources (with appropriate attribution to IGI) within its diamond education programs.
+        </p>
+        <p style={{ color: 'white', fontWeight: 700, fontSize: '17px', lineHeight: 1.7 }}>
+          This recognition reflects a shared commitment to advancing diamond education by recognizing IGI&rsquo;s internationally recognized gemological expertise while continuing to develop ADA&rsquo;s practical approach to visual diamond evaluation, light performance, and real-world application.
+        </p>
       </div>
     </section>
   );
