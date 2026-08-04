@@ -7,14 +7,14 @@ import React from 'react';
 export const WHOP_PLAN_BY_SLUG = {
   'diamond-grading-fundamentals': 'plan_K7nCfkBwyTUxJ', // Diamond Fundamentals — buy now, $399 CAD
   'diamond-grading-intelligence': 'plan_kdJ73RPsAkYEs', // Diamond Intelligence — buy now, $599 CAD
+  'diamond-shape-intelligence': 'plan_lb3ce50TTZ3hy',   // now a live Course, not coming-soon — $599 CAD
 };
 
-// Diamond Shape Intelligence and Diamond Precision aren't purchasable Course records yet
-// (they're the ComingSoonSection marketing cards on the Education page) — matched by title
-// there instead of by slug. See frontend/src/pages/Education.js.
+// Diamond Precision isn't a purchasable Course record yet (it's the ComingSoonSection
+// marketing card on the Education/Home pages) — matched by title there instead of by
+// slug. See frontend/src/components/ComingSoonSection.js.
 export const WHOP_PLAN_BY_COMING_SOON_TITLE = {
-  'Diamond Shape Intelligence': 'plan_lb3ce50TTZ3hy', // waitlist, $599 CAD
-  'Diamond Precision': 'plan_FoZTxWKKryBxA',           // waitlist, $599 CAD
+  'Diamond Precision': 'plan_FoZTxWKKryBxA', // waitlist, $599 CAD
 };
 
 export const findWhopPlanForComingSoonTitle = (title = '') => {

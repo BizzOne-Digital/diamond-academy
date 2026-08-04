@@ -2,9 +2,11 @@ import React from 'react';
 import api from '../utils/api';
 import WhopCheckout, { findWhopPlanForComingSoonTitle } from './WhopCheckout';
 
+// Diamond Shape Intelligence has launched — it's a real Course now, not a coming-soon
+// card (see CourseDetail.js / WhopCheckout.js WHOP_PLAN_BY_SLUG). Only Diamond
+// Precision remains upcoming.
 const DEFAULT_ITEMS = [
   { _id: '1', title: 'Diamond Precision', subtitle: 'Applied Diamond Measurement & Valuation', description: 'This masterclass integrates advanced diamond grading knowledge with the quantitative tools used in real-world diamond evaluation and pricing. Building on Cut, Colour, Clarity, and Carat interpretation, the course introduces key analytical frameworks including proportion analysis, carat weight estimation logic, and value impact assessments based on cut performance and light efficiency. You will also explore advanced evaluation models for fancy-cut diamonds, along with an introduction to fancy colour grading considerations and how structure influences perceived value. A core component of the program focuses on how grading outcomes influence market pricing, including value adjustments tied to cut quality, proportion efficiency, and trade benchmarks similar to Rapaport-style pricing structures. Designed as the final stage of the Diamond Intelligence framework, this course moves beyond visual interpretation into structured calculation — connecting how a diamond looks with how it is measured, compared, and valued in the global trade. Pre-requisite: Diamond Intelligence', image: '/course-precision.png' },
-  { _id: '2', title: 'Diamond Shape Intelligence – Visual Evaluation and Grading', subtitle: 'Beyond Round Brilliants – Because Shape Matters', description: 'Beyond Round Brilliants—learn to evaluate fancy-shaped diamonds through proportion, outline, light performance, and visual balance. Develop the confidence to assess every shape using the principles professionals rely on. Course Highlights: Evaluate the world\'s most popular fancy diamond shapes. Understand preferred proportions and length-to-width ratios. Analyze outline, symmetry, and overall visual appeal. Learn how proportions influence brilliance, fire, scintillation, and spread. Develop grading skills through guided visual exercises. Access interactive proportion analysis tools exclusive to American Diamonds Academy (Tools coming soon).', image: '/course-fancy-shapes.jpeg' },
 ];
 
 // Full-bleed, edge-to-edge alternating rows (image | text, no gap or rounded card) —
