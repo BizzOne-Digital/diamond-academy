@@ -58,8 +58,8 @@ export default function AdminTools() {
         <div>
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: '28px', color: C.navy }}>Tools &amp; Supplies</h1>
           <p style={{ color: '#6b7280', marginTop: '4px' }}>
-            Add Stuller SKUs to show on the Tools page. Find the SKU on Stuller.com's own catalog for the item you want to sell —
-            Stuller's API can only look up items by exact SKU, it can't browse categories, so this list is how items get added.
+            The public Tools page now browses Stuller's live catalog by category automatically — you don't need to add anything here for that.
+            Use this list only to feature specific hand-picked SKUs you want to highlight; find the SKU on Stuller.com's own catalog for the item.
           </p>
         </div>
         <button onClick={() => { reset(); setShowForm(true); }} className="btn btn-primary">+ Add Tool</button>
