@@ -29,9 +29,11 @@ const TOOLS_CATEGORY_ID = 9;
 const TOOLS_CATEGORIES = ['Hand Tools', 'Equipment', 'Supplies', 'Jewelry Supplies', 'General Accessories', 'Watch Supplies'];
 
 // GET /api/stuller/browse?category=Hand+Tools&cursor=<opaque token from a previous response>
-// Browses a real Stuller category, filtered to orderable/in-stock items only (most of
-// the catalog is legacy/inactive placeholder data). Accumulates across several Stuller
-// pages server-side so the frontend gets a useful page of real results per request.
+// Browses a real Stuller category. `Filter: ["Orderable", "OnPriceList"]` (a flat string
+// array — different shape from AdvancedProductFilters) tells Stuller to only return
+// orderable/in-stock, priced items server-side, confirmed live (10/10 results orderable
+// vs. a mix of active/legacy SKUs without it) — so no client-side filtering or
+// multi-page accumulation is needed here.
 router.get('/browse', async (req, res) => {
   const authHeader = stullerAuthHeader();
   if (!authHeader) {
@@ -43,40 +45,29 @@ router.get('/browse', async (req, res) => {
   }
 
   try {
-    const collected = [];
-    let cursor = req.query.cursor || null;
-    let iterations = 0;
-    const MAX_ITERATIONS = 6; // safety cap — most catalog pages are mostly inactive SKUs
+    const cursor = req.query.cursor || null;
+    const body = cursor
+      ? { NextPage: cursor }
+      : { CategoryIds: [TOOLS_CATEGORY_ID], AdvancedProductFilters: [{ Type: 'ProductType', Values: [{ Value: category }] }], Filter: ['Orderable', 'OnPriceList'], PageSize: 24 };
 
-    while (collected.length < 24 && iterations < MAX_ITERATIONS) {
-      const body = cursor
-        ? { NextPage: cursor }
-        : { CategoryIds: [TOOLS_CATEGORY_ID], AdvancedProductFilters: [{ Type: 'ProductType', Values: [{ Value: category }] }], PageSize: 100 };
+    const response = await fetch(`${STULLER_API_BASE}/products`, {
+      method: 'POST',
+      headers: { Authorization: authHeader, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
 
-      const response = await fetch(`${STULLER_API_BASE}/products`, {
-        method: 'POST',
-        headers: { Authorization: authHeader, 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-
-      if (!response.ok) {
-        const text = await response.text().catch(() => '');
-        return res.status(response.status).json({ success: false, message: `Stuller API error (${response.status})`, details: text.slice(0, 500) });
-      }
-
-      const data = await response.json();
-      collected.push(...(data.Products || []).filter(p => p.Orderable));
-      cursor = data.NextPage || null;
-      iterations += 1;
-      if (!cursor) break; // no more pages
+    if (!response.ok) {
+      const text = await response.text().catch(() => '');
+      return res.status(response.status).json({ success: false, message: `Stuller API error (${response.status})`, details: text.slice(0, 500) });
     }
 
+    const data = await response.json();
     res.json({
       success: true,
       category,
       categories: TOOLS_CATEGORIES,
-      products: collected.slice(0, 24),
-      nextCursor: cursor,
+      products: data.Products || [],
+      nextCursor: data.NextPage || null,
     });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
