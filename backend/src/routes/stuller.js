@@ -5,8 +5,9 @@ const ToolSku = require('../models/ToolSku');
 const STULLER_API_BASE = 'https://api.stuller.com/v2';
 
 // Server-side only — Stuller credentials must never reach the browser. Set these in
-// backend/.env: STULLER_USERNAME, STULLER_PASSWORD (the Developer/Administrator login
-// for the ANGELDIAMONDINC Stuller account).
+// backend/.env: STULLER_USERNAME, STULLER_PASSWORD — the Developer-role login Stuller's
+// e-commerce support team issued specifically for API access (separate from the main
+// ANGELDIAMONDINC account login).
 function stullerAuthHeader() {
   const { STULLER_USERNAME, STULLER_PASSWORD } = process.env;
   if (!STULLER_USERNAME || !STULLER_PASSWORD) return null;
@@ -20,6 +21,11 @@ function stullerAuthHeader() {
 //   { AdvancedProductFilters: [{ Type: "ProductType", Values: [{ Value: "Hand Tools" }] }] }
 // Pagination continues by sending back the opaque `NextPage` token Stuller returns,
 // as { NextPage: token } — no need to resend the filter on later pages.
+//
+// Stuller's own e-commerce support team confirmed Category ID 9 is the official
+// top-level "Tools & Supplies" category — every /browse request is scoped to it via
+// CategoryIds, with ProductType as a sub-filter for the tabs below.
+const TOOLS_CATEGORY_ID = 9;
 const TOOLS_CATEGORIES = ['Hand Tools', 'Equipment', 'Supplies', 'Jewelry Supplies', 'General Accessories', 'Watch Supplies'];
 
 // GET /api/stuller/browse?category=Hand+Tools&cursor=<opaque token from a previous response>
@@ -45,7 +51,7 @@ router.get('/browse', async (req, res) => {
     while (collected.length < 24 && iterations < MAX_ITERATIONS) {
       const body = cursor
         ? { NextPage: cursor }
-        : { AdvancedProductFilters: [{ Type: 'ProductType', Values: [{ Value: category }] }], PageSize: 100 };
+        : { CategoryIds: [TOOLS_CATEGORY_ID], AdvancedProductFilters: [{ Type: 'ProductType', Values: [{ Value: category }] }], PageSize: 100 };
 
       const response = await fetch(`${STULLER_API_BASE}/products`, {
         method: 'POST',
