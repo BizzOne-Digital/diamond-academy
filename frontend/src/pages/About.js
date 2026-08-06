@@ -71,7 +71,9 @@ export function About() {
               ))}
             </div>
           </div>
-          <div style={{ minHeight: '520px', background: `url(/Certificates.webp) center/cover no-repeat`, backgroundColor: 'white' }} />
+          <div style={{ background: 'white', display: 'flex', alignItems: 'center' }}>
+            <img src="/Certificates.webp" alt="Certifications" style={{ width: '100%', height: 'auto', display: 'block' }} />
+          </div>
         </div>
       </section>
 
