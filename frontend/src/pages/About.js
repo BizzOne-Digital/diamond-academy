@@ -29,42 +29,32 @@ export function About() {
         <div className="container"><h1>Behind the Shift</h1><p>Because the diamond world is changing, meet the gemmologist who decided learning should change with it.</p></div>
       </div>
 
-      {/* FOUNDER SECTION */}
-      <section className="section" style={{ background: 'white' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '40px', alignItems: 'start' }}>
-            <div style={{ textAlign: 'center' }}>
-              <img src="/about1.webp" alt="Archana Jaswani - Founder"
-                style={{ width: '100%', borderRadius: '8px', objectFit: 'cover', display: 'block' }}
-                onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
-              />
-              <div style={{ display: 'none', width: '100%', aspectRatio: '3/4', background: C.light, borderRadius: '8px', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '8px' }}>
-                <span style={{ fontSize: '60px', opacity: 0.3 }}>👩</span>
-              </div>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '20px', color: C.navy, marginTop: '16px' }}>Archana Jaswani</h3>
-              <p style={{ color: C.coral, fontSize: '14px', fontWeight: 600, marginTop: '4px' }}>FCGmA, PJA, CPAA</p>
-              <p style={{ color: '#6b7280', fontSize: '14px', marginTop: '4px' }}>Founder, American Diamonds Academy</p>
-            </div>
-            <div>
-              <blockquote style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(20px,2.5vw,26px)', color: C.navy, lineHeight: 1.5, fontStyle: 'italic', marginBottom: '24px', borderLeft: `4px solid ${C.coral}`, paddingLeft: '24px' }}>
-                "American Diamonds Academy reimagines diamond learning with an online experience built for the industry's next era."
-              </blockquote>
-              <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '16px', color: C.navy, marginBottom: '24px', fontWeight: 500 }}>&mdash; Archana Jaswani (FCGmA, PJA, CPAA), Founder of the ADA.</p>
-              <p style={{ color: '#4b5563', lineHeight: 1.9, marginBottom: '16px', fontSize: '16px' }}>Where classroom learning stops at theory, ADA teaches diamond grading through advanced 360&deg; visuals that mirror how diamonds are actually bought, sold, and evaluated in today&apos;s digital marketplace &mdash; where decisions rely on trained eyes, not controlled lab setups.</p>
-              <p style={{ color: '#4b5563', lineHeight: 1.9, marginBottom: '16px', fontSize: '16px' }}>At the helm is Archana Jaswani, a credentialed gemmologist, certified appraiser, and respected industry educator. Her background combines formal gemmological training with over two decades of global business leadership across Dubai, Guangzhou, Seoul, Mumbai, and Toronto &mdash; pairing technical discipline and real&#8209;world intuition.</p>
-              <p style={{ color: '#4b5563', lineHeight: 1.9, marginBottom: '16px', fontSize: '16px' }}>She holds multiple professional designations and academic distinctions, including graduating with Honours in Gemmology, receiving the Dean&apos;s Medal and the Sarah &amp; Arthur Frankel Award, and completing the GIA&apos;s laboratory training.</p>
-              <p style={{ color: '#4b5563', lineHeight: 1.9, fontSize: '16px' }}>As Director of Communications for the Canadian Gemmological Association, Archana stays closely connected to the gem community and the evolving needs of students and professionals. Her work reflects the industry&apos;s digital shift and the future of diamond grading &mdash; a future where the screen is the new loupe.</p>
-            </div>
+      {/* FOUNDER SECTION — full-bleed edge-to-edge (photo | text), matching CDA
+          instead of a padded, boxed two-column grid. */}
+      <section style={{ background: 'white' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))' }}>
+          <div style={{ minHeight: '520px', background: `url(/about1.webp) center/cover no-repeat`, backgroundColor: C.light }} />
+          <div style={{ padding: '60px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '24px', color: C.navy, marginBottom: '4px' }}>Archana Jaswani</h3>
+            <p style={{ color: C.coral, fontSize: '14px', fontWeight: 600, marginBottom: '24px' }}>FCGmA, PJA, CPAA — Founder, American Diamonds Academy</p>
+            <blockquote style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(20px,2.5vw,26px)', color: C.navy, lineHeight: 1.5, fontStyle: 'italic', marginBottom: '24px', borderLeft: `4px solid ${C.coral}`, paddingLeft: '24px' }}>
+              "American Diamonds Academy reimagines diamond learning with an online experience built for the industry's next era."
+            </blockquote>
+            <p style={{ color: '#4b5563', lineHeight: 1.9, marginBottom: '16px', fontSize: '16px' }}>Where classroom learning stops at theory, ADA teaches diamond grading through advanced 360&deg; visuals that mirror how diamonds are actually bought, sold, and evaluated in today&apos;s digital marketplace &mdash; where decisions rely on trained eyes, not controlled lab setups.</p>
+            <p style={{ color: '#4b5563', lineHeight: 1.9, marginBottom: '16px', fontSize: '16px' }}>At the helm is Archana Jaswani, a credentialed gemmologist, certified appraiser, and respected industry educator. Her background combines formal gemmological training with over two decades of global business leadership across Dubai, Guangzhou, Seoul, Mumbai, and Toronto &mdash; pairing technical discipline and real&#8209;world intuition.</p>
+            <p style={{ color: '#4b5563', lineHeight: 1.9, marginBottom: '16px', fontSize: '16px' }}>She holds multiple professional designations and academic distinctions, including graduating with Honours in Gemmology, receiving the Dean&apos;s Medal and the Sarah &amp; Arthur Frankel Award, and completing the GIA&apos;s laboratory training.</p>
+            <p style={{ color: '#4b5563', lineHeight: 1.9, fontSize: '16px' }}>As Director of Communications for the Canadian Gemmological Association, Archana stays closely connected to the gem community and the evolving needs of students and professionals. Her work reflects the industry&apos;s digital shift and the future of diamond grading &mdash; a future where the screen is the new loupe.</p>
           </div>
         </div>
       </section>
 
-      {/* CERTIFICATIONS SECTION */}
-      <section className="section" style={{ background: C.light }}>
-        <div className="container">
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, color: C.navy, marginBottom: '40px' }}>My Certifications</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px', alignItems: 'flex-start' }}>
-            <div style={{ flex: '1 1 320px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {/* CERTIFICATIONS SECTION — same full-bleed row pattern; the certificate image
+          runs edge-to-edge instead of being boxed inside a padded container. */}
+      <section style={{ background: C.light }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))' }}>
+          <div style={{ padding: '60px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, color: C.navy, marginBottom: '32px' }}>My Certifications</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {[
                 { org: 'George Brown College', detail: "Graduate Gemmologist (Dean's Award Medal, Honors, Sarah and Arthur Frankel Gemmology Award)" },
                 { org: 'GIA - Gemological Institute of America', detail: 'Diamond Grading Lab\nGem Identification Lab' },
@@ -80,16 +70,8 @@ export function About() {
                 </div>
               ))}
             </div>
-            <div style={{ flex: '1.4 1 380px' }}>
-              <img src="/Certificates.webp" alt="Certifications"
-                style={{ width: '100%', borderRadius: '8px', objectFit: 'contain', display: 'block', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}
-                onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
-              />
-              <div style={{ display: 'none', background: 'white', borderRadius: '8px', padding: '40px', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '8px', minHeight: '200px', color: '#9ca3af', textAlign: 'center' }}>
-                <span style={{ fontSize: '40px', opacity: 0.3 }}>📜</span>
-              </div>
-            </div>
           </div>
+          <div style={{ minHeight: '520px', background: `url(/Certificates.webp) center/cover no-repeat`, backgroundColor: 'white' }} />
         </div>
       </section>
 
