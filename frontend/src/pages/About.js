@@ -32,8 +32,8 @@ export function About() {
       {/* FOUNDER SECTION — full-bleed edge-to-edge (photo | text), matching CDA
           instead of a padded, boxed two-column grid. */}
       <section style={{ background: 'white' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))' }}>
-          <div style={{ minHeight: '520px', background: `url(/about1.webp) center/cover no-repeat`, backgroundColor: C.light }} />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', alignItems: 'start' }}>
+          <div style={{ height: '460px', background: `url(/about1.webp) top center/cover no-repeat`, backgroundColor: C.light }} />
           <div style={{ padding: '60px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '24px', color: C.navy, marginBottom: '4px' }}>Archana Jaswani</h3>
             <p style={{ color: C.coral, fontSize: '14px', fontWeight: 600, marginBottom: '24px' }}>FCGmA, PJA, CPAA — Founder, American Diamonds Academy</p>
