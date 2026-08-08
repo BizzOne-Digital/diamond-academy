@@ -29,12 +29,16 @@ export function About() {
         <div className="container"><h1>Behind the Shift</h1><p>Because the diamond world is changing, meet the gemmologist who decided learning should change with it.</p></div>
       </div>
 
-      {/* FOUNDER SECTION — full-bleed edge-to-edge (photo | text), matching CDA
-          instead of a padded, boxed two-column grid. */}
-      <section style={{ background: 'white' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', alignItems: 'start' }}>
-          <div style={{ height: '460px', background: `url(/about1.webp) top center/cover no-repeat`, backgroundColor: C.light }} />
-          <div style={{ padding: '60px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      {/* FOUNDER SECTION */}
+      <section className="section" style={{ background: 'white' }}>
+        <div className="container">
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px', alignItems: 'flex-start' }}>
+            <div style={{ flex: '1 1 380px' }}>
+              <img src="/about1.webp" alt="Archana Jaswani - Founder"
+                style={{ width: '100%', borderRadius: '8px', display: 'block', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}
+              />
+            </div>
+          <div style={{ flex: '1.4 1 380px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '24px', color: C.navy, marginBottom: '4px' }}>Archana Jaswani</h3>
             <p style={{ color: C.coral, fontSize: '14px', fontWeight: 600, marginBottom: '24px' }}>FCGmA, PJA, CPAA — Founder, American Diamonds Academy</p>
             <blockquote style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(20px,2.5vw,26px)', color: C.navy, lineHeight: 1.5, fontStyle: 'italic', marginBottom: '24px', borderLeft: `4px solid ${C.coral}`, paddingLeft: '24px' }}>
@@ -44,6 +48,7 @@ export function About() {
             <p style={{ color: '#4b5563', lineHeight: 1.9, marginBottom: '16px', fontSize: '16px' }}>At the helm is Archana Jaswani, a credentialed gemmologist, certified appraiser, and respected industry educator. Her background combines formal gemmological training with over two decades of global business leadership across Dubai, Guangzhou, Seoul, Mumbai, and Toronto &mdash; pairing technical discipline and real&#8209;world intuition.</p>
             <p style={{ color: '#4b5563', lineHeight: 1.9, marginBottom: '16px', fontSize: '16px' }}>She holds multiple professional designations and academic distinctions, including graduating with Honours in Gemmology, receiving the Dean&apos;s Medal and the Sarah &amp; Arthur Frankel Award, and completing the GIA&apos;s laboratory training.</p>
             <p style={{ color: '#4b5563', lineHeight: 1.9, fontSize: '16px' }}>As Director of Communications for the Canadian Gemmological Association, Archana stays closely connected to the gem community and the evolving needs of students and professionals. Her work reflects the industry&apos;s digital shift and the future of diamond grading &mdash; a future where the screen is the new loupe.</p>
+          </div>
           </div>
         </div>
       </section>
