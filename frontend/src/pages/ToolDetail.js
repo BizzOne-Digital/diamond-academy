@@ -15,8 +15,8 @@ export default function ToolDetail() {
   const [loading, setLoading] = useState(!location.state?.product);
   const [error, setError] = useState('');
   const [qty, setQty] = useState(1);
-  const [showRequestForm, setShowRequestForm] = useState(false);
-  const [requestForm, setRequestForm] = useState({ name: user?.name || '', email: user?.email || '', phone: '' });
+  const [showCheckoutForm, setShowCheckoutForm] = useState(false);
+  const [checkoutForm, setCheckoutForm] = useState({ name: user?.name || '', email: user?.email || '', phone: '' });
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -50,27 +50,25 @@ export default function ToolDetail() {
   const specs = (product.DescriptiveElementGroup?.DescriptiveElements || [])
     .filter(el => el.DisplayValue && el.DisplayValue !== 'N/A');
 
-  const submitRequest = async (e) => {
+  const submitCheckout = async (e) => {
     e.preventDefault();
-    if (!requestForm.name.trim() || !requestForm.email.trim()) {
+    if (!checkoutForm.name.trim() || !checkoutForm.email.trim()) {
       toast.error('Name and email are required');
       return;
     }
     setSubmitting(true);
     try {
-      await api.post('/stuller/requests', {
-        ...requestForm,
+      const { data } = await api.post('/stuller/checkout', {
+        ...checkoutForm,
         sku: product.SKU,
         productName: name,
         price: product.Price?.Value,
         currency: product.Price?.CurrencyCode,
         qty,
       });
-      toast.success('Request sent! Our team will contact you shortly.');
-      setShowRequestForm(false);
+      window.location.href = data.sessionUrl;
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Could not send request');
-    } finally {
+      toast.error(err.response?.data?.message || 'Could not start checkout');
       setSubmitting(false);
     }
   };
@@ -128,46 +126,48 @@ export default function ToolDetail() {
               <button
                 className="btn btn-primary"
                 style={{ width: '100%', padding: '16px' }}
-                onClick={() => setShowRequestForm(true)}
+                onClick={() => setShowCheckoutForm(true)}
               >
-                Request this Item
+                Buy Now
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      {showRequestForm && (
+      {showCheckoutForm && (
         <div
-          onClick={() => setShowRequestForm(false)}
+          onClick={() => setShowCheckoutForm(false)}
           style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}
         >
           <form
-            onSubmit={submitRequest}
+            onSubmit={submitCheckout}
             onClick={(e) => e.stopPropagation()}
             style={{ background: 'white', borderRadius: '12px', maxWidth: '420px', width: '100%', padding: '32px' }}
           >
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '20px', color: C.navy, marginBottom: '6px' }}>Request this Item</h2>
-            <p style={{ color: '#6b7280', fontSize: '13px', marginBottom: '20px' }}>{name} — Qty {qty}</p>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '20px', color: C.navy, marginBottom: '6px' }}>Checkout</h2>
+            <p style={{ color: '#6b7280', fontSize: '13px', marginBottom: '20px' }}>
+              {name} — Qty {qty} — ${price != null ? (price * qty).toFixed(2) : ''} {product.Price?.CurrencyCode}
+            </p>
 
             <div className="form-group">
               <label>Name *</label>
-              <input value={requestForm.name} onChange={e => setRequestForm(f => ({ ...f, name: e.target.value }))} required />
+              <input value={checkoutForm.name} onChange={e => setCheckoutForm(f => ({ ...f, name: e.target.value }))} required />
             </div>
             <div className="form-group">
               <label>Email *</label>
-              <input type="email" value={requestForm.email} onChange={e => setRequestForm(f => ({ ...f, email: e.target.value }))} required />
+              <input type="email" value={checkoutForm.email} onChange={e => setCheckoutForm(f => ({ ...f, email: e.target.value }))} required />
             </div>
             <div className="form-group">
               <label>Phone</label>
-              <input value={requestForm.phone} onChange={e => setRequestForm(f => ({ ...f, phone: e.target.value }))} />
+              <input value={checkoutForm.phone} onChange={e => setCheckoutForm(f => ({ ...f, phone: e.target.value }))} />
             </div>
 
             <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
               <button type="submit" disabled={submitting} className="btn btn-primary" style={{ flex: 1, opacity: submitting ? 0.7 : 1 }}>
-                {submitting ? 'Sending...' : 'Send Request'}
+                {submitting ? 'Redirecting...' : 'Pay Now'}
               </button>
-              <button type="button" onClick={() => setShowRequestForm(false)} className="btn btn-outline">Cancel</button>
+              <button type="button" onClick={() => setShowCheckoutForm(false)} className="btn btn-outline">Cancel</button>
             </div>
           </form>
         </div>

@@ -53,10 +53,13 @@ export default function AdminToolRequests() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                   <h3 style={{ fontWeight: 600, color: C.navy, fontSize: '15px', margin: 0 }}>{r.productName || r.sku}</h3>
                   <span style={{ padding: '2px 8px', borderRadius: '10px', fontSize: '11px', fontWeight: 600, background: STATUS_COLORS[r.status]?.bg, color: STATUS_COLORS[r.status]?.text }}>{r.status}</span>
+                  <span style={{ padding: '2px 8px', borderRadius: '10px', fontSize: '11px', fontWeight: 600, background: r.paymentStatus === 'paid' ? '#dcfce7' : '#fee2e2', color: r.paymentStatus === 'paid' ? '#16a34a' : '#dc2626' }}>
+                    {r.paymentStatus === 'paid' ? 'Paid' : 'Unpaid'}
+                  </span>
                 </div>
                 <p style={{ color: '#9ca3af', fontSize: '13px', margin: 0 }}>
                   {r.name} &middot; {r.email}{r.phone ? ` · ${r.phone}` : ''} &middot; SKU: {r.sku} &middot; Qty: {r.qty}
-                  {r.price != null && ` · $${r.price.toFixed(2)} ${r.currency || ''}`}
+                  {r.amount != null && ` · Total: $${r.amount.toFixed(2)} ${r.currency || ''}`}
                 </p>
                 <p style={{ color: '#c1c7d0', fontSize: '12px', margin: '4px 0 0' }}>{new Date(r.createdAt).toLocaleString()}</p>
               </div>

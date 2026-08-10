@@ -13,6 +13,7 @@ import DiamondDetail from './pages/DiamondDetail';
 import Resources from './pages/Resources';
 import Tools from './pages/Tools';
 import ToolDetail from './pages/ToolDetail';
+import ToolPaymentSuccess from './pages/ToolPaymentSuccess';
 import Cart from './pages/Cart';
 import { Blog, BlogPost } from './pages/Blog';
 import { About } from './pages/About';
@@ -91,6 +92,7 @@ export default function App() {
               <Route path="/diamonds/:id" element={<DiamondDetail />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/tools" element={<Tools />} />
+              <Route path="/tools/payment-success" element={<ToolPaymentSuccess />} />
               <Route path="/tools/:sku" element={<ToolDetail />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/blog" element={<Blog />} />

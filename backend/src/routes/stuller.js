@@ -1,10 +1,20 @@
 const express = require('express');
 const router = express.Router();
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const ToolSku = require('../models/ToolSku');
 const ToolRequest = require('../models/ToolRequest');
 const { protect, admin, optionalAuth } = require('../middleware/auth');
 
 const STULLER_API_BASE = 'https://api.stuller.com/v2';
+
+// Client-confirmed markup: final price shown to customers is 5x Stuller's cost —
+// meant to be all-inclusive (covers shipping, insurance, customs duties, our margin).
+const MARKUP_MULTIPLIER = 5;
+function applyMarkup(product) {
+  if (product?.Price?.Value != null) product.Price.Value = product.Price.Value * MARKUP_MULTIPLIER;
+  if (product?.ShowcasePrice?.Value != null) product.ShowcasePrice.Value = product.ShowcasePrice.Value * MARKUP_MULTIPLIER;
+  return product;
+}
 
 // Server-side only — Stuller credentials must never reach the browser. Set these in
 // backend/.env: STULLER_USERNAME, STULLER_PASSWORD — the Developer-role login Stuller's
@@ -68,7 +78,7 @@ router.get('/browse', async (req, res) => {
       success: true,
       category,
       categories: TOOLS_CATEGORIES,
-      products: data.Products || [],
+      products: (data.Products || []).map(applyMarkup),
       nextCursor: data.NextPage || null,
     });
   } catch (err) {
@@ -103,7 +113,7 @@ router.get('/tools-and-supplies', async (req, res) => {
     }
 
     const data = await response.json();
-    res.json({ success: true, products: data.Products || data.products || [] });
+    res.json({ success: true, products: (data.Products || data.products || []).map(applyMarkup) });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -133,23 +143,66 @@ router.get('/product/:sku', async (req, res) => {
     const data = await response.json();
     const product = (data.Products || data.products || [])[0];
     if (!product) return res.status(404).json({ success: false, message: 'Product not found' });
-    res.json({ success: true, product });
+    res.json({ success: true, product: applyMarkup(product) });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
 
-// POST /api/stuller/requests — public (guest or logged-in) "Request this Item" submission
-// from the Tools detail page. Lands in the admin panel; no email/payment automation yet.
-router.post('/requests', optionalAuth, async (req, res) => {
+// POST /api/stuller/checkout — real payment. Customer pays the marked-up price
+// (already applied in /browse and /product above) on our own site via Stripe; we never
+// touch Stuller's cart. Creates a ToolRequest record that becomes "paid" once the
+// webhook confirms payment, so our team can then place the matching order with Stuller.
+router.post('/checkout', optionalAuth, async (req, res) => {
   const { name, email, phone, sku, productName, price, currency, qty } = req.body;
   if (!name || !email) return res.status(400).json({ success: false, message: 'Name and email are required' });
+  if (!price || price <= 0) return res.status(400).json({ success: false, message: 'Invalid price' });
+  const quantity = Math.max(1, Number(qty) || 1);
+
   try {
-    const request = await ToolRequest.create({
-      name, email, phone, sku, productName, price, currency, qty: qty || 1,
+    const toolRequest = await ToolRequest.create({
+      name, email, phone, sku, productName, price, currency, qty: quantity,
+      amount: price * quantity,
       user: req.user?._id,
     });
-    res.status(201).json({ success: true, request });
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      customer_email: email,
+      line_items: [{
+        price_data: {
+          currency: (currency || 'usd').toLowerCase(),
+          product_data: { name: productName || 'Tool' },
+          unit_amount: Math.round(price * 100),
+        },
+        quantity,
+      }],
+      success_url: `${process.env.FRONTEND_URL}/tools/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.FRONTEND_URL}/tools/${encodeURIComponent(sku || '')}`,
+      metadata: { type: 'tool', toolRequestId: toolRequest._id.toString() },
+    });
+
+    toolRequest.stripeSessionId = session.id;
+    await toolRequest.save();
+
+    res.json({ success: true, sessionUrl: session.url });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// GET /api/stuller/verify/:sessionId — public confirmation for the payment-success page.
+router.get('/verify/:sessionId', async (req, res) => {
+  try {
+    const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
+    let request = await ToolRequest.findOne({ stripeSessionId: req.params.sessionId });
+    if (request && session.payment_status === 'paid' && request.paymentStatus !== 'paid') {
+      request.paymentStatus = 'paid';
+      request.paidAt = new Date();
+      await request.save();
+    }
+    res.json({ success: true, status: session.payment_status, request });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
