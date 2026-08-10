@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const Whop = require('@whop/sdk').default;
 const ToolSku = require('../models/ToolSku');
 const ToolRequest = require('../models/ToolRequest');
 const { protect, admin, optionalAuth } = require('../middleware/auth');
@@ -29,10 +28,17 @@ function stullerAuthHeader() {
 
 // Tool purchases pay through Whop (not Stripe) — a dynamic one-time checkout is created
 // per order since every tool has a different marked-up price and quantity, unlike the
-// fixed per-course Whop plan links used elsewhere on the site.
-function whopClient() {
+// fixed per-course Whop plan links used elsewhere on the site. Calls Whop's REST API
+// directly with fetch (no SDK) — @whop/sdk pulls in an ESM-only dependency that crashes
+// under `require()` on Vercel's Node runtime.
+const WHOP_API_BASE = 'https://api.whop.com/api/v1';
+function whopHeaders() {
   if (!process.env.WHOP_API_KEY) return null;
-  return new Whop({ apiKey: process.env.WHOP_API_KEY });
+  return {
+    Authorization: `Bearer ${process.env.WHOP_API_KEY}`,
+    'Content-Type': 'application/json',
+    'Api-Version-Date': '2026-07-20',
+  };
 }
 
 // Real category browsing IS supported — it just requires the exact nested request
@@ -167,8 +173,8 @@ router.post('/checkout', optionalAuth, async (req, res) => {
   if (!price || price <= 0) return res.status(400).json({ success: false, message: 'Invalid price' });
   const quantity = Math.max(1, Number(qty) || 1);
 
-  const whop = whopClient();
-  if (!whop || !process.env.WHOP_COMPANY_ID) {
+  const headers = whopHeaders();
+  if (!headers || !process.env.WHOP_COMPANY_ID) {
     return res.status(503).json({ success: false, message: 'Whop payments are not configured. Set WHOP_API_KEY and WHOP_COMPANY_ID on the server.' });
   }
 
@@ -179,17 +185,27 @@ router.post('/checkout', optionalAuth, async (req, res) => {
       user: req.user?._id,
     });
 
-    const checkoutConfig = await whop.checkoutConfigurations.create({
-      company_id: process.env.WHOP_COMPANY_ID,
-      plan: {
-        initial_price: Math.round(price * quantity * 100) / 100,
-        plan_type: 'one_time',
-        currency: 'usd',
-      },
-      metadata: { type: 'tool', toolRequestId: toolRequest._id.toString() },
-      redirect_url: `${process.env.FRONTEND_URL}/tools/payment-success?requestId=${toolRequest._id}`,
+    const whopRes = await fetch(`${WHOP_API_BASE}/checkout_configurations`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        company_id: process.env.WHOP_COMPANY_ID,
+        plan: {
+          initial_price: Math.round(price * quantity * 100) / 100,
+          plan_type: 'one_time',
+          currency: 'usd',
+        },
+        metadata: { type: 'tool', toolRequestId: toolRequest._id.toString() },
+        redirect_url: `${process.env.FRONTEND_URL}/tools/payment-success?requestId=${toolRequest._id}`,
+      }),
     });
 
+    if (!whopRes.ok) {
+      const text = await whopRes.text().catch(() => '');
+      return res.status(whopRes.status).json({ success: false, message: `Whop API error (${whopRes.status})`, details: text.slice(0, 500) });
+    }
+
+    const checkoutConfig = await whopRes.json();
     toolRequest.whopCheckoutId = checkoutConfig.id;
     await toolRequest.save();
 
@@ -202,8 +218,8 @@ router.post('/checkout', optionalAuth, async (req, res) => {
 
 // GET /api/stuller/verify/:requestId — public confirmation for the payment-success page.
 router.get('/verify/:requestId', async (req, res) => {
-  const whop = whopClient();
-  if (!whop) return res.status(503).json({ success: false, message: 'Whop payments are not configured.' });
+  const headers = whopHeaders();
+  if (!headers) return res.status(503).json({ success: false, message: 'Whop payments are not configured.' });
 
   try {
     const request = await ToolRequest.findById(req.params.requestId);
@@ -211,11 +227,13 @@ router.get('/verify/:requestId', async (req, res) => {
 
     let status = request.paymentStatus === 'paid' ? 'paid' : 'pending';
     if (status !== 'paid' && request.whopCheckoutId) {
-      for await (const payment of whop.payments.list({
-        company_id: process.env.WHOP_COMPANY_ID,
-        checkout_configuration_ids: [request.whopCheckoutId],
-      })) {
-        if (payment.status === 'paid') { status = 'paid'; break; }
+      const params = new URLSearchParams({ company_id: process.env.WHOP_COMPANY_ID });
+      params.append('checkout_configuration_ids[]', request.whopCheckoutId);
+      const whopRes = await fetch(`${WHOP_API_BASE}/payments?${params.toString()}`, { headers });
+      if (whopRes.ok) {
+        const data = await whopRes.json();
+        const payments = data.data || data.items || [];
+        if (payments.some(p => p.status === 'paid')) status = 'paid';
       }
     }
 
