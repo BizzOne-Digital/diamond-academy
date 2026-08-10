@@ -14,6 +14,7 @@ const navItems = [
   { path: '/admin/blog', label: 'Blog', Icon: MessageSVG },
   { path: '/admin/comingsoon', label: 'Coming Soon', Icon: StarSVG },
   { path: '/admin/tools', label: 'Tools', Icon: BoltSVG },
+  { path: '/admin/tool-requests', label: 'Tool Requests', Icon: InboxSVG },
   { path: '/admin/users', label: 'Students', Icon: UsersSVG },
   { path: '/admin/orders', label: 'Orders', Icon: CreditCardSVG },
 ];

@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 
 const C = { navy: '#1B2B4B', coral: '#E8835A', light: '#EAF0F8' };
 
 export default function Tools() {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState('Hand Tools');
   const [products, setProducts] = useState([]);
@@ -30,6 +32,10 @@ export default function Tools() {
   }, []);
 
   useEffect(() => { load(category, null); }, [category, load]);
+
+  const openProduct = (p) => {
+    navigate(`/tools/${encodeURIComponent(p.SKU || p.Id)}`, { state: { product: p } });
+  };
 
   return (
     <>
@@ -81,7 +87,12 @@ export default function Tools() {
                   const image = p.Images?.[0]?.FullUrl || p.FullySetImages?.[0]?.FullUrl || '';
                   const price = p.Price?.Value;
                   return (
-                    <div key={p.Id || p.SKU || i} className="card" style={{ overflow: 'hidden' }}>
+                    <div
+                      key={p.Id || p.SKU || i}
+                      className="card"
+                      style={{ overflow: 'hidden', cursor: 'pointer' }}
+                      onClick={() => openProduct(p)}
+                    >
                       {image ? (
                         <div style={{ height: '200px', background: `url(${image}) center/cover no-repeat`, backgroundColor: '#f3f4f6' }} />
                       ) : (

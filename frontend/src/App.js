@@ -12,6 +12,7 @@ import CourseDetail from './pages/CourseDetail';
 import DiamondDetail from './pages/DiamondDetail';
 import Resources from './pages/Resources';
 import Tools from './pages/Tools';
+import ToolDetail from './pages/ToolDetail';
 import Cart from './pages/Cart';
 import { Blog, BlogPost } from './pages/Blog';
 import { About } from './pages/About';
@@ -38,6 +39,7 @@ import AdminResources from './pages/admin/AdminResources';
 import AdminBlog, { AdminBlogForm } from './pages/admin/AdminBlog';
 import AdminComingSoon from './pages/admin/AdminComingSoon';
 import AdminTools from './pages/admin/AdminTools';
+import AdminToolRequests from './pages/admin/AdminToolRequests';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -73,6 +75,7 @@ export default function App() {
         <Route path="blog/edit/:id" element={<AdminBlogForm />} />
         <Route path="comingsoon" element={<AdminComingSoon />} />
         <Route path="tools" element={<AdminTools />} />
+        <Route path="tool-requests" element={<AdminToolRequests />} />
       </Route>
 
       <Route path="*" element={
@@ -88,6 +91,7 @@ export default function App() {
               <Route path="/diamonds/:id" element={<DiamondDetail />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/tools" element={<Tools />} />
+              <Route path="/tools/:sku" element={<ToolDetail />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const ToolSku = require('../models/ToolSku');
+const ToolRequest = require('../models/ToolRequest');
+const { protect, admin, optionalAuth } = require('../middleware/auth');
 
 const STULLER_API_BASE = 'https://api.stuller.com/v2';
 
@@ -105,6 +107,65 @@ router.get('/tools-and-supplies', async (req, res) => {
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
+});
+
+// GET /api/stuller/product/:sku
+// Fetches a single product by SKU — used by the Tools detail page (direct link/refresh
+// support, since the browse grid already has the full product object in memory on click).
+router.get('/product/:sku', async (req, res) => {
+  const authHeader = stullerAuthHeader();
+  if (!authHeader) {
+    return res.status(503).json({ success: false, message: 'Stuller API is not configured. Set STULLER_USERNAME and STULLER_PASSWORD on the server.' });
+  }
+
+  try {
+    const params = new URLSearchParams();
+    params.append('sku', req.params.sku);
+    const response = await fetch(`${STULLER_API_BASE}/products?${params.toString()}`, {
+      headers: { Authorization: authHeader },
+    });
+
+    if (!response.ok) {
+      const text = await response.text().catch(() => '');
+      return res.status(response.status).json({ success: false, message: `Stuller API error (${response.status})`, details: text.slice(0, 500) });
+    }
+
+    const data = await response.json();
+    const product = (data.Products || data.products || [])[0];
+    if (!product) return res.status(404).json({ success: false, message: 'Product not found' });
+    res.json({ success: true, product });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// POST /api/stuller/requests — public (guest or logged-in) "Request this Item" submission
+// from the Tools detail page. Lands in the admin panel; no email/payment automation yet.
+router.post('/requests', optionalAuth, async (req, res) => {
+  const { name, email, phone, sku, productName, price, currency, qty } = req.body;
+  if (!name || !email) return res.status(400).json({ success: false, message: 'Name and email are required' });
+  try {
+    const request = await ToolRequest.create({
+      name, email, phone, sku, productName, price, currency, qty: qty || 1,
+      user: req.user?._id,
+    });
+    res.status(201).json({ success: true, request });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// GET /api/stuller/requests/all — admin list
+router.get('/requests/all', protect, admin, async (req, res) => {
+  const requests = await ToolRequest.find().sort('-createdAt');
+  res.json({ success: true, requests });
+});
+
+// PUT /api/stuller/requests/:id — admin update status
+router.put('/requests/:id', protect, admin, async (req, res) => {
+  const request = await ToolRequest.findByIdAndUpdate(req.params.id, { status: req.body.status }, { new: true });
+  if (!request) return res.status(404).json({ success: false, message: 'Request not found' });
+  res.json({ success: true, request });
 });
 
 module.exports = router;
