@@ -15,7 +15,7 @@ const toolRequestSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   status: { type: String, enum: ['Pending', 'Contacted', 'Fulfilled'], default: 'Pending' },
   amount: { type: Number },
-  stripeSessionId: { type: String },
+  whopCheckoutId: { type: String },
   paymentStatus: { type: String, enum: ['unpaid', 'paid'], default: 'unpaid' },
   paidAt: { type: Date },
 }, { timestamps: true });

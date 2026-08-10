@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const Whop = require('@whop/sdk').default;
 const ToolSku = require('../models/ToolSku');
 const ToolRequest = require('../models/ToolRequest');
 const { protect, admin, optionalAuth } = require('../middleware/auth');
@@ -25,6 +25,14 @@ function stullerAuthHeader() {
   if (!STULLER_USERNAME || !STULLER_PASSWORD) return null;
   const token = Buffer.from(`${STULLER_USERNAME}:${STULLER_PASSWORD}`).toString('base64');
   return `Basic ${token}`;
+}
+
+// Tool purchases pay through Whop (not Stripe) — a dynamic one-time checkout is created
+// per order since every tool has a different marked-up price and quantity, unlike the
+// fixed per-course Whop plan links used elsewhere on the site.
+function whopClient() {
+  if (!process.env.WHOP_API_KEY) return null;
+  return new Whop({ apiKey: process.env.WHOP_API_KEY });
 }
 
 // Real category browsing IS supported — it just requires the exact nested request
@@ -149,15 +157,20 @@ router.get('/product/:sku', async (req, res) => {
   }
 });
 
-// POST /api/stuller/checkout — real payment. Customer pays the marked-up price
-// (already applied in /browse and /product above) on our own site via Stripe; we never
-// touch Stuller's cart. Creates a ToolRequest record that becomes "paid" once the
-// webhook confirms payment, so our team can then place the matching order with Stuller.
+// POST /api/stuller/checkout — real payment via Whop. Customer pays the marked-up
+// price (already applied in /browse and /product above) on our own site; we never touch
+// Stuller's cart. Creates a ToolRequest record that becomes "paid" once we confirm the
+// Whop payment, so our team can then place the matching order with Stuller.
 router.post('/checkout', optionalAuth, async (req, res) => {
   const { name, email, phone, sku, productName, price, currency, qty } = req.body;
   if (!name || !email) return res.status(400).json({ success: false, message: 'Name and email are required' });
   if (!price || price <= 0) return res.status(400).json({ success: false, message: 'Invalid price' });
   const quantity = Math.max(1, Number(qty) || 1);
+
+  const whop = whopClient();
+  if (!whop || !process.env.WHOP_COMPANY_ID) {
+    return res.status(503).json({ success: false, message: 'Whop payments are not configured. Set WHOP_API_KEY and WHOP_COMPANY_ID on the server.' });
+  }
 
   try {
     const toolRequest = await ToolRequest.create({
@@ -166,43 +179,53 @@ router.post('/checkout', optionalAuth, async (req, res) => {
       user: req.user?._id,
     });
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      mode: 'payment',
-      customer_email: email,
-      line_items: [{
-        price_data: {
-          currency: (currency || 'usd').toLowerCase(),
-          product_data: { name: productName || 'Tool' },
-          unit_amount: Math.round(price * 100),
-        },
-        quantity,
-      }],
-      success_url: `${process.env.FRONTEND_URL}/tools/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.FRONTEND_URL}/tools/${encodeURIComponent(sku || '')}`,
+    const checkoutConfig = await whop.checkoutConfigurations.create({
+      company_id: process.env.WHOP_COMPANY_ID,
+      plan: {
+        initial_price: Math.round(price * quantity * 100) / 100,
+        plan_type: 'one_time',
+        currency: 'usd',
+      },
       metadata: { type: 'tool', toolRequestId: toolRequest._id.toString() },
+      redirect_url: `${process.env.FRONTEND_URL}/tools/payment-success?requestId=${toolRequest._id}`,
     });
 
-    toolRequest.stripeSessionId = session.id;
+    toolRequest.whopCheckoutId = checkoutConfig.id;
     await toolRequest.save();
 
-    res.json({ success: true, sessionUrl: session.url });
+    const checkoutUrl = checkoutConfig.purchase_url || `https://whop.com/checkout/${checkoutConfig.plan?.id}/`;
+    res.json({ success: true, sessionUrl: checkoutUrl, checkoutId: checkoutConfig.id });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
 
-// GET /api/stuller/verify/:sessionId — public confirmation for the payment-success page.
-router.get('/verify/:sessionId', async (req, res) => {
+// GET /api/stuller/verify/:requestId — public confirmation for the payment-success page.
+router.get('/verify/:requestId', async (req, res) => {
+  const whop = whopClient();
+  if (!whop) return res.status(503).json({ success: false, message: 'Whop payments are not configured.' });
+
   try {
-    const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
-    let request = await ToolRequest.findOne({ stripeSessionId: req.params.sessionId });
-    if (request && session.payment_status === 'paid' && request.paymentStatus !== 'paid') {
+    const request = await ToolRequest.findById(req.params.requestId);
+    if (!request) return res.status(404).json({ success: false, message: 'Order not found' });
+
+    let status = request.paymentStatus === 'paid' ? 'paid' : 'pending';
+    if (status !== 'paid' && request.whopCheckoutId) {
+      for await (const payment of whop.payments.list({
+        company_id: process.env.WHOP_COMPANY_ID,
+        checkout_configuration_ids: [request.whopCheckoutId],
+      })) {
+        if (payment.status === 'paid') { status = 'paid'; break; }
+      }
+    }
+
+    if (status === 'paid' && request.paymentStatus !== 'paid') {
       request.paymentStatus = 'paid';
       request.paidAt = new Date();
       await request.save();
     }
-    res.json({ success: true, status: session.payment_status, request });
+
+    res.json({ success: true, status, request });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

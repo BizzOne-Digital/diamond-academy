@@ -6,16 +6,16 @@ const C = { navy: '#1B2B4B', coral: '#E8835A' };
 
 export default function ToolPaymentSuccess() {
   const [searchParams] = useSearchParams();
-  const sessionId = searchParams.get('session_id');
+  const requestId = searchParams.get('requestId');
   const [status, setStatus] = useState('loading');
   const [request, setRequest] = useState(null);
 
   useEffect(() => {
-    if (!sessionId) { setStatus('error'); return; }
-    api.get(`/stuller/verify/${sessionId}`)
+    if (!requestId) { setStatus('error'); return; }
+    api.get(`/stuller/verify/${requestId}`)
       .then(r => { setStatus(r.data.status); setRequest(r.data.request); })
       .catch(() => setStatus('error'));
-  }, [sessionId]);
+  }, [requestId]);
 
   if (status === 'loading') {
     return <div style={{ textAlign: 'center', padding: '120px 20px' }}><div className="spinner" style={{ margin: '0 auto' }} /></div>;

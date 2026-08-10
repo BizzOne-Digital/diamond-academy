@@ -6,7 +6,6 @@ const { protect, optionalAuth } = require('../middleware/auth');
 const Order = require('../models/Order');
 const Course = require('../models/Course');
 const User = require('../models/User');
-const ToolRequest = require('../models/ToolRequest');
 
 // POST /api/payments/create-checkout-session
 // Body: { courseIds: [id, ...] } — if omitted, checks out the user's current cart.
@@ -110,19 +109,6 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
-
-    if (session.metadata?.type === 'tool') {
-      try {
-        await ToolRequest.findOneAndUpdate(
-          { stripeSessionId: session.id },
-          { paymentStatus: 'paid', paidAt: new Date() }
-        );
-      } catch (err) {
-        console.error('Tool payment webhook processing error:', err);
-      }
-      return res.json({ received: true });
-    }
-
     try {
       const order = await Order.findOneAndUpdate(
         { stripeSessionId: session.id },
