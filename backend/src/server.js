@@ -17,8 +17,17 @@ const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 300, message: 'Too ma
 app.use('/api/', limiter);
 
 // CORS
+const allowedOrigins = [process.env.FRONTEND_URL || 'http://localhost:3000', 'https://americandiamondacademy.com', 'https://www.americandiamondacademy.com'];
 app.use(cors({
-  origin: [process.env.FRONTEND_URL || 'http://localhost:3000', 'https://americandiamondacademy.com', 'https://www.americandiamondacademy.com'],
+  origin: (origin, callback) => {
+    // Allow no-origin requests (server-to-server, curl) and any Vercel deployment URL for
+    // this project — the frontend's Vercel URL changes across deploys before the final
+    // custom domain is fully live.
+    if (!origin || allowedOrigins.includes(origin) || /\.vercel\.app$/.test(new URL(origin).hostname)) {
+      return callback(null, true);
+    }
+    callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
 }));
 
