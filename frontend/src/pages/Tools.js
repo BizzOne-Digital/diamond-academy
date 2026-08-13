@@ -94,16 +94,16 @@ export default function Tools() {
                       onClick={() => openProduct(p)}
                     >
                       {image ? (
-                        <div style={{ height: '200px', background: `url(${image}) center/cover no-repeat`, backgroundColor: '#f3f4f6' }} />
+                        <div style={{ height: '260px', background: `url(${image}) center/cover no-repeat`, backgroundColor: '#f3f4f6' }} />
                       ) : (
-                        <div style={{ height: '200px', background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ height: '260px', background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           <span style={{ fontSize: '36px', opacity: 0.25 }}>🧰</span>
                         </div>
                       )}
                       <div style={{ padding: '20px' }}>
                         <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '17px', color: C.navy, marginBottom: '6px' }}>{name}</h3>
                         {p.SKU && <p style={{ color: '#9ca3af', fontSize: '12px', marginBottom: '8px' }}>SKU: {p.SKU}</p>}
-                        {price && <p style={{ fontWeight: 700, color: C.coral, fontSize: '16px' }}>${price.toFixed(2)} {p.Price?.CurrencyCode}</p>}
+                        {price && <p style={{ fontWeight: 700, color: C.coral, fontSize: '16px' }}>${price.toFixed(2)} USD</p>}
                       </div>
                     </div>
                   );

@@ -63,7 +63,7 @@ export default function ToolDetail() {
         sku: product.SKU,
         productName: name,
         price: product.Price?.Value,
-        currency: product.Price?.CurrencyCode,
+        currency: 'USD',
         qty,
       });
       window.location.href = data.sessionUrl;
@@ -88,9 +88,9 @@ export default function ToolDetail() {
       <section className="section" style={{ background: 'white' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '48px', alignItems: 'start' }}>
-            <div style={{ background: '#f3f4f6', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '420px', overflow: 'hidden' }}>
+            <div style={{ background: '#f3f4f6', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '560px', overflow: 'hidden' }}>
               {image ? (
-                <img src={image} alt={name} style={{ width: '100%', height: '100%', maxHeight: '520px', objectFit: 'contain' }} />
+                <img src={image} alt={name} style={{ width: '100%', height: '100%', maxHeight: '680px', objectFit: 'contain' }} />
               ) : (
                 <span style={{ fontSize: '64px', opacity: 0.25 }}>🧰</span>
               )}
@@ -108,7 +108,7 @@ export default function ToolDetail() {
 
               {price && (
                 <p style={{ fontWeight: 700, color: C.coral, fontSize: '28px', marginBottom: '24px' }}>
-                  ${price.toFixed(2)} {product.Price?.CurrencyCode}
+                  ${price.toFixed(2)} USD
                 </p>
               )}
 
@@ -147,7 +147,7 @@ export default function ToolDetail() {
           >
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '20px', color: C.navy, marginBottom: '6px' }}>Checkout</h2>
             <p style={{ color: '#6b7280', fontSize: '13px', marginBottom: '20px' }}>
-              {name} — Qty {qty} — ${price != null ? (price * qty).toFixed(2) : ''} {product.Price?.CurrencyCode}
+              {name} — Qty {qty} — ${price != null ? (price * qty).toFixed(2) : ''} USD
             </p>
 
             <div className="form-group">
