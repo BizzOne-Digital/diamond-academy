@@ -24,14 +24,27 @@ export default function AdminLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleLogout = () => { logout(); navigate('/'); };
   const isActive = (path, exact) => exact ? location.pathname === path : location.pathname.startsWith(path);
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc' }}>
+      {/* Mobile overlay backdrop */}
+      {mobileOpen && (
+        <div
+          onClick={() => setMobileOpen(false)}
+          className="admin-mobile-backdrop"
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 40, display: 'none' }}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside style={{ width: sidebarOpen ? '240px' : '64px', background: C.navyDark, color: 'white', flexShrink: 0, transition: 'width 0.3s ease', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+      <aside
+        className={`admin-sidebar ${mobileOpen ? 'admin-sidebar-open' : ''}`}
+        style={{ width: sidebarOpen ? '240px' : '64px', background: C.navyDark, color: 'white', flexShrink: 0, transition: 'width 0.3s ease', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
+      >
         <div style={{ padding: '20px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{ width: '36px', height: '36px', background: C.coral, borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             <DiamondSVG size={20} color="white" />
@@ -39,9 +52,9 @@ export default function AdminLayout() {
           {sidebarOpen && <div><div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '14px' }}>ADA Admin</div><div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)', marginTop: '2px' }}>Management Panel</div></div>}
         </div>
 
-        <nav style={{ flex: 1, padding: '16px 8px' }}>
+        <nav style={{ flex: 1, padding: '16px 8px', overflowY: 'auto' }}>
           {navItems.map(({ path, label, Icon, exact }) => (
-            <Link key={path} to={path} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px', borderRadius: '8px', marginBottom: '4px', color: 'white', textDecoration: 'none', background: isActive(path, exact) ? 'rgba(232,131,90,0.2)' : 'transparent', borderLeft: isActive(path, exact) ? `3px solid ${C.coral}` : '3px solid transparent', transition: 'all 0.2s' }}>
+            <Link key={path} to={path} onClick={() => setMobileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px', borderRadius: '8px', marginBottom: '4px', color: 'white', textDecoration: 'none', background: isActive(path, exact) ? 'rgba(232,131,90,0.2)' : 'transparent', borderLeft: isActive(path, exact) ? `3px solid ${C.coral}` : '3px solid transparent', transition: 'all 0.2s' }}>
               <Icon size={18} color={isActive(path, exact) ? C.coral : 'rgba(255,255,255,0.7)'} style={{ flexShrink: 0 }} />
               {sidebarOpen && <span style={{ fontSize: '14px', fontWeight: isActive(path, exact) ? 600 : 400, color: isActive(path, exact) ? C.coral : 'rgba(255,255,255,0.8)' }}>{label}</span>}
             </Link>
@@ -58,11 +71,25 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main */}
-      <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column', minWidth: 0 }}>
         <header style={{ background: 'white', padding: '0 24px', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #e5e7eb', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6b7280', padding: '4px', fontSize: '18px' }}>
-            {sidebarOpen ? '◀' : '▶'}
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <button
+              className="admin-desktop-toggle"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6b7280', padding: '4px', fontSize: '18px' }}
+            >
+              {sidebarOpen ? '◀' : '▶'}
+            </button>
+            <button
+              className="admin-mobile-toggle"
+              onClick={() => setMobileOpen(true)}
+              style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', color: '#6b7280', fontSize: '22px', padding: '4px' }}
+              aria-label="Open menu"
+            >
+              ☰
+            </button>
+          </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <Link to="/" style={{ color: '#6b7280', fontSize: '13px' }}>← View Site</Link>
             <div style={{ width: '36px', height: '36px', background: C.coral, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '16px' }}>
@@ -74,6 +101,26 @@ export default function AdminLayout() {
           <Outlet />
         </main>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .admin-sidebar {
+            position: fixed !important;
+            top: 0; bottom: 0; left: 0;
+            width: 240px !important;
+            transform: translateX(-100%);
+            transition: transform 0.25s ease !important;
+            z-index: 50;
+          }
+          .admin-sidebar-open { transform: translateX(0); }
+          .admin-mobile-backdrop { display: block !important; }
+          .admin-desktop-toggle { display: none !important; }
+          .admin-mobile-toggle { display: block !important; }
+        }
+        @media (max-width: 640px) {
+          main { padding: 16px !important; }
+        }
+      `}</style>
     </div>
   );
 }
