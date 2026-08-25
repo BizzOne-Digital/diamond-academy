@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { GraduationSVG, GemSVG, BoltSVG, EmailSVG, ShieldSVG, CheckSVG, ClockSVG } from '../components/Icons';
+import { EmailSVG, ShieldSVG, CheckSVG, ClockSVG } from '../components/Icons';
 import toast from 'react-hot-toast';
 import api from '../utils/api';
 import IgiCollabBanner from '../components/IgiCollabBanner';
@@ -80,12 +80,6 @@ export default function Home() {
     } catch { toast.error('Subscription failed. Please try again.'); }
     finally { setSubscribing(false); }
   };
-
-  const features = [
-    { Icon: GraduationSVG, title: 'Certified Expertise', desc: 'Certified gemologist translating technical gem knowledge into clear, practical buying insight.' },
-    { Icon: GemSVG, title: 'Street-Smart Clarity', desc: 'Learn how professionals read diamonds quickly and spot real value in the market.' },
-    { Icon: BoltSVG, title: 'Fast Impact Learning', desc: 'Short, focused training built for immediate real-world application.' },
-  ];
 
   return (
     <>
@@ -169,22 +163,8 @@ export default function Home() {
 
       {/* REIMAGINED — removed duplicate section per client feedback */}
 
-      {/* FEATURES */}
-      <section style={{ background: C.navy, padding: '80px 0' }}>
-        <div className="container">
-          <div className="grid-3">
-            {features.map(({ Icon, title, desc }) => (
-              <div key={title} style={{ textAlign: 'center', color: 'white', padding: '32px 24px' }}>
-                <div style={{ width: '64px', height: '64px', background: 'rgba(232,131,90,0.15)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-                  <Icon size={28} color={C.coral} />
-                </div>
-                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '24px', fontWeight: 400, marginBottom: '16px' }}>{title}</h3>
-                <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '15px', lineHeight: 1.8 }}>{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* FEATURES — removed duplicate (Certified Expertise/Street-Smart Clarity/Fast
+          Impact Learning), now shown once in the video hero's stats row above */}
 
       {/* ACTIVE COURSES — full-bleed alternating rows (text | image, edge-to-edge, no
           gap), matching the CDA reference site exactly: each course is its own
