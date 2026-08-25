@@ -5,7 +5,7 @@ import React from 'react';
 // Homepage (right after "Diamond Learning, Reimagined") and the Education page.
 export default function IgiCollabBanner() {
   return (
-    <section style={{ background: '#A9852E', padding: '48px 32px', textAlign: 'center' }}>
+    <section style={{ background: '#96702C', padding: '48px 32px', textAlign: 'center' }}>
       <p style={{ color: 'white', fontWeight: 700, fontSize: '17px', lineHeight: 1.7, marginBottom: '20px' }}>
         * American Diamonds Academy is honoured to have received authorization from the International Gemological Institute (IGI) to reference selected IGI educational resources (with appropriate attribution to IGI) within its diamond education programs.
       </p>
