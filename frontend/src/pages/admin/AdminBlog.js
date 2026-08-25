@@ -7,6 +7,33 @@ import api from '../../utils/api';
 
 const C = { navy: '#2C3E50', coral: '#E8835A', light: '#E8F6F8' };
 
+// Resizes/compresses an image client-side before upload — phone photos can be 5-15MB,
+// well past Vercel's ~4.5MB serverless request body limit, which rejects the request
+// before it even reaches our backend (shows up as an opaque CORS/network error, not a
+// real error message). Downscaling here keeps uploads reliably small.
+function compressImage(file, maxDim = 1600, quality = 0.82) {
+  return new Promise((resolve) => {
+    if (!file.type.startsWith('image/') || file.type === 'image/gif') { resolve(file); return; }
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob((blob) => {
+        if (!blob) { resolve(file); return; }
+        resolve(new File([blob], file.name.replace(/\.\w+$/, '.jpg'), { type: 'image/jpeg' }));
+      }, 'image/jpeg', quality);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+    img.src = url;
+  });
+}
+
 // ─── BLOG LIST ────────────────────────────────────────────────────────────────
 export default function AdminBlog() {
   const [posts, setPosts] = useState([]);
@@ -115,7 +142,7 @@ export function AdminBlogForm() {
     if (!file) return;
     setImageUploading(true);
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('image', await compressImage(file));
     try {
       const { data } = await api.post('/upload/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
       setForm(f => ({ ...f, coverImage: data.url, coverImagePublicId: data.publicId }));
@@ -135,10 +162,10 @@ export function AdminBlogForm() {
       if (!file) return;
       const editor = quillRef.current?.getEditor();
       const range = editor?.getSelection(true);
-      const formData = new FormData();
-      formData.append('image', file);
       try {
         toast.loading('Uploading image...', { id: 'quill-img' });
+        const formData = new FormData();
+        formData.append('image', await compressImage(file));
         const { data } = await api.post('/upload/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
         editor.insertEmbed(range ? range.index : editor.getLength(), 'image', data.url);
         editor.setSelection((range ? range.index : editor.getLength()) + 1);
