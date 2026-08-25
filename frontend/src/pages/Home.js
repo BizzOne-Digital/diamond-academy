@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { GraduationSVG, GemSVG, BoltSVG, EmailSVG } from '../components/Icons';
+import { GraduationSVG, GemSVG, BoltSVG, EmailSVG, ShieldSVG, CheckSVG, ClockSVG } from '../components/Icons';
 import toast from 'react-hot-toast';
 import api from '../utils/api';
 import IgiCollabBanner from '../components/IgiCollabBanner';
@@ -127,6 +127,45 @@ export default function Home() {
       </section>
 
       <IgiCollabBanner />
+
+      {/* Video hero — looping background video, exact style/copy from client's reference screenshot */}
+      <section style={{ position: 'relative', width: '100%', minHeight: '560px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#000' }}>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+        >
+          <source src="/homevid.mp4" type="video/mp4" />
+        </video>
+        <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '80px 20px' }}>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(48px, 8vw, 96px)', fontWeight: 400, color: 'white', textShadow: '0 2px 20px rgba(0,0,0,0.55)', lineHeight: 1.1, marginBottom: '20px' }}>
+            Intelligence
+          </h2>
+          <p style={{ color: 'white', fontWeight: 600, fontSize: 'clamp(15px,1.8vw,20px)', textShadow: '0 2px 12px rgba(0,0,0,0.5)', marginBottom: '36px' }}>
+            Beyond Round Brilliants – Because Shape Matters
+          </p>
+          <Link to="/education" className="btn btn-primary btn-lg">Enroll Now</Link>
+        </div>
+      </section>
+
+      {/* Stats row — Certified Expertise / Street-Smart Clarity / Fast Impact Learning */}
+      <section style={{ background: C.navy, padding: '70px 20px' }}>
+        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '48px', textAlign: 'center' }}>
+          {[
+            { Icon: ShieldSVG, title: 'Certified Expertise', text: 'Certified gemologist translating technical gem knowledge into clear, practical buying insight.' },
+            { Icon: CheckSVG, title: 'Street-Smart Clarity', text: 'Learn how professionals read diamonds quickly and spot real value in the market.' },
+            { Icon: ClockSVG, title: 'Fast Impact Learning', text: 'Short, focused training built for immediate, real-world application.' },
+          ].map(({ Icon, title, text }) => (
+            <div key={title}>
+              <Icon size={40} color="white" style={{ marginBottom: '20px' }} />
+              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '28px', fontWeight: 400, color: 'white', marginBottom: '14px' }}>{title}</h3>
+              <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '15px', lineHeight: 1.7 }}>{text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* REIMAGINED — removed duplicate section per client feedback */}
 
