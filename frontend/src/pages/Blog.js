@@ -14,58 +14,67 @@ export function Blog() {
     api.get('/blogs').then(r => setPosts(r.data.blogs || [])).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
+  if (loading) {
+    return <div style={{ display: 'flex', justifyContent: 'center', padding: '100px' }}><div className="spinner" /></div>;
+  }
+
+  if (posts.length === 0) {
+    return (
+      <>
+        <Helmet><title>Blog | American Diamonds Academy</title></Helmet>
+        <div className="page-hero"><div className="container"><h1>Blog</h1><p>Insights, education, and industry perspectives from our gemmologists</p></div></div>
+        <div style={{ textAlign: 'center', padding: '80px' }}>
+          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '24px', color: C.navy, marginBottom: '12px' }}>No posts yet</h3>
+          <p style={{ color: '#6b7280' }}>Check back soon for diamond education insights and industry news.</p>
+        </div>
+      </>
+    );
+  }
+
+  const [featured, ...rest] = posts;
+
   return (
     <>
       <Helmet><title>Blog | American Diamonds Academy</title></Helmet>
-      <div className="page-hero">
-        <div className="container">
-          <h1>Blog</h1>
-          <p>Insights, education, and industry perspectives from our gemmologists</p>
-        </div>
-      </div>
 
-      <section className="section" style={{ background: C.light }}>
-        <div className="container">
-          {loading ? (
-            <div style={{ textAlign: 'center', padding: '60px' }}><div className="spinner" style={{ margin: '0 auto' }} /></div>
-          ) : posts.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '80px', background: 'white', borderRadius: '12px' }}>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '24px', color: C.navy, marginBottom: '12px' }}>No posts yet</h3>
-              <p style={{ color: '#6b7280' }}>Check back soon for diamond education insights and industry news.</p>
-            </div>
-          ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '32px' }}>
-              {posts.map(post => (
-                <article key={post._id} className="card" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                  {post.coverImage && (
-                    <div style={{ height: '200px', background: `url(${post.coverImage}) center/cover no-repeat` }} />
-                  )}
-                  {!post.coverImage && (
-                    <div style={{ height: '160px', background: `linear-gradient(135deg, ${C.navy}, ${C.coral})`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 9L12 22L22 9L12 2Z" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinejoin="round"/></svg>
-                    </div>
-                  )}
-                  <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+      {/* FEATURED — full-bleed split: text left, big image right */}
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', minHeight: '600px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 'clamp(40px,6vw,100px)', background: C.light }}>
+          {featured.category && (
+            <span style={{ fontSize: '13px', fontWeight: 600, color: C.coral, textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '16px' }}>{featured.category}</span>
+          )}
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(40px,5.5vw,68px)', fontWeight: 400, color: C.navy, lineHeight: 1.1, marginBottom: '28px' }}>{featured.title}</h1>
+          {featured.excerpt && (
+            <p style={{ color: '#4b5563', fontSize: '18px', lineHeight: 1.8, marginBottom: '36px', maxWidth: '560px' }}>{featured.excerpt}</p>
+          )}
+          <Link to={`/blog/${featured.slug}`} className="btn btn-primary btn-lg" style={{ width: 'fit-content' }}>View This Story</Link>
+        </div>
+        <div style={{ minHeight: '360px', background: featured.coverImage ? `url(${featured.coverImage}) center/cover no-repeat` : `linear-gradient(135deg, ${C.navy}, ${C.coral})` }} />
+      </section>
+
+      {/* GRID — remaining posts, large image cards */}
+      {rest.length > 0 && (
+        <section className="section" style={{ background: 'white' }}>
+          <div className="container">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '48px' }}>
+              {rest.map(post => (
+                <article key={post._id}>
+                  <Link to={`/blog/${post.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
+                    <div style={{ aspectRatio: '1 / 1', marginBottom: '20px', background: post.coverImage ? `url(${post.coverImage}) center/cover no-repeat` : `linear-gradient(135deg, ${C.navy}, ${C.coral})` }} />
                     {post.category && (
-                      <span style={{ fontSize: '12px', fontWeight: 600, color: C.coral, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px', display: 'block' }}>{post.category}</span>
+                      <span style={{ fontSize: '12px', fontWeight: 600, color: C.coral, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '10px', display: 'block' }}>{post.category}</span>
                     )}
-                    <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '20px', fontWeight: 500, color: C.navy, marginBottom: '12px', lineHeight: 1.3 }}>{post.title}</h2>
-                    {post.excerpt && (
-                      <p style={{ color: '#6b7280', fontSize: '14px', lineHeight: 1.7, marginBottom: '16px', flex: 1 }}>{post.excerpt}</p>
-                    )}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid #f3f4f6' }}>
-                      <span style={{ fontSize: '12px', color: '#9ca3af' }}>
-                        {post.author} · {post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ''}
-                      </span>
-                      <Link to={`/blog/${post.slug}`} style={{ color: C.coral, fontSize: '13px', fontWeight: 600, textDecoration: 'none' }}>Read More →</Link>
-                    </div>
-                  </div>
+                    <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '28px', fontWeight: 400, color: C.navy, lineHeight: 1.25, marginBottom: '10px' }}>{post.title}</h2>
+                    <span style={{ fontSize: '13px', color: '#9ca3af' }}>
+                      {post.author} {post.publishedAt && `· ${new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`}
+                    </span>
+                  </Link>
                 </article>
               ))}
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
     </>
   );
 }
