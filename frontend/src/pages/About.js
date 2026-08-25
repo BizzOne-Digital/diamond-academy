@@ -25,8 +25,11 @@ export function About() {
   return (
     <>
       <Helmet><title>About | American Diamonds Academy</title></Helmet>
-      <div className="page-hero" style={{ background: `linear-gradient(rgba(27,43,75,0.82), rgba(27,43,75,0.82)), url(/hero-diamonds.jpg) center/cover`, backgroundSize: 'cover' }}>
-        <div className="container"><h1>Behind the Shift</h1><p>Because the diamond world is changing, meet the gemmologist who decided learning should change with it.</p></div>
+      <div className="page-hero" style={{ background: `linear-gradient(rgba(27,43,75,0.35), rgba(27,43,75,0.35)), url(/hero-diamonds.jpg) center/cover`, backgroundSize: 'cover' }}>
+        <div className="container">
+          <h1 style={{ textShadow: '0 2px 20px rgba(0,0,0,0.6)' }}>Behind the Shift</h1>
+          <p style={{ textShadow: '0 2px 12px rgba(0,0,0,0.55)' }}>Because the diamond world is changing, meet the gemmologist who decided learning should change with it.</p>
+        </div>
       </div>
 
       {/* FOUNDER SECTION */}
@@ -86,9 +89,9 @@ export function About() {
           it's a typographic lockup, no image asset needed) + a second logo slot for
           when the client sends it. */}
       <section style={{ background: 'white', padding: '40px 0', borderTop: '1px solid #eef0f3', borderBottom: '1px solid #eef0f3', overflow: 'hidden' }}>
-        <div style={{ display: 'flex', gap: '100px', width: 'max-content', animation: 'affiliationMarquee 24s linear infinite' }}>
-          {[...Array(2)].map((_, dup) => (
-            <div key={dup} style={{ display: 'flex', alignItems: 'flex-end', gap: '14px', color: C.navy }}>
+        <div style={{ display: 'flex', gap: '100px', width: 'max-content', animation: 'affiliationMarquee 18s linear infinite' }}>
+          {[...Array(8)].map((_, dup) => (
+            <div key={dup} style={{ display: 'flex', alignItems: 'flex-end', gap: '14px', color: C.navy, flexShrink: 0 }}>
               <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '46px', lineHeight: 1 }}>GIA</span>
               <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1, marginBottom: '4px' }}>
                 <span style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', fontSize: '15px' }}>Alumni</span>
@@ -97,33 +100,43 @@ export function About() {
               <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '28px', lineHeight: 1 }}>Member</span>
             </div>
           ))}
-          {/* Second partner logo — placeholder until the client sends the file */}
-          {[...Array(2)].map((_, dup) => (
-            <div key={`slot2-${dup}`} style={{ display: 'flex', alignItems: 'center', height: '56px' }}>
-              <img src="/partner-logo-2.webp" alt="Partner" style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
-                onError={e => { e.target.style.display = 'none'; }}
-              />
-            </div>
-          ))}
         </div>
         <style>{`@keyframes affiliationMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`}</style>
       </section>
 
-      {/* TIMELINE */}
+      {/* TIMELINE — alternating left/right zigzag around a centered vertical line */}
       <section className="section" style={{ background: C.navy, color: 'white' }}>
-        <div className="container" style={{ maxWidth: '800px' }}>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, marginBottom: '48px', textAlign: 'center' }}>Journey</h2>
-          <div style={{ position: 'relative', paddingLeft: '32px', borderLeft: `2px solid ${C.coral}` }}>
-            {timeline.map((m, i) => (
-              <div key={m.year} style={{ marginBottom: i < timeline.length - 1 ? '40px' : 0, position: 'relative' }}>
-                <div style={{ position: 'absolute', left: '-40px', width: '14px', height: '14px', background: C.coral, borderRadius: '50%', top: '6px', border: `3px solid ${C.navy}` }} />
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: '22px', marginBottom: '4px' }}>{m.year}</div>
-                <div style={{ color: C.coral, fontWeight: 600, fontSize: '14px', marginBottom: '6px' }}>{m.title}</div>
-                <div style={{ color: 'rgba(255,255,255,0.65)', fontSize: '14px', lineHeight: 1.8 }}>{m.desc}</div>
-              </div>
-            ))}
+        <div className="container" style={{ maxWidth: '1300px' }}>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(36px,4vw,48px)', fontWeight: 400, marginBottom: '64px', textAlign: 'center' }}>Journey</h2>
+          <div style={{ position: 'relative' }}>
+            <div style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: '2px', background: C.coral, transform: 'translateX(-50%)' }} />
+            {timeline.map((m, i) => {
+              const isLeft = i % 2 === 0;
+              const content = (
+                <>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,2.6vw,34px)', marginBottom: '10px' }}>{m.year}</div>
+                  <div style={{ color: C.coral, fontWeight: 600, fontSize: '20px', marginBottom: '12px' }}>{m.title}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '17px', lineHeight: 1.85 }}>{m.desc}</div>
+                </>
+              );
+              return (
+                <div key={m.year} className="timeline-row" style={{ display: 'grid', gridTemplateColumns: '1fr 50px 1fr', marginBottom: i < timeline.length - 1 ? '64px' : 0 }}>
+                  <div className="timeline-side" style={{ textAlign: 'right', paddingRight: '40px' }}>{isLeft && content}</div>
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div style={{ width: '18px', height: '18px', background: C.coral, borderRadius: '50%', marginTop: '8px', border: `3px solid ${C.navy}` }} />
+                  </div>
+                  <div className="timeline-side" style={{ textAlign: 'left', paddingLeft: '40px' }}>{!isLeft && content}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
+        <style>{`
+          @media (max-width: 640px) {
+            .timeline-row { grid-template-columns: 1fr !important; text-align: center !important; }
+            .timeline-side { text-align: center !important; padding: 0 !important; }
+          }
+        `}</style>
       </section>
 
       {/* INDUSTRY ENGAGEMENT PHOTO — full-bleed edge-to-edge, matching CDA (not
@@ -131,7 +144,7 @@ export function About() {
       <section style={{ background: 'white', padding: '80px 0 0' }}>
         <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 400, color: C.navy, marginBottom: '40px', textAlign: 'center' }}>Industry Engagement</h2>
         <div>
-          <img src="/industry.webp" alt="Industry Engagement"
+          <img src="/indust.jpeg" alt="Industry Engagement"
             style={{ width: '100%', height: 'auto', display: 'block' }}
             onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
           />

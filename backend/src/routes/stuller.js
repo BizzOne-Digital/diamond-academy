@@ -6,9 +6,10 @@ const { protect, admin, optionalAuth } = require('../middleware/auth');
 
 const STULLER_API_BASE = 'https://api.stuller.com/v2';
 
-// Client-confirmed markup: final price shown to customers is 5x Stuller's cost —
-// meant to be all-inclusive (covers shipping, insurance, customs duties, our margin).
-const MARKUP_MULTIPLIER = 5;
+// Client-confirmed markup: matches the "Other Jewelry and All Other Items (Packaging,
+// jewelry cleaner, batteries, etc.)" markup from her own Stuller Showcase pricing setup —
+// the bucket that best matches Tools & Supplies — rather than a flat rate we picked.
+const MARKUP_MULTIPLIER = 2.5;
 function applyMarkup(product) {
   if (product?.Price?.Value != null) product.Price.Value = product.Price.Value * MARKUP_MULTIPLIER;
   if (product?.ShowcasePrice?.Value != null) product.ShowcasePrice.Value = product.ShowcasePrice.Value * MARKUP_MULTIPLIER;
@@ -193,7 +194,7 @@ router.post('/checkout', optionalAuth, async (req, res) => {
         plan: {
           initial_price: Math.round(price * quantity * 100) / 100,
           plan_type: 'one_time',
-          currency: 'usd',
+          currency: (currency || 'cad').toLowerCase(),
         },
         metadata: { type: 'tool', toolRequestId: toolRequest._id.toString() },
         redirect_url: `${process.env.FRONTEND_URL}/tools/payment-success?requestId=${toolRequest._id}`,
