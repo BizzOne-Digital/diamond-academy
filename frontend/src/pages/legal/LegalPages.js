@@ -100,6 +100,48 @@ export function Terms() {
   );
 }
 
+// ─── COURSE DISCLAIMER ────────────────────────────────────────────────────────
+export function CourseDisclaimer() {
+  return (
+    <>
+      <Helmet><title>Course Disclaimer | American Diamonds Academy</title></Helmet>
+      <div className="page-hero"><div className="container"><h1>Course Disclaimer</h1></div></div>
+      <section className="section" style={{ background: C.light }}>
+        <div className="container" style={{ maxWidth: '860px' }}>
+          <div style={{ background: 'white', borderRadius: '12px', padding: '48px', boxShadow: '0 2px 10px rgba(0,0,0,0.06)' }}>
+            <P>This curriculum is designed solely to train professionals in modern visual and digital diamond evaluation for e-commerce and retail environments. It does <strong>not</strong> replace formal gemological education, certification, or laboratory-based training. Visual estimation techniques taught in this course do <strong>not</strong> substitute for the precise measurements, chemical testing, or plotting performed by calibrated laboratory equipment or official grading bodies (including but not limited to GIA and IGI).</P>
+            <P>The techniques taught in this course are designed to enhance professional visual and digital evaluation skills. As with all visual-based assessment methods, results depend on the practitioner&apos;s judgment and the specific conditions under which they are applied. Students are responsible for any evaluations or representations they make in their professional practice.</P>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+// ─── COURSE TERMS OF SERVICE ──────────────────────────────────────────────────
+export function CourseTermsOfService() {
+  return (
+    <>
+      <Helmet><title>Terms of Service | American Diamonds Academy</title></Helmet>
+      <div className="page-hero"><div className="container"><h1>Terms of Service</h1></div></div>
+      <section className="section" style={{ background: C.light }}>
+        <div className="container" style={{ maxWidth: '860px' }}>
+          <div style={{ background: 'white', borderRadius: '12px', padding: '48px', boxShadow: '0 2px 10px rgba(0,0,0,0.06)' }}>
+            <P>&ldquo;American Diamonds Academy&rdquo; is a trade name of Angel Diamond Inc. Courses are provided for professional development purposes only and are not accredited vocational programs under the PCCA and do not confer any form of professional designation, certification, or licensing.</P>
+            <P>All course content is provided &ldquo;as is&rdquo; without warranties of any kind, express or implied. Angel Diamond Inc. assumes no liability for any loss, damages, or claims arising from the use or misuse of the training materials. Participation in the course constitutes acceptance of these terms. All matters relating to this course are governed by the laws of the Province of Ontario.</P>
+            <Section title="Intellectual Property">
+              <P>All original educational materials provided by American Diamonds Academy (&ldquo;ADA&rdquo;)&mdash;including text, diagrams, worksheets, graphics, course structure, and all instructional content&mdash;are the exclusive intellectual property of ADA and are protected by copyright.</P>
+              <P>Certain visual assets used within the course remain the property of their original owners and are not owned by ADA.</P>
+              <P>Students are granted a personal, non-transferable license to access ADA&apos;s educational materials solely for their own learning. Redistribution, reproduction, resale, or unauthorized teaching using ADA content or any third-party assets is strictly prohibited.</P>
+              <P>ADA reserves all rights to its educational content, curriculum, branding, and proprietary training materials.</P>
+            </Section>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
 // ─── REFUND POLICY ────────────────────────────────────────────────────────────
 export function RefundPolicy() {
   return (

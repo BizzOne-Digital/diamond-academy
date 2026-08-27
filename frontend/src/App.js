@@ -26,6 +26,8 @@ import Dashboard from './pages/Dashboard';
 import { Terms } from './pages/legal/LegalPages';
 import { RefundPolicy } from './pages/legal/LegalPages';
 import { PrivacyPolicy } from './pages/legal/LegalPages';
+import { CourseDisclaimer } from './pages/legal/LegalPages';
+import { CourseTermsOfService } from './pages/legal/LegalPages';
 
 import AdminLayout from './pages/admin/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -102,6 +104,8 @@ export default function App() {
               <Route path="/faq" element={<FAQ />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/refund-policy" element={<RefundPolicy />} />
+              <Route path="/course-disclaimer" element={<CourseDisclaimer />} />
+              <Route path="/terms-of-service" element={<CourseTermsOfService />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />

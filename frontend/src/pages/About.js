@@ -190,14 +190,14 @@ export function Contact() {
       <div className="page-hero"><div className="container"><h1>Contact Us</h1><p>Get in touch about courses, enrollment, or any questions.</p></div></div>
       <section className="section" style={{ background: C.light }}>
         <div className="container" style={{ maxWidth: '1000px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px', marginBottom: '40px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px', marginBottom: '40px' }}>
             {contactInfo.map(({ Icon, title, detail, href }) => (
               <a key={title} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="card" style={{ padding: '28px 20px', textAlign: 'center', display: 'block', textDecoration: 'none' }}>
                 <div style={{ width: '52px', height: '52px', background: C.light, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
                   <Icon size={24} color={C.coral} />
                 </div>
                 <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '16px', color: C.navy, marginBottom: '6px' }}>{title}</h3>
-                <p style={{ color: '#6b7280', fontSize: '13px' }}>{detail}</p>
+                <p style={{ color: '#6b7280', fontSize: '13px', wordBreak: 'break-word', overflowWrap: 'break-word' }}>{detail}</p>
               </a>
             ))}
           </div>
@@ -357,7 +357,7 @@ export function FAQ() {
           </div>
           <div style={{ textAlign: 'center', marginTop: '40px', padding: '36px', background: 'white', borderRadius: '12px' }}>
             <p style={{ color: C.navy, fontFamily: "'Playfair Display', serif", fontSize: '20px', marginBottom: '16px' }}>Still didn&apos;t find what you&apos;re looking for?</p>
-            <a href="mailto:jaswani@angeldiamondinc.com" className="btn btn-primary">Contact Us</a>
+            <Link to="/contact" className="btn btn-primary">Contact Us</Link>
           </div>
         </div>
       </section>

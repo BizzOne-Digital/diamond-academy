@@ -67,8 +67,8 @@ export default function Footer() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <Link to="/privacy-policy" style={{ color: COLORS.navy, fontSize: '15px', textDecoration: 'none' }}>Privacy Policy</Link>
                 <Link to="/refund-policy" style={{ color: COLORS.navy, fontSize: '15px', textDecoration: 'none' }}>Refund Policy</Link>
-                <Link to="/terms" style={{ color: COLORS.navy, fontSize: '15px', textDecoration: 'none' }}>Course Disclaimer</Link>
-                <Link to="/terms" style={{ color: COLORS.navy, fontSize: '15px', textDecoration: 'none' }}>Terms of Service</Link>
+                <Link to="/course-disclaimer" style={{ color: COLORS.navy, fontSize: '15px', textDecoration: 'none' }}>Course Disclaimer</Link>
+                <Link to="/terms-of-service" style={{ color: COLORS.navy, fontSize: '15px', textDecoration: 'none' }}>Terms of Service</Link>
               </div>
             </div>
 

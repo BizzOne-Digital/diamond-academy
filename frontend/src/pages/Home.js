@@ -140,7 +140,7 @@ export default function Home() {
           <p style={{ color: 'white', fontWeight: 600, fontSize: 'clamp(15px,1.8vw,20px)', textShadow: '0 2px 12px rgba(0,0,0,0.5)', marginBottom: '36px' }}>
             Beyond Round Brilliants – Because Shape Matters
           </p>
-          <Link to="/education" className="btn btn-primary btn-lg">Enroll Now</Link>
+          <Link to="/education/diamond-shape-intelligence" className="btn btn-primary btn-lg">Enroll Now</Link>
         </div>
       </section>
 
