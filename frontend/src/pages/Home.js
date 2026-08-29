@@ -108,8 +108,8 @@ export default function Home() {
       {/* BELOW HERO — "Diamond Learning, Reimagined." + description + Learn More.
           Wider than the standard .container so the paragraph runs closer to the
           full screen width on large monitors, per client feedback. */}
-      <section style={{ background: C.light, padding: '110px 20px' }}>
-        <div style={{ maxWidth: '1600px', margin: '0 auto' }}>
+      <section style={{ background: C.light, padding: '110px 40px' }}>
+        <div>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(34px,4.5vw,60px)', fontWeight: 400, color: C.navy, marginBottom: '36px', lineHeight: 1.15 }}>
             Diamond Learning, <em>Reimagined.</em>
           </h2>

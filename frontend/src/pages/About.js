@@ -25,7 +25,7 @@ export function About() {
   return (
     <>
       <Helmet><title>About | American Diamonds Academy</title></Helmet>
-      <div className="page-hero" style={{ background: `linear-gradient(rgba(27,43,75,0.35), rgba(27,43,75,0.35)), url(/hero-diamonds.jpg) center/cover`, backgroundSize: 'cover' }}>
+      <div className="page-hero" style={{ background: `url(/hero-diamonds.jpg) center/cover`, backgroundSize: 'cover' }}>
         <div className="container">
           <h1 style={{ textShadow: '0 2px 20px rgba(0,0,0,0.6)' }}>Behind the Shift</h1>
           <p style={{ textShadow: '0 2px 12px rgba(0,0,0,0.55)' }}>Because the diamond world is changing, meet the gemmologist who decided learning should change with it.</p>
@@ -190,7 +190,7 @@ export function Contact() {
       <div className="page-hero"><div className="container"><h1>Contact Us</h1><p>Get in touch about courses, enrollment, or any questions.</p></div></div>
       <section className="section" style={{ background: C.light }}>
         <div className="container" style={{ maxWidth: '1000px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px', marginBottom: '40px' }}>
+          <div className="contact-info-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '16px', marginBottom: '40px' }}>
             {contactInfo.map(({ Icon, title, detail, href }) => (
               <a key={title} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="card" style={{ padding: '28px 20px', textAlign: 'center', display: 'block', textDecoration: 'none' }}>
                 <div style={{ width: '52px', height: '52px', background: C.light, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
@@ -201,6 +201,10 @@ export function Contact() {
               </a>
             ))}
           </div>
+          <style>{`
+            @media (max-width: 900px) { .contact-info-grid { grid-template-columns: repeat(3, 1fr) !important; } }
+            @media (max-width: 560px) { .contact-info-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+          `}</style>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
             <div style={{ background: 'white', borderRadius: '12px', padding: '28px', boxShadow: '0 2px 10px rgba(0,0,0,0.06)' }}>
