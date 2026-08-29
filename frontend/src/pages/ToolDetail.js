@@ -18,6 +18,8 @@ export default function ToolDetail() {
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [checkoutForm, setCheckoutForm] = useState({ name: user?.name || '', email: user?.email || '', phone: '' });
   const [submitting, setSubmitting] = useState(false);
+  const [zoomed, setZoomed] = useState(false);
+  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
 
   useEffect(() => {
     if (product) return;
@@ -88,9 +90,33 @@ export default function ToolDetail() {
       <section className="section" style={{ background: 'white' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '48px', alignItems: 'start' }}>
-            <div style={{ background: '#f3f4f6', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '560px', overflow: 'hidden' }}>
+            <div
+              style={{ position: 'relative', background: '#f3f4f6', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '560px', overflow: 'hidden', cursor: image ? 'zoom-in' : 'default' }}
+              onMouseEnter={() => image && setZoomed(true)}
+              onMouseLeave={() => setZoomed(false)}
+              onMouseMove={(e) => {
+                if (!image) return;
+                const rect = e.currentTarget.getBoundingClientRect();
+                setZoomPos({
+                  x: ((e.clientX - rect.left) / rect.width) * 100,
+                  y: ((e.clientY - rect.top) / rect.height) * 100,
+                });
+              }}
+            >
               {image ? (
-                <img src={image} alt={name} style={{ width: '100%', height: '100%', maxHeight: '680px', objectFit: 'contain' }} />
+                zoomed ? (
+                  <div
+                    style={{
+                      width: '100%', height: '100%', minHeight: '560px',
+                      backgroundImage: `url(${image})`,
+                      backgroundSize: '220%',
+                      backgroundPosition: `${zoomPos.x}% ${zoomPos.y}%`,
+                      backgroundRepeat: 'no-repeat',
+                    }}
+                  />
+                ) : (
+                  <img src={image} alt={name} style={{ width: '100%', height: '100%', maxHeight: '680px', objectFit: 'contain' }} />
+                )
               ) : (
                 <span style={{ fontSize: '64px', opacity: 0.25 }}>🧰</span>
               )}
