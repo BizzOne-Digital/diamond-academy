@@ -103,7 +103,7 @@ export default function Tools() {
                       <div style={{ padding: '20px' }}>
                         <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '17px', color: C.navy, marginBottom: '6px' }}>{name}</h3>
                         {p.SKU && <p style={{ color: '#9ca3af', fontSize: '12px', marginBottom: '8px' }}>SKU: {p.SKU}</p>}
-                        {price && <p style={{ fontWeight: 700, color: C.coral, fontSize: '16px' }}>${price.toFixed(2)} {p.Price?.CurrencyCode}</p>}
+                        {price && <p style={{ fontWeight: 700, color: C.coral, fontSize: '16px' }}>${Math.round(price)} {p.Price?.CurrencyCode}</p>}
                       </div>
                     </div>
                   );

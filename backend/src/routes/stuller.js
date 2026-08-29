@@ -10,9 +10,18 @@ const STULLER_API_BASE = 'https://api.stuller.com/v2';
 // jewelry cleaner, batteries, etc.)" markup from her own Stuller Showcase pricing setup —
 // the bucket that best matches Tools & Supplies — rather than a flat rate we picked.
 const MARKUP_MULTIPLIER = 2.5;
+// Stuller returns prices in CAD — client wants everything shown in USD, as clean
+// round whole-dollar amounts (no cents, no thousands commas).
+const CAD_TO_USD = 0.72;
 function applyMarkup(product) {
-  if (product?.Price?.Value != null) product.Price.Value = product.Price.Value * MARKUP_MULTIPLIER;
-  if (product?.ShowcasePrice?.Value != null) product.ShowcasePrice.Value = product.ShowcasePrice.Value * MARKUP_MULTIPLIER;
+  if (product?.Price?.Value != null) {
+    product.Price.Value = Math.round(product.Price.Value * MARKUP_MULTIPLIER * CAD_TO_USD);
+    product.Price.CurrencyCode = 'USD';
+  }
+  if (product?.ShowcasePrice?.Value != null) {
+    product.ShowcasePrice.Value = Math.round(product.ShowcasePrice.Value * MARKUP_MULTIPLIER * CAD_TO_USD);
+    product.ShowcasePrice.CurrencyCode = 'USD';
+  }
   return product;
 }
 

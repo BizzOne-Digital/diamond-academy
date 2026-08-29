@@ -67,7 +67,7 @@ export default function Education() {
                       {course.totalSessions > 0 && <span className="badge badge-coral">{course.totalSessions} Sessions</span>}
                     </div>
                     <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3.5vw,44px)', fontWeight: 400, color: C.navy, marginBottom: '8px', lineHeight: 1.15 }}>{course.title}</h3>
-                    <p style={{ fontSize: '26px', fontWeight: 700, color: C.navy, marginBottom: '20px', fontFamily: "'Playfair Display', serif" }}>${course.price.toFixed(2)}</p>
+                    <p style={{ fontSize: '26px', fontWeight: 700, color: C.navy, marginBottom: '20px', fontFamily: "'Playfair Display', serif" }}>${course.price}</p>
                     <p style={{ color: '#4b5563', lineHeight: 1.85, marginBottom: '28px', fontSize: '16px', maxWidth: '480px' }}>{course.shortDescription || course.description?.substring(0, 180)}...</p>
                     <Link to={`/education/${course.slug}`} className="btn btn-primary btn-lg" style={{ alignSelf: 'flex-start' }}>View More Details</Link>
                   </div>
@@ -80,7 +80,7 @@ export default function Education() {
                       {course.totalSessions > 0 && <span className="badge badge-coral">{course.totalSessions} Sessions</span>}
                     </div>
                     <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,3.5vw,44px)', fontWeight: 400, color: C.navy, marginBottom: '8px', lineHeight: 1.15 }}>{course.title}</h3>
-                    <p style={{ fontSize: '26px', fontWeight: 700, color: C.navy, marginBottom: '20px', fontFamily: "'Playfair Display', serif" }}>${course.price.toFixed(2)}</p>
+                    <p style={{ fontSize: '26px', fontWeight: 700, color: C.navy, marginBottom: '20px', fontFamily: "'Playfair Display', serif" }}>${course.price}</p>
                     <p style={{ color: '#4b5563', lineHeight: 1.85, marginBottom: '28px', fontSize: '16px', maxWidth: '480px' }}>{course.shortDescription || course.description?.substring(0, 180)}...</p>
                     <Link to={`/education/${course.slug}`} className="btn btn-primary btn-lg" style={{ alignSelf: 'flex-start' }}>View More Details</Link>
                   </div>

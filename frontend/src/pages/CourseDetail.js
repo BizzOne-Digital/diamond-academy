@@ -62,7 +62,7 @@ export default function CourseDetail() {
               <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px,4vw,48px)', fontWeight: 400, marginBottom: '16px', lineHeight: 1.2 }}>{course.title}</h1>
               <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '16px', lineHeight: 1.8, marginBottom: '32px' }}>{course.shortDescription || course.description?.substring(0, 200)}</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
-                <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '36px', fontWeight: 600 }}>${course.price.toFixed(2)}</span>
+                <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '36px', fontWeight: 600 }}>${course.price}</span>
                 {whopPlanId ? (
                   <WhopCheckout planId={whopPlanId} />
                 ) : isEnrolled ? (
@@ -145,7 +145,7 @@ export default function CourseDetail() {
             {/* Sidebar */}
             <div id="enroll">
               <div style={{ position: 'sticky', top: '90px', background: C.light, borderRadius: '12px', padding: '32px', border: '1px solid #e5e7eb' }}>
-                <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 600, color: C.navy, marginBottom: '20px' }}>${course.price.toFixed(2)}</p>
+                <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 600, color: C.navy, marginBottom: '20px' }}>${course.price}</p>
                 {whopPlanId ? (
                   <WhopCheckout planId={whopPlanId} className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', marginBottom: '16px' }} />
                 ) : isEnrolled ? (

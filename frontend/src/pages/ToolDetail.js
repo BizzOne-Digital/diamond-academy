@@ -108,7 +108,7 @@ export default function ToolDetail() {
 
               {price && (
                 <p style={{ fontWeight: 700, color: C.coral, fontSize: '28px', marginBottom: '24px' }}>
-                  ${price.toFixed(2)} {product.Price?.CurrencyCode}
+                  ${Math.round(price)} {product.Price?.CurrencyCode}
                 </p>
               )}
 
@@ -147,7 +147,7 @@ export default function ToolDetail() {
           >
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '20px', color: C.navy, marginBottom: '6px' }}>Checkout</h2>
             <p style={{ color: '#6b7280', fontSize: '13px', marginBottom: '20px' }}>
-              {name} — Qty {qty} — ${price != null ? (price * qty).toFixed(2) : ''} {product.Price?.CurrencyCode}
+              {name} — Qty {qty} — ${price != null ? Math.round(price * qty) : ''} {product.Price?.CurrencyCode}
             </p>
 
             <div className="form-group">
