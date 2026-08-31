@@ -189,21 +189,24 @@ export function Contact() {
       <Helmet><title>Contact | American Diamonds Academy</title></Helmet>
       <div className="page-hero"><div className="container"><h1>Contact Us</h1><p>Get in touch about courses, enrollment, or any questions.</p></div></div>
       <section className="section" style={{ background: C.light }}>
-        <div className="container" style={{ maxWidth: '1000px' }}>
-          <div className="contact-info-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '16px', marginBottom: '40px' }}>
+        <div className="container" style={{ maxWidth: '1400px' }}>
+          <div className="contact-info-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px', marginBottom: '40px' }}>
             {contactInfo.map(({ Icon, title, detail, href }) => (
-              <a key={title} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="card" style={{ padding: '28px 20px', textAlign: 'center', display: 'block', textDecoration: 'none' }}>
+              <a key={title} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="card" style={{ padding: '32px 16px', textAlign: 'center', display: 'block', textDecoration: 'none' }}>
                 <div style={{ width: '52px', height: '52px', background: C.light, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
                   <Icon size={24} color={C.coral} />
                 </div>
                 <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '16px', color: C.navy, marginBottom: '6px' }}>{title}</h3>
-                <p style={{ color: '#6b7280', fontSize: '13px', wordBreak: 'break-word', overflowWrap: 'break-word' }}>{detail}</p>
+                <p style={{ color: '#6b7280', fontSize: '12px', whiteSpace: 'nowrap' }}>{detail}</p>
               </a>
             ))}
           </div>
           <style>{`
             @media (max-width: 900px) { .contact-info-grid { grid-template-columns: repeat(3, 1fr) !important; } }
-            @media (max-width: 560px) { .contact-info-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+            @media (max-width: 560px) {
+              .contact-info-grid { grid-template-columns: repeat(2, 1fr) !important; }
+              .contact-info-grid p { font-size: 11px !important; white-space: normal !important; }
+            }
           `}</style>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
