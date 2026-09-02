@@ -43,8 +43,6 @@ function DiamondShapesCarousel({ C }) {
           transition: 'opacity 1s ease',
         }} />
       ))}
-      {/* Subtle bottom gradient only — keeps the dot/label row legible without tinting the photo */}
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.5) 100%)' }} />
       {/* Dots */}
       <div style={{ position: 'absolute', bottom: '24px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '10px', zIndex: 2 }}>
         {shapes.map((_, i) => (
@@ -53,7 +51,7 @@ function DiamondShapesCarousel({ C }) {
       </div>
       {/* Shape name */}
       <div style={{ position: 'absolute', bottom: '60px', left: '50%', transform: 'translateX(-50%)', zIndex: 2, textAlign: 'center' }}>
-        <span style={{ color: 'white', fontSize: '14px', fontWeight: 600, letterSpacing: '3px', textTransform: 'uppercase', opacity: 0.8 }}>{shapes[current].name}</span>
+        <span style={{ color: 'white', fontSize: '14px', fontWeight: 600, letterSpacing: '3px', textTransform: 'uppercase', opacity: 0.9, textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>{shapes[current].name}</span>
       </div>
     </section>
   );
