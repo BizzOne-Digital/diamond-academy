@@ -42,6 +42,9 @@ export function Login() {
               <label>Password</label>
               <input type="password" placeholder="Your password" value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} required />
             </div>
+            <div style={{ textAlign: 'right', marginBottom: '20px' }}>
+              <Link to="/forgot-password" style={{ color: C.coral, fontSize: '13px', fontWeight: 600 }}>Forgot password?</Link>
+            </div>
             <button type="submit" disabled={loading} className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '14px', fontSize: '15px', marginBottom: '20px', opacity: loading ? 0.7 : 1 }}>
               {loading ? 'Signing in...' : 'Sign In'}
             </button>

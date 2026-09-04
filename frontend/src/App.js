@@ -22,6 +22,8 @@ import { FAQ } from './pages/About';
 import { PaymentSuccess } from './pages/About';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
 import { Terms } from './pages/legal/LegalPages';
 import { RefundPolicy } from './pages/legal/LegalPages';
@@ -109,6 +111,8 @@ export default function App() {
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password/:token" element={<ResetPassword />} />
               <Route path="/payment/success" element={<PaymentSuccess />} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="*" element={<div style={{textAlign:'center',padding:'100px 20px'}}><h2>404 — Page not found</h2></div>} />
