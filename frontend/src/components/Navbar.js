@@ -73,28 +73,13 @@ export default function Navbar() {
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '108px' }}>
 
-        {/* LOGO — uses logo.png if exists, falls back to SVG text */}
+        {/* LOGO */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>
           <img
             src="/logo.png"
             alt="American Diamonds Academy"
             style={{ height: '96px', width: 'auto', objectFit: 'contain' }}
-            onError={e => {
-              e.target.style.display = 'none';
-              e.target.nextSibling.style.display = 'flex';
-            }}
           />
-          {/* Fallback SVG logo shown if logo.png not found */}
-          <div style={{ display: 'none', alignItems: 'center', gap: '10px' }}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L2 9L12 22L22 9L12 2Z" stroke="#E8835A" strokeWidth="1.5" strokeLinejoin="round"/>
-              <path d="M2 9H22M8 9L12 2M16 9L12 2" stroke="#E8835A" strokeWidth="1.5"/>
-            </svg>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: '20px', fontWeight: 700, color: 'white', letterSpacing: '1px' }}>ADA</span>
-              <span style={{ fontSize: '9px', color: '#E8835A', textTransform: 'uppercase', letterSpacing: '3px', fontWeight: 600 }}>Academy</span>
-            </div>
-          </div>
         </Link>
 
         {/* DESKTOP NAV — hidden on mobile */}
