@@ -20,10 +20,10 @@ app.use('/api/', limiter);
 const allowedOrigins = [process.env.FRONTEND_URL || 'http://localhost:3000', 'https://americandiamondacademy.com', 'https://www.americandiamondacademy.com'];
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow no-origin requests (server-to-server, curl) and any Vercel deployment URL for
-    // this project — the frontend's Vercel URL changes across deploys before the final
-    // custom domain is fully live.
-    if (!origin || allowedOrigins.includes(origin) || /\.vercel\.app$/.test(new URL(origin).hostname)) {
+    // Allow no-origin requests (server-to-server, curl) and any Vercel/Hostinger deployment
+    // URL for this project — the frontend's platform URL changes across deploys before the
+    // final custom domain is fully live.
+    if (!origin || allowedOrigins.includes(origin) || /\.(vercel\.app|hostingersite\.com)$/.test(new URL(origin).hostname)) {
       return callback(null, true);
     }
     callback(new Error('Not allowed by CORS'));
