@@ -269,6 +269,28 @@ export function Contact() {
               </div>
             </div>
           </div>
+
+          {/* ADDRESS + MAP */}
+          <div style={{ marginTop: '48px', background: 'white', borderRadius: '12px', padding: '36px', boxShadow: '0 2px 10px rgba(0,0,0,0.06)' }}>
+            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '22px', color: C.navy, marginBottom: '16px' }}>Our Address</h3>
+            <p style={{ color: '#4b5563', fontSize: '15px', lineHeight: 1.8, marginBottom: '24px' }}>
+              American Diamonds Academy<br />
+              55 Queen Street East, Suite 1506<br />
+              Downtown Diamond District<br />
+              Toronto, ON M5C 1R6, Canada
+            </p>
+            <div style={{ borderRadius: '10px', overflow: 'hidden', border: '1px solid #e5e7eb' }}>
+              <iframe
+                title="American Diamonds Academy location"
+                src="https://www.google.com/maps?q=55+Queen+Street+East+Suite+1506+Toronto+ON+M5C+1R6+Canada&output=embed"
+                width="100%"
+                height="360"
+                style={{ border: 0, display: 'block' }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </div>
         </div>
       </section>
     </>
