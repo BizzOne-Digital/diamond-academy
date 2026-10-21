@@ -94,7 +94,7 @@ router.get('/browse', async (req, res) => {
 
     if (!response.ok) {
       const text = await response.text().catch(() => '');
-      return res.status(response.status).json({ success: false, message: `Stuller API error (${response.status})`, details: text.slice(0, 500) });
+      return res.status(502).json({ success: false, message: `Stuller API error (${response.status})`, details: text.slice(0, 500) });
     }
 
     const data = await response.json();
@@ -133,7 +133,7 @@ router.get('/tools-and-supplies', async (req, res) => {
 
     if (!response.ok) {
       const text = await response.text().catch(() => '');
-      return res.status(response.status).json({ success: false, message: `Stuller API error (${response.status})`, details: text.slice(0, 500) });
+      return res.status(502).json({ success: false, message: `Stuller API error (${response.status})`, details: text.slice(0, 500) });
     }
 
     const data = await response.json();
@@ -161,7 +161,7 @@ router.get('/product/:sku', async (req, res) => {
 
     if (!response.ok) {
       const text = await response.text().catch(() => '');
-      return res.status(response.status).json({ success: false, message: `Stuller API error (${response.status})`, details: text.slice(0, 500) });
+      return res.status(502).json({ success: false, message: `Stuller API error (${response.status})`, details: text.slice(0, 500) });
     }
 
     const data = await response.json();
