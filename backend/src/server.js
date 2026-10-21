@@ -17,7 +17,7 @@ const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 300, message: 'Too ma
 app.use('/api/', limiter);
 
 // CORS
-const allowedOrigins = [process.env.FRONTEND_URL || 'http://localhost:3000', 'https://americandiamondacademy.com', 'https://www.americandiamondacademy.com'];
+const allowedOrigins = [process.env.FRONTEND_URL || 'http://localhost:3000', 'https://americandiamondsacademy.com', 'https://www.americandiamondsacademy.com'];
 app.use(cors({
   origin: (origin, callback) => {
     // Allow no-origin requests (server-to-server, curl) and any Vercel/Hostinger deployment
